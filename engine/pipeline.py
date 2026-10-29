@@ -225,6 +225,9 @@ def run(params: RunParams, allow_unconfirmed: bool = False) -> Result:
             "confirmed_on": comp.confirmed_on,
         },
         "sources": sources,
+        # A provisional run uses a composition not yet confirmed after review.
+        # Its figures are for internal checking and must not be published.
+        "provisional": comp.status != "confirmed",
     }
     tables = {
         "countries": countries,

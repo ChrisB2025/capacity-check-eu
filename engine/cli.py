@@ -75,6 +75,18 @@ def build_parser() -> argparse.ArgumentParser:
 
     sub.add_parser("concordance", help="Regenerate the A64 concordance.")
     sub.add_parser("gate1", help="Write the gate 1 coverage tables.")
+    ts = sub.add_parser("testset", help="Regenerate the fixed test set fixtures.")
+    ts.add_argument(
+        "--provisional",
+        action="store_true",
+        help="Allow a composition not yet confirmed.",
+    )
+    g2 = sub.add_parser("gate2", help="Run the gate 2 checks and write tables.")
+    g2.add_argument(
+        "--provisional",
+        action="store_true",
+        help="Allow a composition not yet confirmed.",
+    )
 
     run = sub.add_parser("run", help="Run the model for one shock.")
     run.add_argument(
@@ -92,6 +104,11 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--slack", choices=["ecfin", "vacancy"], default="ecfin")
     run.add_argument("--pressure-low", type=float, default=0.02)
     run.add_argument("--pressure-high", type=float, default=0.05)
+    run.add_argument(
+        "--provisional",
+        action="store_true",
+        help="Allow a composition not yet confirmed; the run is marked provisional.",
+    )
     return parser
 
 
@@ -156,7 +173,7 @@ def cmd_run(args: argparse.Namespace) -> int:
         ),
     )
     try:
-        result = pipeline.run(params)
+        result = pipeline.run(params, allow_unconfirmed=args.provisional)
     except CompositionNotConfirmed as exc:
         print(str(exc), file=sys.stderr)
         return EXIT_NOT_CONFIRMED
@@ -182,6 +199,23 @@ def main(argv: list[str] | None = None) -> int:
         from engine import concordance
 
         print(concordance.write())
+        return 0
+    if args.command == "testset":
+        from engine import testset
+
+        print(testset.generate(allow_unconfirmed=args.provisional))
+        return 0
+    if args.command == "gate2":
+        from engine import gate2
+        from engine.shock import CompositionNotConfirmed
+
+        try:
+            summary = gate2.run(allow_unconfirmed=args.provisional)
+        except CompositionNotConfirmed as exc:
+            print(str(exc), file=sys.stderr)
+            return EXIT_NOT_CONFIRMED
+        brief = {k: v for k, v in summary.items() if k != "runs"}
+        print(json.dumps(brief, indent=1))
         return 0
     if args.command == "gate1":
         from engine import gate1
