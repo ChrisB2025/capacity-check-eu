@@ -17,7 +17,7 @@ import numpy as np
 import pandas as pd
 
 from engine import __version__, concordance, io_model, jobs, rating, shock, slack
-from engine.params import RunParams
+from engine.params import RunParams, Thresholds
 from engine.sources._common import EU27, PROCESSED_DIR, read_provenance, utc_now
 
 RUNS_DIR = PROCESSED_DIR / "runs"
@@ -236,6 +236,27 @@ def run(params: RunParams, allow_unconfirmed: bool = False) -> Result:
         "direct_demand": pd.concat(direct, ignore_index=True),
     }
     return Result(run_id, params, manifest, tables)
+
+
+def params_from_dict(d: dict) -> RunParams:
+    d = dict(d)
+    d["thresholds"] = Thresholds(**d["thresholds"])
+    d["countries"] = tuple(d["countries"])
+    return RunParams(**d)
+
+
+def load(run_id: str) -> Result:
+    """Reopen a saved run exactly as written by ``save``."""
+    out = RUNS_DIR / run_id
+    manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
+    tables = {
+        name: pd.read_csv(out / f"{name}.csv", keep_default_na=False, na_values=[""])
+        for name in TABLES
+    }
+    return Result(run_id, params_from_dict(manifest["params"]), manifest, tables)
+
+
+TABLES = ("countries", "lines", "industry_detail", "direct_demand")
 
 
 def save(result: Result) -> Path:

@@ -115,3 +115,36 @@ Four compositions drafted from sources opened and checked on 29 October 2026, al
 ## 2026-10-29: Provisional Gate 2 results published
 
 Chris decided to publish the provisional Gate 2 report, its tables in `docs/gate-2/` and the fixed test set's fixtures, although the composition is not yet confirmed. The report is marked provisional and unreviewed, and `summary.json` and each fixture manifest record the composition's status. All three are regenerated once a composition is confirmed.
+
+## 2026-10-29: Phase 5 Sweden layer, judgement calls
+
+Chris authorised Phases 3, 4 and 5 overnight. Choices made in `engine/sweden.py`, each described in step 8 of `docs/method-note.md`:
+
+- **Unknown occupation kept, not redistributed.** SSYK code 0002 is its own flagged row, so the split adds back to the Swedish total. Shares are given both of all extra jobs and of jobs with a known occupation.
+- **Unknown industry left out of the mixes.** Employees in YREG54BAS group "00" cannot be assigned to any of the 64 industries.
+- **ELA column left empty.** The 2025 report has no occupation list by country, and its EU-wide tables do not describe Sweden.
+- **Field of education reported as the occupation's most common field**, with the number of people in that field working elsewhere as an upper bound. YREG52BAS has only ten broad fields, which cannot support a claim about trained workers outside a specific trade.
+- **Konjunkturinstitutet values computed but marked not publishable**, pending gate 1 decision 4 on its licence.
+
+## 2026-10-29: Review package and Eurostat request sent; Phases 3 to 5 authorised
+
+Chris sent the composition table and method note to the outside reviewer and to Ciaran McKenna, and sent the request for the FIGARO 2025 edition to Eurostat. He then authorised Phases 3 and 5, followed by Phase 4, to run overnight ahead of the Gate 2 go, overriding the gate sequence and the rule that the web interface waits for reviewer comments. Every result stays provisional until a composition is confirmed.
+
+## 2026-10-30: Phase 3 judgement calls
+
+- **Full factorial matrix.** Every combination of shock size, composition, thresholds and slack indicator: 72 runs on the 2026 edition, and 72 more on the 2025 edition when it arrives.
+- **Alternative thresholds.** The brief asks for "default and alternative thresholds" without naming them. Two sets are run: lower (1% and 3%) and higher (3% and 8%). Slack quantiles stay at the median and upper quartile. For Chris to confirm.
+- **Six-group aggregation.** No mapping exists in the project documents; one is proposed in `docs/gate-3-report.md` and `engine/results.py`. Water supply (E36) is placed in distribution. For the reviewer and Stephen Hinton.
+- **Dependencies table** covers C16, C22, C23, C24, C25, C27 and C28, by member state programme, with no rating.
+- **Plausibility references unverified.** Both documents refuse scripted downloads. Figures are entered in `engine/plausibility_refs.yaml` with `verified: false`; the stopping rule's third test is not applied until Chris checks them. The French comparison uses construction jobs in France; all three model measures are reported because the right one depends on what the official estimate counts.
+
+## 2026-10-30: Phase 4 judgement calls
+
+- **Local database: SQLite when `DATABASE_URL` is unset.** The local PostgreSQL password is still unknown; production uses Railway PostgreSQL. A deviation from the Phase 0 decision, for Chris to confirm or reverse.
+- **Map: server-side SVG**, no JavaScript map library. Eurostat GISCO NUTS 2024 boundaries (1:20 million) are projected once by `web/tools/build_map.py` into a committed JSON file. Six fixed headline bins on a single blue ramp; the same figures are in the table beneath.
+- **HTMX vendored** (1.9.12) rather than loaded from a CDN. Tailwind 4.1.11 compiled with `npm run css`; `output.css` committed.
+- **Run time.** A run from the inputs page takes about ten seconds, more than the "few seconds" in the brief. No worker has been added; the page waits. For Chris to decide.
+- **Shared login** from `APP_USERNAME` and `APP_PASSWORD`, Railway variables only, created at container start. `PUBLIC_READ_ONLY=true` opens results to everyone and refuses new runs.
+- **Edited compositions** are written to the data volume as `user-<hash>.yaml` with status "user-defined" and labelled as user-defined shocks on every page.
+- **CDM tables** are Django models with the baseline's exact field names; foreign keys are plain UUID columns so the names stay exact. The three change-request fields are in the project's own `RequirementExtension` table.
+- **Data on the volume** is copied from the local machine rather than fetched again on the server, so production runs read files with the same checksums as the local runs.

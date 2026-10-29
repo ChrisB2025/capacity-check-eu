@@ -4,6 +4,8 @@
 ``import-figaro``  register a FIGARO file downloaded by hand from CIRCABC
 ``concordance``    regenerate engine/concordances/a64.csv
 ``gate1``          write the gate 1 coverage tables to docs/gate-1/
+``sweden``         write the Sweden occupation tables for a saved run
+``results``        run the full matrix and write docs/results/
 ``run``            run the model; refuses compositions not yet confirmed
 """
 
@@ -80,6 +82,14 @@ def build_parser() -> argparse.ArgumentParser:
         "--provisional",
         action="store_true",
         help="Allow a composition not yet confirmed.",
+    )
+    sw = sub.add_parser("sweden", help="Sweden occupation tables for one run.")
+    sw.add_argument("run_id", help="A saved run in data/processed/runs/.")
+    rs = sub.add_parser("results", help="Run the full matrix; write docs/results.")
+    rs.add_argument(
+        "--provisional",
+        action="store_true",
+        help="Allow compositions not yet confirmed.",
     )
     g2 = sub.add_parser("gate2", help="Run the gate 2 checks and write tables.")
     g2.add_argument(
@@ -216,6 +226,26 @@ def main(argv: list[str] | None = None) -> int:
             return EXIT_NOT_CONFIRMED
         brief = {k: v for k, v in summary.items() if k != "runs"}
         print(json.dumps(brief, indent=1))
+        return 0
+    if args.command == "sweden":
+        from engine import pipeline, sweden
+
+        res = pipeline.load(args.run_id)
+        out = pipeline.RUNS_DIR / args.run_id
+        for name, df in sweden.run(res).items():
+            df.to_csv(out / f"{name}.csv", index=False, lineterminator=chr(10))
+            print(out / f"{name}.csv")
+        return 0
+    if args.command == "results":
+        from engine import results
+        from engine.shock import CompositionNotConfirmed
+
+        try:
+            summary = results.run(allow_unconfirmed=args.provisional)
+        except CompositionNotConfirmed as exc:
+            print(str(exc), file=sys.stderr)
+            return EXIT_NOT_CONFIRMED
+        print(json.dumps({k: summary[k] for k in ("base_run", "runs", "edition_test")}))
         return 0
     if args.command == "gate1":
         from engine import gate1

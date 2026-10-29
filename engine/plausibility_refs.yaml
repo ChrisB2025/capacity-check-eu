@@ -1,0 +1,44 @@
+# Official job estimates used by the plausibility check (step 10).
+#
+# verified: true only once Chris has checked each figure against the saved
+# document and the document is registered with a checksum. Until then the
+# check is computed but marked unverified, and the stopping rule's third test
+# is not applied.
+
+france:
+  measure: additional jobs in building energy renovation by 2030
+  estimate_low: 170000
+  estimate_high: 250000
+  programme_meur_low: 20000
+  programme_meur_high: 30000
+  programme_note: additional investment per year in renovation by the end of the decade
+  compare_with: home_construction
+  source: >-
+    France Strategie and Dares (September 2023), Renovation energetique des
+    batiments: quels besoins de main-d'oeuvre en 2030 ? Note d'analyse 126.
+  url: https://www.strategie.gouv.fr/sites/strategie.gouv.fr/files/atoms/files/fs-2023-note_danalyse_ndeg126-septembre.pdf
+  verified: false
+  verification_note: >-
+    The note could not be fetched on 29 October 2026 (the link redirects to a
+    missing page). The job range is the one in the brief; the investment range
+    comes from search extracts of the note and must be checked against the
+    document before use.
+
+ireland:
+  measure: additional construction workers to close the infrastructure gap
+  estimate_low: 80000
+  estimate_high: 80000
+  programme_meur_low: null
+  programme_meur_high: null
+  programme_note: not found; the paper's spending figure must be read from the document
+  compare_with: home_construction
+  source: >-
+    Conroy, N. and Timoney, K. (October 2024), Ireland's Infrastructure
+    Demands, Irish Fiscal Advisory Council Working Paper 23.
+  url: https://fiscalcouncil.ie/wp-content/uploads/2024/10/Irelands-Infrastructure-Demands.pdf
+  verified: false
+  verification_note: >-
+    The paper refuses scripted downloads (HTTP 403) and must be saved by hand.
+    "Almost 80,000" is from the brief and the Council's summaries. Without the
+    paper's spending figure the model can only say what programme size its
+    coefficients imply for 80,000 construction workers.

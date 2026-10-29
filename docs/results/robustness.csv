@@ -1,0 +1,72 @@
+test,variant,run_id,lines_compared,lines_rated_in_both,lines_unrated_in_either,ratings_changed,share_changed,transitions
+shock size,shock 0.5%,f7bb28ecbc65,1728,1132,596,32,0.028268551236749116,binding to tight: 17; tight to clear: 15
+combined,"shock 0.5%, vacancy slack",798aeda938d4,1728,1125,603,452,0.4017777777777778,binding to tight: 21; clear to tight: 165; tight to binding: 2; tight to clear: 264
+combined,"shock 0.5%, thresholds lower",93564a1978ef,1728,1132,596,7,0.006183745583038869,binding to tight: 7
+combined,"shock 0.5%, thresholds lower, vacancy slack",d18e0c815f4f,1728,1125,603,426,0.37866666666666665,binding to tight: 15; clear to tight: 165; tight to binding: 4; tight to clear: 242
+combined,"shock 0.5%, thresholds higher",658c3bad53ca,1728,1132,596,42,0.037102473498233215,binding to tight: 24; tight to clear: 18
+combined,"shock 0.5%, thresholds higher, vacancy slack",486b72bad3b3,1728,1125,603,462,0.4106666666666667,binding to clear: 4; binding to tight: 20; clear to tight: 165; tight to binding: 1; tight to clear: 272
+combined,"shock 0.5%, alt_contractor",94382c07df74,1728,1132,596,30,0.026501766784452298,binding to tight: 16; tight to clear: 14
+combined,"shock 0.5%, alt_contractor, vacancy slack",298afc76206f,1728,1125,603,452,0.4017777777777778,binding to tight: 20; clear to tight: 165; tight to binding: 3; tight to clear: 264
+combined,"shock 0.5%, alt_contractor, thresholds lower",4a0fca55597b,1728,1132,596,7,0.006183745583038869,tight to clear: 7
+combined,"shock 0.5%, alt_contractor, thresholds lower, vacancy slack",4d1dd6b03022,1728,1125,603,432,0.384,binding to tight: 13; clear to tight: 165; tight to binding: 5; tight to clear: 249
+combined,"shock 0.5%, alt_contractor, thresholds higher",79f9a9d218a6,1728,1132,596,39,0.03445229681978799,binding to tight: 24; tight to clear: 15
+combined,"shock 0.5%, alt_contractor, thresholds higher, vacancy slack",05300270991f,1728,1125,603,456,0.4053333333333333,binding to tight: 24; clear to tight: 165; tight to binding: 1; tight to clear: 266
+combined,"shock 0.5%, alt_materials",acb5972874e9,1728,1132,596,43,0.037985865724381625,binding to tight: 20; clear to tight: 7; tight to binding: 5; tight to clear: 11
+combined,"shock 0.5%, alt_materials, vacancy slack",26acf8c65e01,1728,1125,603,439,0.39022222222222225,binding to tight: 22; clear to tight: 168; tight to binding: 5; tight to clear: 244
+combined,"shock 0.5%, alt_materials, thresholds lower",66160550d784,1728,1132,596,50,0.044169611307420496,binding to tight: 10; clear to tight: 12; tight to binding: 20; tight to clear: 8
+combined,"shock 0.5%, alt_materials, thresholds lower, vacancy slack",8d8fac824e4b,1728,1125,603,436,0.38755555555555554,binding to tight: 17; clear to binding: 1; clear to tight: 168; tight to binding: 13; tight to clear: 237
+combined,"shock 0.5%, alt_materials, thresholds higher",61f3b4186699,1728,1132,596,46,0.04063604240282685,binding to tight: 24; clear to tight: 5; tight to binding: 1; tight to clear: 16
+combined,"shock 0.5%, alt_materials, thresholds higher, vacancy slack",c082dc9eec50,1728,1125,603,451,0.4008888888888889,binding to clear: 4; binding to tight: 20; clear to tight: 168; tight to binding: 1; tight to clear: 258
+combined,"shock 0.5%, alt_heating",54632bceff3c,1728,1132,596,60,0.053003533568904596,binding to tight: 25; clear to tight: 1; tight to binding: 12; tight to clear: 22
+combined,"shock 0.5%, alt_heating, vacancy slack",195d89644172,1728,1125,603,469,0.41688888888888886,binding to clear: 8; binding to tight: 17; clear to tight: 166; tight to binding: 9; tight to clear: 269
+combined,"shock 0.5%, alt_heating, thresholds lower",a8f547cf1dcd,1728,1132,596,64,0.05653710247349823,binding to tight: 25; clear to tight: 7; tight to binding: 13; tight to clear: 19
+combined,"shock 0.5%, alt_heating, thresholds lower, vacancy slack",b450a6876085,1728,1125,603,456,0.4053333333333333,binding to clear: 3; binding to tight: 22; clear to tight: 168; tight to binding: 9; tight to clear: 254
+combined,"shock 0.5%, alt_heating, thresholds higher",e0772069a842,1728,1132,596,56,0.04946996466431095,binding to tight: 25; clear to tight: 1; tight to binding: 7; tight to clear: 23
+combined,"shock 0.5%, alt_heating, thresholds higher, vacancy slack",72cebf8e52ab,1728,1125,603,468,0.416,binding to clear: 8; binding to tight: 17; clear to tight: 166; tight to binding: 8; tight to clear: 269
+slack indicator,vacancy slack,2407992dfbae,1728,1125,603,425,0.37777777777777777,binding to tight: 13; clear to tight: 165; tight to binding: 5; tight to clear: 242
+thresholds,thresholds lower,a3f1ebf74f13,1728,1132,596,40,0.0353356890459364,clear to tight: 26; tight to binding: 14
+combined,"thresholds lower, vacancy slack",9616ed8f79e4,1728,1125,603,414,0.368,binding to tight: 13; clear to tight: 177; tight to binding: 15; tight to clear: 209
+thresholds,thresholds higher,9362cadeefe5,1728,1132,596,25,0.022084805653710248,binding to tight: 14; tight to clear: 11
+combined,"thresholds higher, vacancy slack",a66b7913d28f,1728,1125,603,449,0.39911111111111114,binding to tight: 19; clear to tight: 165; tight to binding: 3; tight to clear: 262
+composition,alt_contractor,a4e1a4abccea,1728,1132,596,10,0.0088339222614841,tight to binding: 3; tight to clear: 7
+combined,"alt_contractor, vacancy slack",10ac73a2e870,1728,1125,603,434,0.3857777777777778,binding to tight: 13; clear to tight: 165; tight to binding: 7; tight to clear: 249
+combined,"alt_contractor, thresholds lower",de09d80f5340,1728,1132,596,52,0.045936395759717315,clear to tight: 27; tight to binding: 18; tight to clear: 7
+combined,"alt_contractor, thresholds lower, vacancy slack",a240a12d6b4c,1728,1125,603,423,0.376,binding to tight: 13; clear to tight: 176; tight to binding: 17; tight to clear: 217
+combined,"alt_contractor, thresholds higher",bb145f0dded7,1728,1132,596,21,0.018551236749116608,binding to tight: 12; tight to clear: 9
+combined,"alt_contractor, thresholds higher, vacancy slack",96d8f1dcefd7,1728,1125,603,444,0.39466666666666667,binding to tight: 18; clear to tight: 165; tight to binding: 4; tight to clear: 257
+composition,alt_materials,b27238c3fd28,1728,1132,596,50,0.044169611307420496,binding to tight: 2; clear to tight: 12; tight to binding: 28; tight to clear: 8
+combined,"alt_materials, vacancy slack",25a74e256f62,1728,1125,603,438,0.3893333333333333,binding to tight: 13; clear to binding: 1; clear to tight: 168; tight to binding: 19; tight to clear: 237
+combined,"alt_materials, thresholds lower",7366c0f4db19,1728,1132,596,77,0.06802120141342756,clear to tight: 32; tight to binding: 38; tight to clear: 7
+combined,"alt_materials, thresholds lower, vacancy slack",1c651757826e,1728,1125,603,426,0.37866666666666665,binding to tight: 13; clear to binding: 3; clear to tight: 178; tight to binding: 26; tight to clear: 206
+combined,"alt_materials, thresholds higher",ecf9ff536a37,1728,1132,596,45,0.03975265017667844,binding to tight: 15; clear to tight: 10; tight to binding: 9; tight to clear: 11
+combined,"alt_materials, thresholds higher, vacancy slack",86779320f445,1728,1125,603,436,0.38755555555555554,binding to tight: 19; clear to binding: 1; clear to tight: 168; tight to binding: 7; tight to clear: 241
+composition,alt_heating,35fb64e0c629,1728,1132,596,64,0.05653710247349823,binding to tight: 25; clear to tight: 7; tight to binding: 13; tight to clear: 19
+combined,"alt_heating, vacancy slack",00ca26c287be,1728,1125,603,456,0.4053333333333333,binding to clear: 3; binding to tight: 22; clear to tight: 168; tight to binding: 9; tight to clear: 254
+combined,"alt_heating, thresholds lower",a40aaa21611a,1728,1132,596,67,0.05918727915194346,binding to tight: 22; clear to tight: 23; tight to binding: 15; tight to clear: 7
+combined,"alt_heating, thresholds lower, vacancy slack",539dc7d13dea,1728,1125,603,431,0.3831111111111111,binding to clear: 2; binding to tight: 21; clear to tight: 182; tight to binding: 12; tight to clear: 214
+combined,"alt_heating, thresholds higher",8b6c980aaaa5,1728,1132,596,61,0.053886925795053005,binding to tight: 25; clear to tight: 1; tight to binding: 13; tight to clear: 22
+combined,"alt_heating, thresholds higher, vacancy slack",531069c916be,1728,1125,603,468,0.416,binding to clear: 7; binding to tight: 18; clear to tight: 166; tight to binding: 9; tight to clear: 268
+shock size,shock 2%,1bf9f670551f,1728,1132,596,51,0.045053003533568906,clear to tight: 26; tight to binding: 25
+combined,"shock 2%, vacancy slack",2f153dceb78f,1728,1125,603,423,0.376,binding to tight: 13; clear to tight: 177; tight to binding: 24; tight to clear: 209
+combined,"shock 2%, thresholds lower",bf5b5c4ed5a1,1728,1132,596,152,0.13427561837455831,clear to tight: 101; tight to binding: 51
+combined,"shock 2%, thresholds lower, vacancy slack",8c480e088871,1728,1125,603,406,0.36088888888888887,binding to tight: 13; clear to binding: 1; clear to tight: 209; tight to binding: 43; tight to clear: 140
+combined,"shock 2%, thresholds higher",a26cbc02d69f,1728,1132,596,9,0.007950530035335688,clear to tight: 4; tight to binding: 5
+combined,"shock 2%, thresholds higher, vacancy slack",7ba21f06148e,1728,1125,603,426,0.37866666666666665,binding to tight: 13; clear to tight: 168; tight to binding: 8; tight to clear: 237
+combined,"shock 2%, alt_contractor",93de0c16b633,1728,1132,596,56,0.04946996466431095,clear to tight: 27; tight to binding: 22; tight to clear: 7
+combined,"shock 2%, alt_contractor, vacancy slack",1bd076e02df1,1728,1125,603,427,0.37955555555555553,binding to tight: 13; clear to tight: 176; tight to binding: 21; tight to clear: 217
+combined,"shock 2%, alt_contractor, thresholds lower",8b9c2d426f06,1728,1132,596,150,0.13250883392226148,clear to tight: 99; tight to binding: 44; tight to clear: 7
+combined,"shock 2%, alt_contractor, thresholds lower, vacancy slack",3c2660bf0f5c,1728,1125,603,400,0.35555555555555557,binding to tight: 13; clear to binding: 1; clear to tight: 206; tight to binding: 35; tight to clear: 145
+combined,"shock 2%, alt_contractor, thresholds higher",ec30c004f80b,1728,1132,596,20,0.0176678445229682,clear to tight: 4; tight to binding: 9; tight to clear: 7
+combined,"shock 2%, alt_contractor, thresholds higher, vacancy slack",7855b930ef12,1728,1125,603,433,0.3848888888888889,binding to tight: 13; clear to tight: 168; tight to binding: 10; tight to clear: 242
+combined,"shock 2%, alt_materials",fc3cc6e045f7,1728,1132,596,82,0.07243816254416961,clear to tight: 32; tight to binding: 43; tight to clear: 7
+combined,"shock 2%, alt_materials, vacancy slack",3d36db9a37be,1728,1125,603,431,0.3831111111111111,binding to tight: 13; clear to binding: 3; clear to tight: 178; tight to binding: 31; tight to clear: 206
+combined,"shock 2%, alt_materials, thresholds lower",418e80563639,1728,1132,596,173,0.15282685512367492,clear to tight: 103; tight to binding: 63; tight to clear: 7
+combined,"shock 2%, alt_materials, thresholds lower, vacancy slack",60f98950dc5c,1728,1125,603,414,0.368,binding to tight: 13; clear to binding: 4; clear to tight: 204; tight to binding: 51; tight to clear: 142
+combined,"shock 2%, alt_materials, thresholds higher",5bd30183c3cf,1728,1132,596,56,0.04946996466431095,clear to tight: 16; tight to binding: 33; tight to clear: 7
+combined,"shock 2%, alt_materials, thresholds higher, vacancy slack",251ea20d4432,1728,1125,603,438,0.3893333333333333,binding to tight: 13; clear to binding: 2; clear to tight: 170; tight to binding: 23; tight to clear: 230
+combined,"shock 2%, alt_heating",56afa93e143d,1728,1132,596,61,0.053886925795053005,binding to tight: 11; clear to tight: 23; tight to binding: 20; tight to clear: 7
+combined,"shock 2%, alt_heating, vacancy slack",9da9d40ac595,1728,1125,603,431,0.3831111111111111,binding to clear: 2; binding to tight: 16; clear to binding: 2; clear to tight: 180; tight to binding: 17; tight to clear: 214
+combined,"shock 2%, alt_heating, thresholds lower",6f41b0a3b19a,1728,1132,596,143,0.12632508833922262,binding to tight: 10; clear to tight: 78; tight to binding: 55
+combined,"shock 2%, alt_heating, thresholds lower, vacancy slack",792500e849e6,1728,1125,603,417,0.37066666666666664,binding to tight: 18; clear to binding: 2; clear to tight: 203; tight to binding: 38; tight to clear: 156
+combined,"shock 2%, alt_heating, thresholds higher",215f145a166a,1728,1132,596,61,0.053886925795053005,binding to tight: 24; clear to tight: 13; tight to binding: 13; tight to clear: 11
+combined,"shock 2%, alt_heating, thresholds higher, vacancy slack",b1f7428117a3,1728,1125,603,446,0.39644444444444443,binding to clear: 3; binding to tight: 21; clear to tight: 172; tight to binding: 10; tight to clear: 240

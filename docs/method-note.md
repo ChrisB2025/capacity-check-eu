@@ -87,7 +87,19 @@ For each member state's shock, the headline is the share of the jobs it creates 
 
 ### 8. Sweden (`engine/sweden.py`, Phase 5)
 
-Swedish industry jobs are split into four-digit occupations using Statistics Sweden table YREG54BAS. The occupation mix of each of its 16 industry groups is applied to every one of the 64 industries in the group. The largest occupations are compared with Arbetsförmedlingen's Yrkesbarometer and the ELA shortages report. Sweden is a demonstration, not a validation.
+Sweden is a demonstration, not a validation: no Swedish programme with documented bottlenecks exists to test against.
+
+- **Occupations.** The extra persons on Swedish lines are split into four-digit SSYK 2012 occupations using Statistics Sweden table YREG54BAS for the latest year (2024). The occupation mix of each of its 16 industry groups is applied to every one of the 64 industries in the group. Employees in the "unknown industry" group are left out of the mixes. The "unknown occupation" code (0002) is kept as its own row and flagged; it holds under 1% of the extra jobs in the standard run. The extra jobs follow the run's application: with all 27 programmes applied together, they are the jobs on Swedish lines from every programme.
+- **Comparison with forecasts.** The 25 largest occupations are joined to Arbetsförmedlingen's Yrkesbarometer at national level by SSYK code: job prospects, the recruitment situation (shortage, balance, surplus or paradox) and the five-year outlook, as published, translated to English. Where several Yrkesbarometer occupations share one SSYK code, their assessments are listed together. Some occupations have no Yrkesbarometer assessment.
+- **ELA shortages report.** The 2025 report publishes no shortage status by occupation for Sweden. Its occupation tables are EU-wide (for example the ten most widespread shortage occupations), and the country lists behind them are not in the report. The ELA column is therefore left empty. Using the EU-wide tables would need an ISCO 2008 to SSYK 2012 concordance and would not describe Sweden.
+- **Fields of education.** YREG52BAS gives employees by occupation and ten broad fields of education. For each of the 25 largest occupations, the table shows the most common field among its workers and how many people with that field work in other occupations. The fields are broad (for example "engineering and manufacturing" covers about 1.15 million employees), so this is an upper bound on people who might be qualified, not a count of trained workers outside the trade.
+- **Cross-check of construction slack.** Konjunkturinstitutet's monthly construction survey (question 1084, labour as a limiting factor, not adjusted) is set beside the DG ECFIN construction series for Sweden, by SNI 41, 42, 43 and in total. Both are placed in their own history with the same rule as step 5, using twelve-month means. Konjunkturinstitutet collects the Swedish data for DG ECFIN, and over the 58 months in common the two series correlate at above 0.999, so the check confirms the ECFIN series rather than adding evidence. Konjunkturinstitutet's series starts in January 2022, under the five-year minimum, so it gets no class.
+
+Limits:
+
+- YREG54BAS counts employees, not all persons employed. Self-employed workers, common in construction, are outside the mix.
+- Industries share their group's mix. Architecture and engineering (M71) takes the mix of all business services (sections M and N), whose largest occupations include cleaners and warehouse staff. Occupations reached mainly through that group, such as cleaners, should be read with this in mind; the table shows which group contributes most to each occupation.
+- Konjunkturinstitutet states no reuse licence (gate 1, decision 4). Its values are computed for the cross-check but marked not publishable until the licence is confirmed.
 
 ### 9. Robustness (`engine/robustness.py`)
 
