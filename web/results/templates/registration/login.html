@@ -1,0 +1,15 @@
+{% extends "results/base.html" %}
+{% block title %}Log in | Capacity Check Europe{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-sm rounded border border-stone-200 bg-white p-6">
+  <h1 class="text-lg font-semibold">Log in</h1>
+  <p class="mt-1 text-sm text-stone-600">Shared access until the reviewer signs off.</p>
+  <form method="post" class="mt-4 space-y-3">{% csrf_token %}
+    {% if form.errors %}<p class="text-sm text-red-700">Name and password did not match.</p>{% endif %}
+    <label class="block text-sm">Name<input name="username" autocomplete="username" class="mt-1 block w-full rounded border border-stone-300 px-2 py-1" required></label>
+    <label class="block text-sm">Password<input type="password" name="password" autocomplete="current-password" class="mt-1 block w-full rounded border border-stone-300 px-2 py-1" required></label>
+    <input type="hidden" name="next" value="{{ next }}">
+    <button class="rounded bg-stone-900 px-4 py-1.5 text-white hover:bg-stone-700">Log in</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,169 @@
+{% extends "results/base.html" %}{% load fmt %}
+{% block title %}Run {{ run.run_id }} | Capacity Check Europe{% endblock %}
+{% block content %}
+{% include "results/_run_header.html" %}
+
+<nav class="mb-6 flex flex-wrap gap-3 text-sm">
+  <a href="#headline" class="underline">Headline</a>
+  <a href="#requirement" class="underline">1. Requirement</a>
+  <a href="#availability" class="underline">2. Availability</a>
+  <a href="#rating" class="underline">3. Rating</a>
+  <a href="#dependencies" class="underline">Dependencies</a>
+  {% if has_sweden %}<a href="{% url 'sweden' run.run_id %}" class="underline">Sweden</a>{% endif %}
+  <a href="#downloads" class="underline">Downloads and sources</a>
+</nav>
+
+<section id="headline" class="grid gap-6 lg:grid-cols-5">
+  <div class="lg:col-span-3">
+    <h2 class="text-lg font-semibold">Share of each programme's jobs that fall on tight or binding lines</h2>
+    <p class="mt-1 text-sm text-stone-600">Jobs created anywhere in the EU by each member state's programme. Hover or tap a country; select it for its industry detail.</p>
+    <figure class="mt-3 rounded border border-stone-200 bg-white p-2">
+      <svg viewBox="{{ viewbox }}" class="h-auto w-full" role="img" aria-label="Map of the headline share by member state; the same figures are in the table below.">
+        {% for s in shapes %}
+          {% if s.fill == None %}
+            <path d="{{ s.d }}" fill="#e7e5e4" stroke="#ffffff" stroke-width="0.6"/>
+          {% elif s.fill == "nodata" %}
+            <a href="{{ s.url }}"><path class="map-state" d="{{ s.d }}" fill="url(#hatch)" stroke="#ffffff" stroke-width="0.8"><title>{{ s.title }}</title></path></a>
+          {% else %}
+            <a href="{{ s.url }}"><path class="map-state" d="{{ s.d }}" fill="{{ s.fill }}" stroke="#ffffff" stroke-width="0.8"><title>{{ s.title }}</title></path></a>
+          {% endif %}
+        {% endfor %}
+        <defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#f5f5f4"/><line x1="0" y1="0" x2="0" y2="6" stroke="#a8a29e" stroke-width="2"/></pattern></defs>
+      </svg>
+      <figcaption class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-stone-600">
+        {% for b in legend %}<span class="flex items-center gap-1"><span class="inline-block h-3 w-4 rounded-sm" style="background: {{ b.colour }}"></span>{{ b.label }}</span>{% endfor %}
+        <span class="flex items-center gap-1"><span class="inline-block h-3 w-4 rounded-sm bg-stone-200"></span>not in this run</span>
+      </figcaption>
+      <p class="mt-1 text-xs text-stone-500">{{ map_source }}</p>
+    </figure>
+  </div>
+  <div class="lg:col-span-2">
+    <h3 class="text-sm font-semibold text-stone-700">How to read it</h3>
+    <ul class="mt-2 list-disc space-y-2 pl-5 text-sm text-stone-700">
+      <li><strong>Requirement</strong> comes first: what the shock needs, by industry and where the output is produced.</li>
+      <li><strong>Availability</strong> second: how often firms in each industry report labour as limiting, against that series' own history.</li>
+      <li>The <strong>rating</strong> combines the two. Tight: the shock adds at least {{ p.thresholds.pressure_low|pct:0 }} to the industry's employment, or shortage reports are above their median. Binding: the shock adds more than {{ p.thresholds.pressure_high|pct:0 }} and shortage reports are in the top quarter of their history. Where evidence is missing the line gets no rating, never a forced score.</li>
+      <li>The headline separates member states only weakly: construction is under pressure everywhere, and shortage reports are high in most industries in 2025 and 2026.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="requirement" class="mt-10">
+  <h2 class="text-lg font-semibold">1. Requirement: what the shock needs</h2>
+  <p class="mt-1 text-sm text-stone-600">Required output across all economies, where it is produced, and the persons employed it needs in EU member states, in one year.</p>
+  <div class="mt-3 overflow-x-auto rounded border border-stone-200 bg-white">
+  <table class="w-full text-sm">
+    <thead class="bg-stone-100 text-left text-stone-600"><tr>
+      <th class="px-3 py-2">Member state</th><th class="px-3 py-2 text-right">Shock (EUR m)</th><th class="px-3 py-2 text-right">Required output (EUR m)</th>
+      <th class="px-3 py-2 text-right">At home</th><th class="px-3 py-2 text-right">Rest of EU</th><th class="px-3 py-2 text-right">Outside EU</th>
+      <th class="px-3 py-2 text-right">Extra persons in the EU</th>
+      {% for code, label in focus_labels %}<th class="px-3 py-2 text-right">Pressure: {{ label }}</th>{% endfor %}
+    </tr></thead>
+    <tbody>
+    {% for c in countries %}
+      <tr class="border-t border-stone-100">
+        <td class="px-3 py-1.5"><a class="underline" href="{% url 'country' run.run_id c.country %}">{{ c.name }}</a></td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ c.shock_meur|num }}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ c.required_output_meur|num }}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ c.required_home_share|pct }}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ c.required_rest_eu_share|pct }}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ c.required_non_eu_share|pct }}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ c.extra_persons_eu|hundreds }}</td>
+        {% for f in c.focus %}<td class="px-3 py-1.5 text-right tabular-nums">{{ f.pressure|pct:1 }}</td>{% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="mt-1 text-xs text-stone-500">Pressure: extra persons on the member state's own industry, from {% if p.application == "simultaneous" %}all programmes in this run{% else %}its own programme{% endif %}, as a share of the industry's employment.</p>
+</section>
+
+<section id="availability" class="mt-10">
+  <h2 class="text-lg font-semibold">2. Availability: what firms report</h2>
+  <p class="mt-1 text-sm text-stone-600">Share of firms naming labour as a factor limiting activity, mean of the latest four complete quarters, placed in the series' own history. High: top quarter. Elevated: above median. Low: at or below median.</p>
+  <div class="mt-3 overflow-x-auto rounded border border-stone-200 bg-white">
+  <table class="w-full text-sm">
+    <thead class="bg-stone-100 text-left text-stone-600"><tr>
+      <th class="px-3 py-2">Member state</th>
+      {% for code, label in focus_labels %}<th class="px-3 py-2">{{ label }}</th>{% endfor %}
+      <th class="px-3 py-2 text-right">Construction: share of firms now</th><th class="px-3 py-2 text-right">Construction: years of history</th>
+    </tr></thead>
+    <tbody>
+    {% for c in countries %}
+      <tr class="border-t border-stone-100">
+        <td class="px-3 py-1.5">{{ c.name }}</td>
+        {% for f in c.focus %}<td class="px-3 py-1.5">{% if f.slack_class %}{{ f.slack_class }} <span class="text-stone-500">({{ f.slack_percentile|pct }})</span>{% else %}<span class="text-stone-500">no series</span>{% endif %}</td>{% endfor %}
+        {% with f=c.focus.0 %}
+        <td class="px-3 py-1.5 text-right tabular-nums">{% if f.slack_current != None %}{{ f.slack_current|num:1 }}%{% else %}n/a{% endif %}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ f.slack_years|num:1 }}</td>
+        {% endwith %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="rating" class="mt-10">
+  <h2 class="text-lg font-semibold">3. Rating and headline</h2>
+  <div class="mt-3 overflow-x-auto rounded border border-stone-200 bg-white">
+  <table class="w-full text-sm">
+    <thead class="bg-stone-100 text-left text-stone-600"><tr>
+      <th class="px-3 py-2">Member state</th>
+      {% for code, label in focus_labels %}<th class="px-3 py-2">{{ label }}</th>{% endfor %}
+      <th class="px-3 py-2 text-right">Headline: jobs on tight or binding lines</th><th class="px-3 py-2 text-right">Jobs on unrated lines</th><th class="px-3 py-2">Data quality</th>
+    </tr></thead>
+    <tbody>
+    {% for c in countries %}
+      <tr class="border-t border-stone-100">
+        <td class="px-3 py-1.5"><a class="underline" href="{% url 'country' run.run_id c.country %}">{{ c.name }}</a></td>
+        {% for f in c.focus %}<td class="px-3 py-1.5"><span class="rating {{ f.rating|rating_class }}">{{ f.rating|default:"no rating" }}</span></td>{% endfor %}
+        <td class="px-3 py-1.5 text-right font-medium tabular-nums">{{ c.headline_tight_or_binding_share|pct }}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ c.unrated_share|pct }}</td>
+        <td class="px-3 py-1.5" title="{{ c.data_quality_flags }}">{{ c.data_quality }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="mt-1 text-xs text-stone-500">Data quality: good when at most 10% of the programme's jobs are on unrated lines or lines with estimated employment; limited up to a third or with a construction note; poor otherwise. Hover a grade for its reasons.</p>
+</section>
+
+<section id="dependencies" class="mt-10">
+  <h2 class="text-lg font-semibold">Dependencies: manufacturing the programme leans on</h2>
+  <p class="mt-1 text-sm text-stone-600">Required output in the insulation, heat pump, building materials and related manufacturing industries, and where it is produced. No rating is given.</p>
+  <div class="mt-3 max-h-[32rem] overflow-auto rounded border border-stone-200 bg-white">
+  <table class="w-full text-sm">
+    <thead class="sticky top-0 bg-stone-100 text-left text-stone-600"><tr>
+      <th class="px-3 py-2">Member state</th><th class="px-3 py-2">Industry</th><th class="px-3 py-2">Role</th>
+      <th class="px-3 py-2 text-right">Required (EUR m)</th><th class="px-3 py-2 text-right">At home</th><th class="px-3 py-2 text-right">Rest of EU</th><th class="px-3 py-2 text-right">Outside EU</th>
+    </tr></thead>
+    <tbody>
+    {% for d in deps %}
+      <tr class="border-t border-stone-100">
+        <td class="px-3 py-1">{{ d.country }}</td><td class="px-3 py-1"><span class="font-mono">{{ d.industry }}</span> {{ d.label }}</td><td class="px-3 py-1">{{ d.role }}</td>
+        <td class="px-3 py-1 text-right tabular-nums">{{ d.required_total_meur|num:1 }}</td>
+        <td class="px-3 py-1 text-right tabular-nums">{{ d.home_share|pct }}</td><td class="px-3 py-1 text-right tabular-nums">{{ d.rest_eu_share|pct }}</td><td class="px-3 py-1 text-right tabular-nums">{{ d.non_eu_share|pct }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="downloads" class="mt-10 grid gap-6 lg:grid-cols-2">
+  <div>
+    <h2 class="text-lg font-semibold">Downloads</h2>
+    <ul class="mt-2 space-y-1 text-sm">
+      {% for t in tables %}<li><a class="underline" href="{% url 'csv' run.run_id t %}">{{ t }}.csv</a></li>{% endfor %}
+    </ul>
+  </div>
+  <div>
+    <h2 class="text-lg font-semibold">Sources read by this run</h2>
+    <ul class="mt-2 space-y-1 text-xs">
+      {% for s in run.manifest.sources %}<li><span class="text-stone-500">{{ s.role }}:</span> {{ s.file }} <span class="font-mono text-stone-500">sha256 {{ s.sha256|slice:":16" }}&hellip;</span></li>{% endfor %}
+    </ul>
+    <p class="mt-2 text-xs text-stone-500">Engine version {{ run.manifest.engine_version }}{% if run.seconds %}; computed in {{ run.seconds|num:1 }} seconds{% endif %}. The same run is reproduced from the command line with <code>python -m engine run</code> and these parameters.</p>
+  </div>
+</section>
+{% endblock %}

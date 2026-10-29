@@ -1,0 +1,59 @@
+{% extends "results/base.html" %}{% load fmt %}
+{% block title %}Sweden | Run {{ run.run_id }}{% endblock %}
+{% block content %}
+{% include "results/_run_header.html" %}
+<h1 class="text-2xl font-semibold tracking-tight">Sweden: which occupations?</h1>
+<div class="mt-3 max-w-3xl rounded border border-sky-200 bg-sky-50 px-3 py-2 text-sm">
+  <strong>A demonstration, not a validation.</strong> No Swedish programme with documented bottlenecks exists to test this against. The extra Swedish jobs from the run are split into four-digit occupations using the occupation mix of each of Statistics Sweden's 16 industry groups (YREG54BAS, employees only, so the self-employed are missing). Architecture and engineering shares the mix of all business services, which is why cleaners and warehouse staff appear.
+</div>
+{% if unknown %}<p class="mt-3 text-sm text-stone-600">Jobs in the unknown-occupation code: {{ unknown.share_of_swedish_extra|pct:1 }} of Swedish extra jobs.</p>{% endif %}
+
+<h2 class="mt-8 text-lg font-semibold">Largest occupations and Arbetsf&ouml;rmedlingen's assessment</h2>
+<div class="mt-2 overflow-x-auto rounded border border-stone-200 bg-white">
+<table class="w-full text-sm">
+  <thead class="bg-stone-100 text-left text-stone-600"><tr>
+    <th class="px-3 py-2">SSYK</th><th class="px-3 py-2">Occupation</th><th class="px-3 py-2 text-right">Extra persons</th><th class="px-3 py-2 text-right">Share of the occupation's employees</th>
+    <th class="px-3 py-2">Job prospects</th><th class="px-3 py-2">Recruitment</th><th class="px-3 py-2">Five-year outlook</th>
+  </tr></thead>
+  <tbody>
+  {% for r in forecasts %}
+    <tr class="border-t border-stone-100">
+      <td class="px-3 py-1 font-mono">{{ r.ssyk }}</td><td class="px-3 py-1">{{ r.occupation }}</td>
+      <td class="px-3 py-1 text-right tabular-nums">{{ r.extra_persons|num }}</td>
+      <td class="px-3 py-1 text-right tabular-nums">{{ r.extra_share_of_occupation_employees|pct:1 }}</td>
+      <td class="px-3 py-1">{{ r.af_job_prospects|default:"not assessed" }}</td><td class="px-3 py-1">{{ r.af_recruitment|default:"" }}</td><td class="px-3 py-1">{{ r.af_outlook_5y|default:"" }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+<p class="mt-1 text-xs text-stone-500">The ELA labour shortages report 2025 gives no occupation list for Sweden, so it is not compared here.</p>
+
+<h2 class="mt-8 text-lg font-semibold">Field of education</h2>
+<p class="mt-1 text-sm text-stone-600">The main field of education among each occupation's employees (YREG52BAS, ten broad fields), and how many employees with that field work in other occupations. With fields this broad, the second figure is an upper bound, not a count of qualified workers available.</p>
+<div class="mt-2 overflow-x-auto rounded border border-stone-200 bg-white">
+<table class="w-full text-sm">
+  <thead class="bg-stone-100 text-left text-stone-600"><tr>
+    <th class="px-3 py-2">Occupation</th><th class="px-3 py-2">Main field</th><th class="px-3 py-2 text-right">Share with that field</th><th class="px-3 py-2 text-right">Employees with that field in other occupations</th>
+  </tr></thead>
+  <tbody>
+  {% for r in education %}
+    <tr class="border-t border-stone-100">
+      <td class="px-3 py-1">{{ r.occupation }}</td><td class="px-3 py-1">{{ r.main_field_label }}</td>
+      <td class="px-3 py-1 text-right tabular-nums">{{ r.main_field_share|pct }}</td><td class="px-3 py-1 text-right tabular-nums">{{ r.field_employed_outside_occupation|num }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+
+{% if konj %}
+<h2 class="mt-8 text-lg font-semibold">Construction shortage reports</h2>
+<div class="mt-2 overflow-x-auto rounded border border-stone-200 bg-white">
+<table class="w-full text-sm">
+  <thead class="bg-stone-100 text-left text-stone-600"><tr><th class="px-3 py-2">Sector</th><th class="px-3 py-2">Source</th><th class="px-3 py-2 text-right">Latest 12-month mean</th><th class="px-3 py-2 text-right">Percentile</th><th class="px-3 py-2">Class</th></tr></thead>
+  <tbody>{% for r in konj %}<tr class="border-t border-stone-100"><td class="px-3 py-1">{{ r.sector }}</td><td class="px-3 py-1">{{ r.source }} {{ r.basis }}</td><td class="px-3 py-1 text-right tabular-nums">{{ r.current_12m_mean|num:1 }}%</td><td class="px-3 py-1 text-right tabular-nums">{{ r.percentile|pct }}</td><td class="px-3 py-1">{{ r.slack_class|default:"none" }}</td></tr>{% endfor %}</tbody>
+</table>
+</div>
+{% endif %}
+{% endblock %}

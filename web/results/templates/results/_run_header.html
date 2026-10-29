@@ -1,0 +1,16 @@
+{% if run.provisional %}
+<div class="mb-4 rounded border border-amber-300 bg-amber-50 px-3 py-2 text-sm">
+  <strong>Provisional.</strong> This run uses a composition with status &ldquo;{{ run.composition.status }}&rdquo;{% if run.user_defined %}, edited on the inputs page, so it is a user-defined shock, not the standard shock{% else %}, not yet confirmed after review{% endif %}. Its figures are for checking, not for publication.
+</div>
+{% endif %}
+<div class="mb-6">
+  <p class="text-sm text-stone-500"><a class="hover:underline" href="{% url 'run' run.run_id %}">Run {{ run.run_id }}</a> &middot; {{ run.created|date:"j F Y, H:i" }}</p>
+  <p class="mt-1 text-sm text-stone-700">
+    Shock {{ run.params.shock_pct }}% of {{ run.params.gdp_year }} GDP &middot;
+    composition {{ run.composition.name }} &middot;
+    FIGARO {{ run.params.edition }} edition, {{ run.params.ref_year }} &middot;
+    {{ run.params.application }} application &middot;
+    slack: {% if run.params.slack_indicator == "ecfin" %}DG ECFIN labour share{% else %}job vacancy rate{% endif %} &middot;
+    pressure thresholds {% widthratio run.params.thresholds.pressure_low 0.01 1 %}% and {% widthratio run.params.thresholds.pressure_high 0.01 1 %}%
+  </p>
+</div>

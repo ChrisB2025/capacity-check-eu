@@ -1,0 +1,21 @@
+{% extends "results/base.html" %}
+{% block title %}Method | Capacity Check Europe{% endblock %}
+{% block content %}
+<div class="max-w-3xl">
+<h1 class="text-2xl font-semibold tracking-tight">Method in brief</h1>
+<ol class="mt-4 list-decimal space-y-2 pl-5 text-stone-800">
+  <li><strong>Direct demand.</strong> A composition table splits the spending across the products bought directly.</li>
+  <li><strong>Supply chains.</strong> Eurostat's FIGARO inter-country input-output tables ({{ industries }} industries, 50 economies) give the output required from each industry in each economy, split into home, rest of EU and outside EU.</li>
+  <li><strong>Jobs.</strong> Persons employed per euro of output, from Eurostat's national accounts.</li>
+  <li><strong>Pressure.</strong> Extra persons as a share of the industry's employment.</li>
+  <li><strong>Availability.</strong> The share of firms naming labour as limiting (DG ECFIN business surveys), placed in its own history.</li>
+  <li><strong>Rating.</strong> Clear, tight, binding or no rating, from pressure and availability together. Thresholds are parameters.</li>
+  <li><strong>Headline.</strong> The share of a programme's jobs on tight or binding lines.</li>
+  <li><strong>Sweden.</strong> Swedish jobs split into occupations and compared with official forecasts.</li>
+  <li><strong>Robustness.</strong> Other compositions, thresholds, slack indicator and FIGARO edition.</li>
+  <li><strong>Plausibility.</strong> France and Ireland against official job estimates.</li>
+</ol>
+<p class="mt-6 text-stone-700">The full method note, composition table, data register and decisions log are in the repository: <a class="underline" href="{{ REPO_URL }}/tree/main/docs">{{ REPO_URL }}/tree/main/docs</a>.</p>
+<p class="mt-3 text-stone-700">The engine runs and reproduces every figure from the command line without this website or its database. The website calls the engine; it does not compute anything itself.</p>
+</div>
+{% endblock %}

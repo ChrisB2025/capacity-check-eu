@@ -1,0 +1,78 @@
+{% extends "results/base.html" %}{% load fmt %}
+{% block title %}New run | Capacity Check Europe{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-semibold tracking-tight">New run</h1>
+<p class="mt-2 max-w-3xl text-sm text-stone-700">A run takes about ten seconds; the page waits for it. Every composition is still awaiting review, so every run is marked provisional. Editing a composition's shares makes the run a user-defined shock, not the standard shock.</p>
+
+<form method="post" class="mt-6 grid gap-6 lg:grid-cols-2" onsubmit="this.querySelector('button[type=submit]').disabled=true;document.getElementById('running').hidden=false">
+  {% csrf_token %}
+  <fieldset class="rounded border border-stone-200 bg-white p-4">
+    <legend class="px-1 text-sm font-semibold">Shock</legend>
+    <label class="block text-sm">Size, % of {{ defaults.gdp_year }} GDP
+      <input type="number" name="shock_pct" min="0.5" max="2" step="0.1" value="{{ values.shock_pct|default:defaults.shock_pct }}" class="mt-1 w-32 rounded border border-stone-300 px-2 py-1" required>
+    </label>
+    <label class="mt-4 block text-sm">Composition
+      <select name="composition" class="mt-1 block rounded border border-stone-300 px-2 py-1"
+              hx-get="{% url 'new_run' %}" hx-target="#comp-lines" hx-select="#comp-lines" hx-swap="outerHTML">
+        {% for key, c in compositions.items %}<option value="{{ key }}" {% if key == comp_name %}selected{% endif %}>{{ key }} ({{ c.status }})</option>{% endfor %}
+      </select>
+    </label>
+    <div id="comp-lines" class="mt-3">
+      <p class="text-xs text-stone-500">{{ composition.description }}</p>
+      <table class="mt-2 w-full text-sm" hx-get="{% url 'composition_total' %}" hx-trigger="input from:find input" hx-include="#comp-lines" hx-target="#comp-total">
+        <thead class="text-left text-stone-500"><tr><th class="py-1">Code</th><th>Product</th><th class="text-right">Share</th></tr></thead>
+        <tbody>
+        {% for ln in composition.lines %}
+          <tr class="border-t border-stone-100">
+            <td class="py-1 font-mono">{{ ln.code }}</td><td class="pr-2">{{ ln.label }}</td>
+            <td class="text-right"><input type="number" name="share_{{ ln.code }}" value="{{ ln.share }}" step="any" min="0" max="1" class="w-28 rounded border border-stone-300 px-2 py-0.5 text-right"></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <p id="comp-total" class="mt-1 text-right text-sm" aria-live="polite"></p>
+    </div>
+  </fieldset>
+
+  <fieldset class="rounded border border-stone-200 bg-white p-4">
+    <legend class="px-1 text-sm font-semibold">Data and method</legend>
+    <label class="block text-sm">FIGARO edition and reference year
+      <select name="edition" class="mt-1 block rounded border border-stone-300 px-2 py-1">
+        {% for ed, year in editions %}<option value="{{ ed }}:{{ year }}" {% if ed == defaults.edition and year == defaults.ref_year %}selected{% endif %}>{{ ed }} edition, {{ year }}</option>{% endfor %}
+      </select>
+    </label>
+    <label class="mt-4 block text-sm">Application
+      <select name="application" class="mt-1 block rounded border border-stone-300 px-2 py-1">
+        <option value="simultaneous">simultaneous: all chosen states at once</option>
+        <option value="own">own: each state's programme alone</option>
+      </select>
+    </label>
+    <label class="mt-4 block text-sm">Slack indicator
+      <select name="slack_indicator" class="mt-1 block rounded border border-stone-300 px-2 py-1">
+        <option value="ecfin">DG ECFIN: share of firms naming labour as limiting</option>
+        <option value="vacancy">Eurostat job vacancy rate</option>
+      </select>
+    </label>
+    <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+      <label>Tight from pressure (%)<input type="number" name="pressure_low" step="0.1" min="0" value="2" class="mt-1 block w-24 rounded border border-stone-300 px-2 py-1"></label>
+      <label>Binding above pressure (%)<input type="number" name="pressure_high" step="0.1" min="0" value="5" class="mt-1 block w-24 rounded border border-stone-300 px-2 py-1"></label>
+      <label>Slack elevated above quantile<input type="number" name="slack_median_quantile" step="0.05" min="0" max="1" value="{{ defaults.thresholds.slack_median_quantile }}" class="mt-1 block w-24 rounded border border-stone-300 px-2 py-1"></label>
+      <label>Slack high from quantile<input type="number" name="slack_top_quantile" step="0.05" min="0" max="1" value="{{ defaults.thresholds.slack_top_quantile }}" class="mt-1 block w-24 rounded border border-stone-300 px-2 py-1"></label>
+    </div>
+  </fieldset>
+
+  <fieldset class="rounded border border-stone-200 bg-white p-4 lg:col-span-2">
+    <legend class="px-1 text-sm font-semibold">Member states applying the shock</legend>
+    <div class="grid grid-cols-2 gap-1 text-sm sm:grid-cols-4 lg:grid-cols-7">
+      {% for code, name in countries %}
+      <label class="flex items-center gap-1.5"><input type="checkbox" name="countries" value="{{ code }}" {% if code in selected %}checked{% endif %}> {{ name }}</label>
+      {% endfor %}
+    </div>
+  </fieldset>
+
+  <div class="lg:col-span-2">
+    <button type="submit" class="rounded bg-stone-900 px-4 py-2 text-white hover:bg-stone-700">Run</button>
+    <span id="running" hidden class="ml-3 text-sm text-stone-600">Running, about ten seconds&hellip;</span>
+  </div>
+</form>
+{% endblock %}

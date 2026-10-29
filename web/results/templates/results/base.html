@@ -1,0 +1,38 @@
+{% load static %}<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Capacity Check Europe{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/output.css' %}">
+  <script src="{% static 'js/htmx.min.js' %}" defer></script>
+</head>
+<body class="bg-stone-50 text-stone-900 antialiased">
+  <header class="border-b border-stone-200 bg-white">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
+      <a href="{% url 'runs' %}" class="font-semibold tracking-tight">Capacity Check Europe <span class="font-normal text-stone-500">(working name)</span></a>
+      <nav class="flex gap-4 text-sm">
+        <a href="{% url 'runs' %}" class="hover:underline">Runs</a>
+        {% if not PUBLIC_READ_ONLY %}<a href="{% url 'new_run' %}" class="hover:underline">New run</a>{% endif %}
+        <a href="{% url 'about' %}" class="hover:underline">Method</a>
+      </nav>
+      {% if user.is_authenticated %}
+      <form method="post" action="{% url 'logout' %}" class="ml-auto">{% csrf_token %}<button class="text-sm text-stone-600 hover:underline">Log out</button></form>
+      {% endif %}
+    </div>
+  </header>
+  <main class="mx-auto max-w-6xl px-4 py-6">
+    {% if messages %}{% for m in messages %}<div class="mb-4 rounded border border-red-300 bg-red-50 px-3 py-2 text-sm">{{ m }}</div>{% endfor %}{% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="mt-12 border-t border-stone-200 bg-white">
+    <div class="mx-auto max-w-6xl px-4 py-6 text-sm text-stone-600">
+      <p class="mb-2 font-medium text-stone-800">What the result does not claim</p>
+      <ul class="list-disc space-y-1 pl-5">
+        {% for s in NOT_CLAIMED %}<li>{{ s }}</li>{% endfor %}
+      </ul>
+      <p class="mt-4">Data: Eurostat (FIGARO, national accounts, job vacancies), DG ECFIN business surveys, Statistics Sweden, Arbetsf&ouml;rmedlingen. Every figure is traceable to a dataset, edition and checksum listed with each run. Code and method: <a class="underline" href="{{ REPO_URL }}">{{ REPO_URL }}</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>

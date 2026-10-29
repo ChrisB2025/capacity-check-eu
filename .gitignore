@@ -27,3 +27,7 @@ web/staticfiles/
 .idea/
 Thumbs.db
 .DS_Store
+
+# Local web app
+web/*.sqlite3
+data/compositions/

@@ -1,0 +1,55 @@
+{% extends "results/base.html" %}{% load fmt %}
+{% block title %}{{ name }} | Run {{ run.run_id }}{% endblock %}
+{% block content %}
+{% include "results/_run_header.html" %}
+<h1 class="text-2xl font-semibold tracking-tight">{{ name }}</h1>
+{% if summary %}
+<dl class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+  <div class="rounded border border-stone-200 bg-white p-3"><dt class="text-xs text-stone-500">Shock</dt><dd class="text-lg font-semibold tabular-nums">EUR {{ summary.shock_meur|num }} m</dd></div>
+  <div class="rounded border border-stone-200 bg-white p-3"><dt class="text-xs text-stone-500">Extra persons in the EU</dt><dd class="text-lg font-semibold tabular-nums">{{ summary.extra_persons_eu|hundreds }}</dd></div>
+  <div class="rounded border border-stone-200 bg-white p-3"><dt class="text-xs text-stone-500">Jobs on tight or binding lines</dt><dd class="text-lg font-semibold tabular-nums">{{ summary.headline_tight_or_binding_share|pct }}</dd></div>
+  <div class="rounded border border-stone-200 bg-white p-3"><dt class="text-xs text-stone-500">Data quality</dt><dd class="text-lg font-semibold">{{ summary.data_quality }}</dd><dd class="text-xs text-stone-500">{{ summary.data_quality_flags }}</dd></div>
+</dl>
+{% endif %}
+
+<h2 class="mt-8 text-lg font-semibold">Direct purchases</h2>
+<p class="mt-1 text-sm text-stone-600">The composition applied to the shock, and where each product comes from, following the origin of the member state's investment purchases.</p>
+<div class="mt-2 overflow-x-auto rounded border border-stone-200 bg-white">
+<table class="w-full text-sm">
+  <thead class="bg-stone-100 text-left text-stone-600"><tr><th class="px-3 py-2">Code</th><th class="px-3 py-2 text-right">Share</th><th class="px-3 py-2 text-right">EUR m</th><th class="px-3 py-2 text-right">From home</th><th class="px-3 py-2 text-right">From rest of EU</th><th class="px-3 py-2 text-right">From outside EU</th><th class="px-3 py-2">Origin basis</th></tr></thead>
+  <tbody>{% for r in direct %}<tr class="border-t border-stone-100"><td class="px-3 py-1 font-mono">{{ r.code }}</td><td class="px-3 py-1 text-right tabular-nums">{{ r.share|pct:1 }}</td><td class="px-3 py-1 text-right tabular-nums">{{ r.meur|num:1 }}</td><td class="px-3 py-1 text-right tabular-nums">{{ r.home|pct }}</td><td class="px-3 py-1 text-right tabular-nums">{{ r.rest_eu|pct }}</td><td class="px-3 py-1 text-right tabular-nums">{{ r.non_eu|pct }}</td><td class="px-3 py-1">{{ r.origin_basis }}</td></tr>{% endfor %}</tbody>
+</table>
+</div>
+
+<h2 class="mt-8 text-lg font-semibold">Industries, by extra persons</h2>
+<p class="mt-1 text-sm text-stone-600">Requirement (required output from this programme and where it is produced) on the left; availability and the rating of the member state's own industry on the right.</p>
+<div class="mt-2 overflow-x-auto rounded border border-stone-200 bg-white">
+<table class="w-full text-sm">
+  <thead class="bg-stone-100 text-left text-stone-600">
+    <tr><th class="px-3 py-1" colspan="2"></th><th class="border-l border-stone-200 px-3 py-1 text-center" colspan="5">Requirement</th><th class="border-l border-stone-200 px-3 py-1 text-center" colspan="3">Availability and rating</th></tr>
+    <tr>
+    <th class="px-3 py-2">Code</th><th class="px-3 py-2">Industry</th>
+    <th class="border-l border-stone-200 px-3 py-2 text-right">Required (EUR m)</th><th class="px-3 py-2 text-right">At home</th><th class="px-3 py-2 text-right">Rest of EU</th><th class="px-3 py-2 text-right">Outside EU</th>
+    <th class="px-3 py-2 text-right">Extra persons on this line</th>
+    <th class="border-l border-stone-200 px-3 py-2 text-right">Pressure</th><th class="px-3 py-2">Slack</th><th class="px-3 py-2">Rating</th>
+  </tr></thead>
+  <tbody>
+  {% for r in rows %}
+    <tr class="border-t border-stone-100">
+      <td class="px-3 py-1 font-mono">{{ r.industry }}</td><td class="px-3 py-1">{{ r.label }}</td>
+      <td class="border-l border-stone-100 px-3 py-1 text-right tabular-nums">{{ r.required_total_meur|num:1 }}</td>
+      <td class="px-3 py-1 text-right tabular-nums">{{ r.required_home_meur|num:1 }}</td>
+      <td class="px-3 py-1 text-right tabular-nums">{{ r.required_rest_eu_meur|num:1 }}</td>
+      <td class="px-3 py-1 text-right tabular-nums">{{ r.required_non_eu_meur|num:1 }}</td>
+      <td class="px-3 py-1 text-right tabular-nums">{{ r.extra_persons_all|num }}</td>
+      <td class="border-l border-stone-100 px-3 py-1 text-right tabular-nums">{{ r.pressure|pct:1 }}</td>
+      <td class="px-3 py-1">{% if r.slack_class != "none" %}{{ r.slack_class }} <span class="text-stone-500">({{ r.slack_percentile|pct }})</span>{% else %}<span class="text-stone-500">no series</span>{% endif %}</td>
+      <td class="px-3 py-1"><span class="rating {{ r.rating|rating_class }}">{{ r.rating }}</span></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% if not show_all %}<p class="mt-2 text-sm"><a class="underline" href="?all=1">Show all {{ n_rows }} industries</a></p>{% endif %}
+<p class="mt-2 text-xs text-stone-500">Extra persons on this line: persons needed in {{ name }}'s own industry by all programmes in the run{% if run.params.application == "own" %}; pressure counts only {{ name }}'s own programme{% endif %}. Required output columns count this programme only, wherever produced.</p>
+{% endblock %}

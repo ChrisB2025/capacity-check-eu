@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@source "../results/templates";
+@source "../results/views.py";
+
+@layer components {
+  .rating { @apply inline-block whitespace-nowrap rounded px-1.5 py-0.5 text-xs font-medium; }
+  .rating-binding { @apply bg-red-100 text-red-900; }
+  .rating-tight { @apply bg-amber-100 text-amber-900; }
+  .rating-clear { @apply bg-emerald-100 text-emerald-900; }
+  .rating-none { @apply bg-stone-100 text-stone-600; }
+  .map-state { cursor: pointer; }
+  .map-state:hover { stroke: #1c1917; stroke-width: 1.5; }
+}

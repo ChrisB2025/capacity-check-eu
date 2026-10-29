@@ -1,0 +1,38 @@
+{% extends "results/base.html" %}{% load fmt %}
+{% block title %}Runs | Capacity Check Europe{% endblock %}
+{% block content %}
+<div class="mb-6 max-w-3xl">
+  <h1 class="text-2xl font-semibold tracking-tight">Which industries would a renovation programme press on?</h1>
+  <p class="mt-2 text-stone-700">The same public spending shock, a share of GDP spent on housing and energy renovation in one year, is applied in each EU member state. It is traced through Eurostat's inter-country input-output tables to jobs by industry, then compared with what firms report about labour shortages. The shock is an identical financial shock, not an identical physical programme.</p>
+</div>
+<div class="flex items-baseline justify-between">
+  <h2 class="text-lg font-semibold">Saved runs</h2>
+  {% if not PUBLIC_READ_ONLY %}<a href="{% url 'new_run' %}" class="rounded bg-stone-900 px-3 py-1.5 text-sm text-white hover:bg-stone-700">New run</a>{% endif %}
+</div>
+<div class="mt-3 overflow-x-auto rounded border border-stone-200 bg-white">
+<table class="w-full text-sm">
+  <thead class="bg-stone-100 text-left text-stone-600"><tr>
+    <th class="px-3 py-2">Run</th><th class="px-3 py-2">Created</th><th class="px-3 py-2 text-right">Shock</th>
+    <th class="px-3 py-2">Composition</th><th class="px-3 py-2">Edition</th><th class="px-3 py-2">Slack</th>
+    <th class="px-3 py-2 text-right">Pressure thresholds</th><th class="px-3 py-2 text-right">States</th><th class="px-3 py-2">Status</th>
+  </tr></thead>
+  <tbody>
+  {% for it in items %}
+    <tr class="border-t border-stone-100 hover:bg-stone-50">
+      <td class="px-3 py-2 font-mono"><a class="underline" href="{% url 'run' it.run.run_id %}">{{ it.run.run_id }}</a></td>
+      <td class="px-3 py-2">{{ it.run.created|date:"j M Y H:i" }}</td>
+      <td class="px-3 py-2 text-right">{{ it.p.shock_pct }}%</td>
+      <td class="px-3 py-2">{{ it.run.composition.name }}</td>
+      <td class="px-3 py-2">{{ it.p.edition }} ({{ it.p.ref_year }})</td>
+      <td class="px-3 py-2">{{ it.p.slack_indicator }}</td>
+      <td class="px-3 py-2 text-right">{{ it.p.thresholds.pressure_low|pct:1 }} / {{ it.p.thresholds.pressure_high|pct:1 }}</td>
+      <td class="px-3 py-2 text-right">{{ it.n_countries }}</td>
+      <td class="px-3 py-2">{% if it.run.provisional %}<span class="rounded bg-amber-100 px-1.5 py-0.5 text-amber-900">provisional</span>{% else %}confirmed{% endif %}</td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="9" class="px-3 py-6 text-center text-stone-500">No runs yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}
