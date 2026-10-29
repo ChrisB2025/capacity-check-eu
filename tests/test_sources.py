@@ -135,6 +135,14 @@ def test_figaro_identity_detects_gap(monkeypatch):
     assert checks["output_identity_max_abs_gap_meur"] == pytest.approx(0.5)
 
 
+@pytest.mark.parametrize(
+    "circabc, api",
+    [("C10T12", "C10-12"), ("N80T82", "N80-82"), ("C31_32", "C31_32"), ("F", "F")],
+)
+def test_circabc_codes_map_to_api_codes(circabc, api):
+    assert figaro._circabc_code(circabc) == api
+
+
 def test_dataflow_for_year():
     assert figaro.dataflow_for(2010) == "naio_10_fcp_ii1"
     assert figaro.dataflow_for(2024) == "naio_10_fcp_ii4"

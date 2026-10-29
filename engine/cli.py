@@ -121,6 +121,9 @@ def cmd_import_figaro(args: argparse.Namespace) -> int:
 
     raw = figaro.import_circabc(args.path, args.edition, args.year)
     print(f"{raw.path.name}  {raw.sha256}")
+    _, out, checks = figaro.load_circabc(args.edition, args.year)
+    print(out)
+    print(json.dumps(checks, indent=1))
     return 0
 
 

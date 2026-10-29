@@ -23,6 +23,7 @@ Every CSV in this folder is computed by `python -m engine gate1` from the proces
 | ecfin_bcs_rel2610.parquet | ecfin-country-weights_rel2610_20261029.zip | 18137e1c520e43bf87f35c383c51dee1ebf94f6120d58d5c436ff0cab77cee5d |
 | figaro_2026_y2023.parquet | naio-10-fcp_2026ed-y2023_20261029.zip | 0be08d99da929dc829e748fd0638de3aa9f5e5b25b58472202ea0ca9f9bff926 |
 | figaro_2026_y2024.parquet | naio-10-fcp_2026ed-y2024_20261029.zip | 61ba83e38dd4a1601ad00e86920034323291047da908e855072678348204e638 |
+| figaro_2026_y2024_circabc.parquet | naio-10-fcp-circabc_2026ed-y2024_20261029.zip | a1730eccb9b33c03d8e8a8cad2975d6dc952ba30f1096a82485651041069f701 |
 | jvs_q_nace2.parquet | jvs-q-nace2_upd2026-03-20_20261029.csv.gz | 002f9b4f966b89a635d322477b6a6b0fb68971075481138fc17a807a411564c9 |
 | nama_10_a64_e.parquet | nama-10-a64-e_upd2026-10-27_20261029.csv.gz | 644fc8ef896074cc117145a8ad57a064f93fe766fcfedd205ed3f163ffe549d9 |
 | scb_yreg54bas.parquet | scb-yreg54bas_upd2026-01-16_20261029.json | 0f605198fd48eaf8918ba931479c47f4a83ee7ccdc9cd9958a054a10a4d462e5 |

@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import gzip
 import io
+import re
 import zipfile
 
 import numpy as np
@@ -241,6 +242,112 @@ def load_sdmx(year: int, edition: str = "2026", force: bool = False):
         unit="MIO_EUR",
         checks=checks,
     )
+    return raw, out, checks
+
+
+# CIRCABC flat files ----------------------------------------------------------------
+
+# CIRCABC uses "webpage" codes; the API uses Eurobase codes. The country
+# mapping is the one in Eurostat's Description_FIGARO_Tables workbook (sheet
+# "Circabc-Eurobase code mapping"). For industry ranges that sheet gives
+# "C10-C12", but the API itself serves "C10-12", so the API's form is used.
+CIRCABC_AREAS = {"GB": "UK", "GR": "EL", "W2": "DOM", "FIGW1": "WRL_REST"}
+
+
+def _circabc_code(code: str) -> str:
+    return re.sub(r"^([A-Z])(\d{2})T(\d{2})$", r"\1\2-\3", code)
+
+
+def parse_circabc_flat(path) -> pd.DataFrame:
+    """Read a CIRCABC ``flatfile_eu-ic-io_ind-by-ind`` zip into the API schema."""
+    import pyarrow as pa
+    import pyarrow.csv as pacsv
+
+    with zipfile.ZipFile(path) as zf:
+        names = [n for n in zf.namelist() if n.lower().endswith(".csv")]
+        if len(names) != 1:
+            raise SourceError(f"{path}: expected one CSV inside, found {names}")
+        with zf.open(names[0]) as fh:
+            table = pacsv.read_csv(
+                fh,
+                convert_options=pacsv.ConvertOptions(
+                    include_columns=["refArea", "rowIi", "counterpartArea", "colIi",
+                                     "obsValue"],
+                    column_types={"obsValue": pa.float64()},
+                ),
+            )  # fmt: skip
+    df = pd.DataFrame(
+        {
+            "c_orig": table["refArea"].dictionary_encode().to_pandas(),
+            "ind_ava": table["rowIi"].dictionary_encode().to_pandas(),
+            "c_dest": table["counterpartArea"].dictionary_encode().to_pandas(),
+            "ind_use": table["colIi"].dictionary_encode().to_pandas(),
+            "value": table["obsValue"].to_numpy(),
+        }
+    )
+    for col in ("c_orig", "c_dest"):
+        df[col] = df[col].cat.rename_categories(
+            lambda c: CIRCABC_AREAS.get(c, c)
+        )  # fmt: skip
+    for col in ("ind_ava", "ind_use"):
+        df[col] = df[col].cat.rename_categories(_circabc_code)
+    df["flag"] = pd.Categorical([""] * len(df))
+    return df
+
+
+def compare(a: pd.DataFrame, b: pd.DataFrame) -> dict:
+    """Flow-by-flow comparison of two copies of the same table."""
+    keys = ["c_orig", "ind_ava", "c_dest", "ind_use"]
+    left = a[[*keys, "value"]].copy()
+    right = b[[*keys, "value"]].copy()
+    for t in (left, right):
+        for k in keys:
+            t[k] = t[k].astype(str)
+    merged = left.merge(right, on=keys, how="outer", suffixes=("_a", "_b"),
+                        indicator=True)  # fmt: skip
+    both = merged[merged["_merge"] == "both"]
+    diff = (both["value_a"] - both["value_b"]).abs()
+    return {
+        "rows_a": len(a),
+        "rows_b": len(b),
+        "only_in_a": int((merged["_merge"] == "left_only").sum()),
+        "only_in_b": int((merged["_merge"] == "right_only").sum()),
+        "max_abs_diff_meur": float(diff.max()),
+        "flows_differing_by_more_than_0_001_meur": int((diff > 0.001).sum()),
+    }
+
+
+def load_circabc(edition: str, year: int):
+    """Parse an imported CIRCABC file, validate it and, if the API copy of the
+    same edition and year is held, compare the two flow by flow."""
+    held = find_raw(f"{DATASET}-circabc", f"{edition}ed-y{year}", "zip")
+    if held is None:
+        raise SourceError(
+            f"no CIRCABC file imported for edition {edition}, year {year}; "
+            "run python -m engine import-figaro first"
+        )
+    raw = RawFile(
+        f"figaro_{edition}_y{year}_circabc", f"{DATASET}-circabc",
+        f"{edition}ed-y{year}", f"{CIRCABC_LIBRARY} (manual download)",
+        _download_date(held), held, sha256_file(held),
+    )  # fmt: skip
+    df = parse_circabc_flat(raw.path)
+    checks = validate(df)
+    if checks["missing_values"] or checks["output_identity_max_rel_gap"] > 1e-3:
+        raise SourceError(f"{raw.key} failed validation: {checks}")
+
+    from engine.sources._common import PROCESSED_DIR
+
+    api_path = PROCESSED_DIR / f"figaro_{edition}_y{year}.parquet"
+    if api_path.exists():
+        checks["comparison_with_api_copy"] = compare(df, pd.read_parquet(api_path))
+        name = f"figaro_{edition}_y{year}_circabc"
+    else:
+        name = f"figaro_{edition}_y{year}"
+    out = write_parquet(
+        df, name, [raw], edition=edition, reference_year=year, unit="MIO_EUR",
+        checks=checks, loader="circabc",
+    )  # fmt: skip
     return raw, out, checks
 
 

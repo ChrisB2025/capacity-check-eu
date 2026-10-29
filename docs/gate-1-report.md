@@ -1,6 +1,6 @@
 # Gate 1 report: data acquisition
 
-Date: 2026-10-29. Status: **two of the three checks pass; the second is waiting on a manual download.** The first stopping-rule test does not fire.
+Date: 2026-10-29, updated the same day after the CIRCABC check. Status: **two of the three checks pass. The second fails for now: the 2025 FIGARO edition is no longer published, and Eurostat has to be asked for it.** The first stopping-rule test does not fire.
 
 Every figure below comes from the tables in `docs/gate-1/`, produced by `python -m engine gate1`. `docs/gate-1/SOURCES.md` lists the raw files and checksums behind each table, and `docs/data-register.md` records every download.
 
@@ -9,7 +9,7 @@ Every figure below comes from the tables in `docs/gate-1/`, produced by `python 
 | Check | Answer |
 | :--- | :--- |
 | 1. Do the DG ECFIN sector files hold the labour constraint question for most member states? | **Yes.** All 27 have the construction series. Manufacturing and services coverage by division is good for most countries, with gaps listed below. |
-| 2. Can an earlier FIGARO edition be obtained? | **Not yet confirmed.** The 2026 edition is held and validated for 2023 and 2024. The 2025 edition exists only on CIRCABC, which cannot be downloaded by script. You need to download it by hand (instructions below). |
+| 2. Can an earlier FIGARO edition be obtained? | **Not from any public source.** The CIRCABC FIGARO library now holds only the 2026 edition, and the API serves only the current edition. The 2026 edition is held, from both routes, and the two copies are identical. The 2025 edition has to be requested from Eurostat. |
 | 3. Do the Swedish occupation tables load and join to the 64 industries? | **Yes, with limits.** Both tables load completely. The join to the 64 industries is at the level of 16 industry groups, so occupation mixes within manufacturing and within business services are shared across their industries. |
 | Stopping rule, first test | **Does not fire.** No member state lacks the construction labour series. |
 
@@ -51,18 +51,16 @@ Release `nace2_ecfin_2610`, downloaded 29 October 2026, all 16 workbooks plus th
 - 50 economies (49 plus rest of world) and 64 industries, 11,060,700 flows, no missing values, no negative intermediate flows, no flagged observations.
 - For every economy and industry, total output by row equals total inputs plus value added by column. The largest relative gap is of the order of 10^-15, which is rounding.
 
-**The 2025 edition** (reference years 2010 to 2023) is not on the API, which only serves the current edition. Eurostat's database page, as archived on 6 March 2026, linked the 2025 files to a CIRCABC folder (`0d8bab1e-d159-40b9-9aff-ef8e6d58e24e`). CIRCABC is a JavaScript application that rejects scripted requests, so I could not confirm the folder is still there. **What you need to do:**
+**The same table from CIRCABC.** On 29 October Chris downloaded the 2026 edition's industry-by-industry flat file for 2024 from the CIRCABC FIGARO library, with its description workbook, and both were imported and registered. `engine/sources/figaro.py` translates CIRCABC's country and industry codes to the API's, using the country mapping in Eurostat's description workbook. The parsed file passes the same validation, and a flow-by-flow comparison with the API copy finds:
 
-1. Open the FIGARO library on CIRCABC in a browser: https://circabc.europa.eu/ui/group/cec66924-a924-4f91-a0ef-600a0531e3ba/library/460a20fc-5956-44f9-8633-2821eb48dd62
-2. Look for the 2025 edition. Download the **industry-by-industry input-output table, CSV flat format**, for reference year **2023**. If 2024 sits next to it in the 2026 edition folder, download that file too.
-3. Run, for each file:
-   ```bash
-   python -m engine import-figaro <downloaded file> --edition 2025 --year 2023
-   python -m engine import-figaro <downloaded file> --edition 2026 --year 2024
-   ```
-   This copies the file unedited into `data/raw/`, checksums it and registers it. I then write the parser for the CSV layout and check it against the API copy of the 2026 edition, which must agree to rounding.
+- the same 11,060,700 flows, none missing on either side, and
+- a largest difference of exactly zero.
 
-If the 2025 edition is no longer on CIRCABC, the fallback is to ask Eurostat user support for it. Without a previous edition the robustness test and the second stopping-rule test cannot run.
+Both loaders are therefore proven on the same table. An earlier edition, whichever route it comes by, passes through tested code.
+
+**The 2025 edition** (reference years 2010 to 2023) is **no longer published**. The CIRCABC FIGARO library holds only the 2026 edition folders. The API serves only the current edition, and DBnomics does not mirror FIGARO. I found no copy deposited elsewhere, such as Zenodo. Eurostat's database page, as archived on 6 March 2026, linked the 2025 files to a CIRCABC folder that is no longer listed.
+
+The route left is to ask Eurostat. The FIGARO metadata names ESTAT-IGA@ec.europa.eu for user feedback. Without a previous edition, the robustness test across editions and the second stopping-rule test cannot run as specified.
 
 **A finding about recent years.** Eurostat's FIGARO information page says national supply and use tables generally arrive about 36 months after the reference year, so the most recent FIGARO years are projected by Eurostat. The metadata marks most non-EU economies' 2024 tables as estimated by Eurostat. It states accuracy as "not available", and says "there is no point at which data are final". This affects which reference year to use (decision 3 below).
 
@@ -129,18 +127,12 @@ Both tables load through the Statistics Sweden API with nothing suppressed (`dat
 
 ## Departure from a decision already taken
 
-On 29 October you chose our own parser for the CIRCABC CSV files, with the API as a cross-check. Now that the API proved complete and exactly balanced, and CIRCABC proved impossible to script, I propose to swap the roles:
-
-- The API becomes the primary source for the 2026 edition, because it is fully reproducible from the command line.
-- The CIRCABC CSV parser is used for the 2025 edition.
-- That parser is proven on the 2026 CSV against the API copy, so both editions effectively pass through the same tested path.
-
-This needs your approval (decision 1).
+On 29 October you chose our own parser for the CIRCABC CSV files, with the API as a cross-check. Both now exist and give identical tables. I propose the API as the primary loader for the current edition, because it runs from the command line with no manual step. The CIRCABC parser stays for any edition that arrives as a file. This needs your approval (decision 1).
 
 ## Decisions for you
 
 1. **Swap the FIGARO loader roles as described above.** Recommended.
-2. **Download the FIGARO files from CIRCABC** (check 2). This blocks closing check 2.
+2. **Ask Eurostat for the 2025 edition** (check 2), at ESTAT-IGA@ec.europa.eu. Ask for the industry-by-industry flat file for at least reference year 2023. If Eurostat cannot supply it, the robustness and stopping-rule tests need a substitute agreed with the reviewer. The nearest would be stability between the 2023 and 2024 tables of one edition, which tests something different and must be named as such. This blocks closing check 2.
 3. **Which reference year the edition comparison uses.** Comparing 2023 in the 2025 and 2026 editions isolates Eurostat's revisions. Comparing each edition's latest year (2023 against 2024) mixes revision with a year of change. I recommend 2023 against 2023 for the stopping-rule test, with the latest-year comparison reported alongside. The same point raises whether the main run should use 2024, which is the shock year but mostly projected, or 2023. This is a method question for the reviewer; my recommendation is 2024, with 2023 as a sensitivity.
 4. **Konjunkturinstitutet licence.** I recommend using it only as an internal cross-check and not republishing its values unless it confirms reuse terms. Alternatively, write to them.
 5. **The 16 industries with no survey question.** I recommend "no rating" for them, as the method says when slack is missing, rather than borrowing another sector's series. Trade (G45 to G47) is the one most likely to matter for this shock, through distribution of materials.
