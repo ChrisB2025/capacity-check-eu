@@ -23,6 +23,7 @@ web/staticfiles/
 
 # Editors and OS
 .vscode/
+*.code-workspace
 .idea/
 Thumbs.db
 .DS_Store
