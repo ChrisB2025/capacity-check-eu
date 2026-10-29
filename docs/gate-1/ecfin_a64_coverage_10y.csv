@@ -1,0 +1,1729 @@
+country,figaro_code,ecfin_survey,divisions_in_survey,divisions_with_series,sector_total_available,status
+AT,A01,none,0,0,False,no survey question
+AT,A02,none,0,0,False,no survey question
+AT,A03,none,0,0,False,no survey question
+AT,B,none,0,0,False,no survey question
+AT,C10-12,industry,3,2,False,partial
+AT,C13-15,industry,3,3,False,full
+AT,C16,industry,1,1,False,full
+AT,C17,industry,1,1,False,full
+AT,C18,industry,1,1,False,full
+AT,C19,industry,1,0,False,missing
+AT,C20,industry,1,1,False,full
+AT,C21,industry,1,1,False,full
+AT,C22,industry,1,1,False,full
+AT,C23,industry,1,1,False,full
+AT,C24,industry,1,1,False,full
+AT,C25,industry,1,1,False,full
+AT,C26,industry,1,1,False,full
+AT,C27,industry,1,1,False,full
+AT,C28,industry,1,1,False,full
+AT,C29,industry,1,1,False,full
+AT,C30,industry,1,1,False,full
+AT,C31_32,industry,2,2,False,full
+AT,C33,industry,1,1,False,full
+AT,D35,none,0,0,False,no survey question
+AT,E36,none,0,0,False,no survey question
+AT,E37-39,none,0,0,False,no survey question
+AT,F,building,3,3,True,full
+AT,G45,none,0,0,False,no survey question
+AT,G46,none,0,0,False,no survey question
+AT,G47,none,0,0,False,no survey question
+AT,H49,services,1,1,False,full
+AT,H50,services,1,0,False,missing
+AT,H51,services,1,0,False,missing
+AT,H52,services,1,1,False,full
+AT,H53,services,1,1,False,full
+AT,I,services,2,2,False,full
+AT,J58,services,1,1,False,full
+AT,J59_60,services,2,0,False,missing
+AT,J61,services,1,0,False,missing
+AT,J62_63,services,2,2,False,full
+AT,K64,services,1,1,False,full
+AT,K65,services,1,0,False,missing
+AT,K66,services,1,0,False,missing
+AT,L,services,1,1,False,full
+AT,M69_70,services,2,2,False,full
+AT,M71,services,1,1,False,full
+AT,M72,services,1,1,False,full
+AT,M73,services,1,1,False,full
+AT,M74_75,services,2,1,False,partial
+AT,N77,services,1,1,False,full
+AT,N78,services,1,1,False,full
+AT,N79,services,1,1,False,full
+AT,N80-82,services,3,3,False,full
+AT,O84,none,0,0,False,no survey question
+AT,P85,none,0,0,False,no survey question
+AT,Q86,none,0,0,False,no survey question
+AT,Q87_88,none,0,0,False,no survey question
+AT,R90-92,services,3,0,False,missing
+AT,R93,services,1,0,False,missing
+AT,S94,services,1,0,False,missing
+AT,S95,services,1,0,False,missing
+AT,S96,services,1,0,False,missing
+AT,T,none,0,0,False,no survey question
+AT,U,none,0,0,False,no survey question
+BE,A01,none,0,0,False,no survey question
+BE,A02,none,0,0,False,no survey question
+BE,A03,none,0,0,False,no survey question
+BE,B,none,0,0,False,no survey question
+BE,C10-12,industry,3,2,False,partial
+BE,C13-15,industry,3,3,False,full
+BE,C16,industry,1,1,False,full
+BE,C17,industry,1,1,False,full
+BE,C18,industry,1,1,False,full
+BE,C19,industry,1,0,False,missing
+BE,C20,industry,1,1,False,full
+BE,C21,industry,1,1,False,full
+BE,C22,industry,1,1,False,full
+BE,C23,industry,1,1,False,full
+BE,C24,industry,1,1,False,full
+BE,C25,industry,1,1,False,full
+BE,C26,industry,1,1,False,full
+BE,C27,industry,1,1,False,full
+BE,C28,industry,1,1,False,full
+BE,C29,industry,1,1,False,full
+BE,C30,industry,1,1,False,full
+BE,C31_32,industry,2,2,False,full
+BE,C33,industry,1,1,False,full
+BE,D35,none,0,0,False,no survey question
+BE,E36,none,0,0,False,no survey question
+BE,E37-39,none,0,0,False,no survey question
+BE,F,building,3,3,True,full
+BE,G45,none,0,0,False,no survey question
+BE,G46,none,0,0,False,no survey question
+BE,G47,none,0,0,False,no survey question
+BE,H49,services,1,1,False,full
+BE,H50,services,1,0,False,missing
+BE,H51,services,1,0,False,missing
+BE,H52,services,1,1,False,full
+BE,H53,services,1,0,False,missing
+BE,I,services,2,2,False,full
+BE,J58,services,1,0,False,missing
+BE,J59_60,services,2,0,False,missing
+BE,J61,services,1,1,False,full
+BE,J62_63,services,2,2,False,full
+BE,K64,services,1,1,False,full
+BE,K65,services,1,0,False,missing
+BE,K66,services,1,1,False,full
+BE,L,services,1,1,False,full
+BE,M69_70,services,2,2,False,full
+BE,M71,services,1,1,False,full
+BE,M72,services,1,1,False,full
+BE,M73,services,1,1,False,full
+BE,M74_75,services,2,1,False,partial
+BE,N77,services,1,1,False,full
+BE,N78,services,1,1,False,full
+BE,N79,services,1,1,False,full
+BE,N80-82,services,3,3,False,full
+BE,O84,none,0,0,False,no survey question
+BE,P85,none,0,0,False,no survey question
+BE,Q86,none,0,0,False,no survey question
+BE,Q87_88,none,0,0,False,no survey question
+BE,R90-92,services,3,0,False,missing
+BE,R93,services,1,0,False,missing
+BE,S94,services,1,0,False,missing
+BE,S95,services,1,1,False,full
+BE,S96,services,1,1,False,full
+BE,T,none,0,0,False,no survey question
+BE,U,none,0,0,False,no survey question
+BG,A01,none,0,0,False,no survey question
+BG,A02,none,0,0,False,no survey question
+BG,A03,none,0,0,False,no survey question
+BG,B,none,0,0,False,no survey question
+BG,C10-12,industry,3,3,False,full
+BG,C13-15,industry,3,3,False,full
+BG,C16,industry,1,1,False,full
+BG,C17,industry,1,1,False,full
+BG,C18,industry,1,1,False,full
+BG,C19,industry,1,1,False,full
+BG,C20,industry,1,1,False,full
+BG,C21,industry,1,1,False,full
+BG,C22,industry,1,1,False,full
+BG,C23,industry,1,1,False,full
+BG,C24,industry,1,1,False,full
+BG,C25,industry,1,1,False,full
+BG,C26,industry,1,1,False,full
+BG,C27,industry,1,1,False,full
+BG,C28,industry,1,1,False,full
+BG,C29,industry,1,1,False,full
+BG,C30,industry,1,1,False,full
+BG,C31_32,industry,2,2,False,full
+BG,C33,industry,1,1,False,full
+BG,D35,none,0,0,False,no survey question
+BG,E36,none,0,0,False,no survey question
+BG,E37-39,none,0,0,False,no survey question
+BG,F,building,3,3,True,full
+BG,G45,none,0,0,False,no survey question
+BG,G46,none,0,0,False,no survey question
+BG,G47,none,0,0,False,no survey question
+BG,H49,services,1,1,False,full
+BG,H50,services,1,1,False,full
+BG,H51,services,1,1,False,full
+BG,H52,services,1,1,False,full
+BG,H53,services,1,1,False,full
+BG,I,services,2,2,False,full
+BG,J58,services,1,1,False,full
+BG,J59_60,services,2,2,False,full
+BG,J61,services,1,1,False,full
+BG,J62_63,services,2,2,False,full
+BG,K64,services,1,0,False,missing
+BG,K65,services,1,0,False,missing
+BG,K66,services,1,0,False,missing
+BG,L,services,1,1,False,full
+BG,M69_70,services,2,2,False,full
+BG,M71,services,1,1,False,full
+BG,M72,services,1,0,False,missing
+BG,M73,services,1,1,False,full
+BG,M74_75,services,2,2,False,full
+BG,N77,services,1,1,False,full
+BG,N78,services,1,1,False,full
+BG,N79,services,1,1,False,full
+BG,N80-82,services,3,3,False,full
+BG,O84,none,0,0,False,no survey question
+BG,P85,none,0,0,False,no survey question
+BG,Q86,none,0,0,False,no survey question
+BG,Q87_88,none,0,0,False,no survey question
+BG,R90-92,services,3,1,False,partial
+BG,R93,services,1,1,False,full
+BG,S94,services,1,0,False,missing
+BG,S95,services,1,1,False,full
+BG,S96,services,1,1,False,full
+BG,T,none,0,0,False,no survey question
+BG,U,none,0,0,False,no survey question
+CY,A01,none,0,0,False,no survey question
+CY,A02,none,0,0,False,no survey question
+CY,A03,none,0,0,False,no survey question
+CY,B,none,0,0,False,no survey question
+CY,C10-12,industry,3,2,False,partial
+CY,C13-15,industry,3,3,False,full
+CY,C16,industry,1,1,False,full
+CY,C17,industry,1,1,False,full
+CY,C18,industry,1,1,False,full
+CY,C19,industry,1,0,False,missing
+CY,C20,industry,1,1,False,full
+CY,C21,industry,1,0,False,missing
+CY,C22,industry,1,1,False,full
+CY,C23,industry,1,1,False,full
+CY,C24,industry,1,1,False,full
+CY,C25,industry,1,1,False,full
+CY,C26,industry,1,0,False,missing
+CY,C27,industry,1,1,False,full
+CY,C28,industry,1,1,False,full
+CY,C29,industry,1,0,False,missing
+CY,C30,industry,1,0,False,missing
+CY,C31_32,industry,2,2,False,full
+CY,C33,industry,1,0,False,missing
+CY,D35,none,0,0,False,no survey question
+CY,E36,none,0,0,False,no survey question
+CY,E37-39,none,0,0,False,no survey question
+CY,F,building,3,3,True,full
+CY,G45,none,0,0,False,no survey question
+CY,G46,none,0,0,False,no survey question
+CY,G47,none,0,0,False,no survey question
+CY,H49,services,1,1,False,full
+CY,H50,services,1,1,False,full
+CY,H51,services,1,1,False,full
+CY,H52,services,1,1,False,full
+CY,H53,services,1,1,False,full
+CY,I,services,2,2,False,full
+CY,J58,services,1,1,False,full
+CY,J59_60,services,2,2,False,full
+CY,J61,services,1,1,False,full
+CY,J62_63,services,2,1,False,partial
+CY,K64,services,1,1,False,full
+CY,K65,services,1,1,False,full
+CY,K66,services,1,1,False,full
+CY,L,services,1,1,False,full
+CY,M69_70,services,2,2,False,full
+CY,M71,services,1,1,False,full
+CY,M72,services,1,0,False,missing
+CY,M73,services,1,1,False,full
+CY,M74_75,services,2,1,False,partial
+CY,N77,services,1,1,False,full
+CY,N78,services,1,0,False,missing
+CY,N79,services,1,1,False,full
+CY,N80-82,services,3,2,False,partial
+CY,O84,none,0,0,False,no survey question
+CY,P85,none,0,0,False,no survey question
+CY,Q86,none,0,0,False,no survey question
+CY,Q87_88,none,0,0,False,no survey question
+CY,R90-92,services,3,2,False,partial
+CY,R93,services,1,1,False,full
+CY,S94,services,1,1,False,full
+CY,S95,services,1,1,False,full
+CY,S96,services,1,1,False,full
+CY,T,none,0,0,False,no survey question
+CY,U,none,0,0,False,no survey question
+CZ,A01,none,0,0,False,no survey question
+CZ,A02,none,0,0,False,no survey question
+CZ,A03,none,0,0,False,no survey question
+CZ,B,none,0,0,False,no survey question
+CZ,C10-12,industry,3,2,False,partial
+CZ,C13-15,industry,3,3,False,full
+CZ,C16,industry,1,1,False,full
+CZ,C17,industry,1,1,False,full
+CZ,C18,industry,1,1,False,full
+CZ,C19,industry,1,1,False,full
+CZ,C20,industry,1,1,False,full
+CZ,C21,industry,1,1,False,full
+CZ,C22,industry,1,1,False,full
+CZ,C23,industry,1,1,False,full
+CZ,C24,industry,1,1,False,full
+CZ,C25,industry,1,1,False,full
+CZ,C26,industry,1,1,False,full
+CZ,C27,industry,1,1,False,full
+CZ,C28,industry,1,1,False,full
+CZ,C29,industry,1,1,False,full
+CZ,C30,industry,1,1,False,full
+CZ,C31_32,industry,2,2,False,full
+CZ,C33,industry,1,1,False,full
+CZ,D35,none,0,0,False,no survey question
+CZ,E36,none,0,0,False,no survey question
+CZ,E37-39,none,0,0,False,no survey question
+CZ,F,building,3,3,True,full
+CZ,G45,none,0,0,False,no survey question
+CZ,G46,none,0,0,False,no survey question
+CZ,G47,none,0,0,False,no survey question
+CZ,H49,services,1,1,False,full
+CZ,H50,services,1,0,False,missing
+CZ,H51,services,1,1,False,full
+CZ,H52,services,1,1,False,full
+CZ,H53,services,1,1,False,full
+CZ,I,services,2,2,False,full
+CZ,J58,services,1,1,False,full
+CZ,J59_60,services,2,0,False,missing
+CZ,J61,services,1,1,False,full
+CZ,J62_63,services,2,2,False,full
+CZ,K64,services,1,1,False,full
+CZ,K65,services,1,1,False,full
+CZ,K66,services,1,1,False,full
+CZ,L,services,1,1,False,full
+CZ,M69_70,services,2,2,False,full
+CZ,M71,services,1,1,False,full
+CZ,M72,services,1,1,False,full
+CZ,M73,services,1,1,False,full
+CZ,M74_75,services,2,1,False,partial
+CZ,N77,services,1,1,False,full
+CZ,N78,services,1,1,False,full
+CZ,N79,services,1,1,False,full
+CZ,N80-82,services,3,3,False,full
+CZ,O84,none,0,0,False,no survey question
+CZ,P85,none,0,0,False,no survey question
+CZ,Q86,none,0,0,False,no survey question
+CZ,Q87_88,none,0,0,False,no survey question
+CZ,R90-92,services,3,0,False,missing
+CZ,R93,services,1,0,False,missing
+CZ,S94,services,1,0,False,missing
+CZ,S95,services,1,1,False,full
+CZ,S96,services,1,1,False,full
+CZ,T,none,0,0,False,no survey question
+CZ,U,none,0,0,False,no survey question
+DE,A01,none,0,0,False,no survey question
+DE,A02,none,0,0,False,no survey question
+DE,A03,none,0,0,False,no survey question
+DE,B,none,0,0,False,no survey question
+DE,C10-12,industry,3,2,False,partial
+DE,C13-15,industry,3,3,False,full
+DE,C16,industry,1,1,False,full
+DE,C17,industry,1,1,False,full
+DE,C18,industry,1,1,False,full
+DE,C19,industry,1,1,False,full
+DE,C20,industry,1,1,False,full
+DE,C21,industry,1,1,False,full
+DE,C22,industry,1,1,False,full
+DE,C23,industry,1,1,False,full
+DE,C24,industry,1,1,False,full
+DE,C25,industry,1,1,False,full
+DE,C26,industry,1,1,False,full
+DE,C27,industry,1,1,False,full
+DE,C28,industry,1,1,False,full
+DE,C29,industry,1,1,False,full
+DE,C30,industry,1,0,False,missing
+DE,C31_32,industry,2,2,False,full
+DE,C33,industry,1,0,False,missing
+DE,D35,none,0,0,False,no survey question
+DE,E36,none,0,0,False,no survey question
+DE,E37-39,none,0,0,False,no survey question
+DE,F,building,3,2,True,partial
+DE,G45,none,0,0,False,no survey question
+DE,G46,none,0,0,False,no survey question
+DE,G47,none,0,0,False,no survey question
+DE,H49,services,1,1,False,full
+DE,H50,services,1,0,False,missing
+DE,H51,services,1,0,False,missing
+DE,H52,services,1,1,False,full
+DE,H53,services,1,0,False,missing
+DE,I,services,2,2,False,full
+DE,J58,services,1,0,False,missing
+DE,J59_60,services,2,0,False,missing
+DE,J61,services,1,0,False,missing
+DE,J62_63,services,2,1,False,partial
+DE,K64,services,1,0,False,missing
+DE,K65,services,1,0,False,missing
+DE,K66,services,1,0,False,missing
+DE,L,services,1,1,False,full
+DE,M69_70,services,2,2,False,full
+DE,M71,services,1,1,False,full
+DE,M72,services,1,1,False,full
+DE,M73,services,1,1,False,full
+DE,M74_75,services,2,1,False,partial
+DE,N77,services,1,1,False,full
+DE,N78,services,1,1,False,full
+DE,N79,services,1,1,False,full
+DE,N80-82,services,3,2,False,partial
+DE,O84,none,0,0,False,no survey question
+DE,P85,none,0,0,False,no survey question
+DE,Q86,none,0,0,False,no survey question
+DE,Q87_88,none,0,0,False,no survey question
+DE,R90-92,services,3,0,False,missing
+DE,R93,services,1,0,False,missing
+DE,S94,services,1,0,False,missing
+DE,S95,services,1,0,False,missing
+DE,S96,services,1,0,False,missing
+DE,T,none,0,0,False,no survey question
+DE,U,none,0,0,False,no survey question
+DK,A01,none,0,0,False,no survey question
+DK,A02,none,0,0,False,no survey question
+DK,A03,none,0,0,False,no survey question
+DK,B,none,0,0,False,no survey question
+DK,C10-12,industry,3,3,False,full
+DK,C13-15,industry,3,2,False,partial
+DK,C16,industry,1,1,False,full
+DK,C17,industry,1,1,False,full
+DK,C18,industry,1,1,False,full
+DK,C19,industry,1,1,False,full
+DK,C20,industry,1,1,False,full
+DK,C21,industry,1,1,False,full
+DK,C22,industry,1,1,False,full
+DK,C23,industry,1,1,False,full
+DK,C24,industry,1,1,False,full
+DK,C25,industry,1,1,False,full
+DK,C26,industry,1,1,False,full
+DK,C27,industry,1,1,False,full
+DK,C28,industry,1,1,False,full
+DK,C29,industry,1,1,False,full
+DK,C30,industry,1,1,False,full
+DK,C31_32,industry,2,2,False,full
+DK,C33,industry,1,1,False,full
+DK,D35,none,0,0,False,no survey question
+DK,E36,none,0,0,False,no survey question
+DK,E37-39,none,0,0,False,no survey question
+DK,F,building,3,3,True,full
+DK,G45,none,0,0,False,no survey question
+DK,G46,none,0,0,False,no survey question
+DK,G47,none,0,0,False,no survey question
+DK,H49,services,1,1,False,full
+DK,H50,services,1,1,False,full
+DK,H51,services,1,1,False,full
+DK,H52,services,1,1,False,full
+DK,H53,services,1,1,False,full
+DK,I,services,2,2,False,full
+DK,J58,services,1,1,False,full
+DK,J59_60,services,2,0,False,missing
+DK,J61,services,1,1,False,full
+DK,J62_63,services,2,2,False,full
+DK,K64,services,1,1,False,full
+DK,K65,services,1,1,False,full
+DK,K66,services,1,0,False,missing
+DK,L,services,1,1,False,full
+DK,M69_70,services,2,2,False,full
+DK,M71,services,1,1,False,full
+DK,M72,services,1,1,False,full
+DK,M73,services,1,1,False,full
+DK,M74_75,services,2,1,False,partial
+DK,N77,services,1,1,False,full
+DK,N78,services,1,1,False,full
+DK,N79,services,1,1,False,full
+DK,N80-82,services,3,2,False,partial
+DK,O84,none,0,0,False,no survey question
+DK,P85,none,0,0,False,no survey question
+DK,Q86,none,0,0,False,no survey question
+DK,Q87_88,none,0,0,False,no survey question
+DK,R90-92,services,3,3,False,full
+DK,R93,services,1,1,False,full
+DK,S94,services,1,1,False,full
+DK,S95,services,1,1,False,full
+DK,S96,services,1,0,False,missing
+DK,T,none,0,0,False,no survey question
+DK,U,none,0,0,False,no survey question
+EE,A01,none,0,0,False,no survey question
+EE,A02,none,0,0,False,no survey question
+EE,A03,none,0,0,False,no survey question
+EE,B,none,0,0,False,no survey question
+EE,C10-12,industry,3,2,False,partial
+EE,C13-15,industry,3,3,False,full
+EE,C16,industry,1,1,False,full
+EE,C17,industry,1,1,False,full
+EE,C18,industry,1,1,False,full
+EE,C19,industry,1,0,False,missing
+EE,C20,industry,1,1,False,full
+EE,C21,industry,1,0,False,missing
+EE,C22,industry,1,1,False,full
+EE,C23,industry,1,1,False,full
+EE,C24,industry,1,0,False,missing
+EE,C25,industry,1,1,False,full
+EE,C26,industry,1,1,False,full
+EE,C27,industry,1,1,False,full
+EE,C28,industry,1,1,False,full
+EE,C29,industry,1,0,False,missing
+EE,C30,industry,1,0,False,missing
+EE,C31_32,industry,2,2,False,full
+EE,C33,industry,1,0,False,missing
+EE,D35,none,0,0,False,no survey question
+EE,E36,none,0,0,False,no survey question
+EE,E37-39,none,0,0,False,no survey question
+EE,F,building,3,3,True,full
+EE,G45,none,0,0,False,no survey question
+EE,G46,none,0,0,False,no survey question
+EE,G47,none,0,0,False,no survey question
+EE,H49,services,1,1,False,full
+EE,H50,services,1,0,False,missing
+EE,H51,services,1,0,False,missing
+EE,H52,services,1,1,False,full
+EE,H53,services,1,0,False,missing
+EE,I,services,2,2,False,full
+EE,J58,services,1,0,False,missing
+EE,J59_60,services,2,0,False,missing
+EE,J61,services,1,1,False,full
+EE,J62_63,services,2,1,False,partial
+EE,K64,services,1,0,False,missing
+EE,K65,services,1,0,False,missing
+EE,K66,services,1,0,False,missing
+EE,L,services,1,1,False,full
+EE,M69_70,services,2,0,False,missing
+EE,M71,services,1,1,False,full
+EE,M72,services,1,0,False,missing
+EE,M73,services,1,1,False,full
+EE,M74_75,services,2,0,False,missing
+EE,N77,services,1,0,False,missing
+EE,N78,services,1,0,False,missing
+EE,N79,services,1,1,False,full
+EE,N80-82,services,3,0,False,missing
+EE,O84,none,0,0,False,no survey question
+EE,P85,none,0,0,False,no survey question
+EE,Q86,none,0,0,False,no survey question
+EE,Q87_88,none,0,0,False,no survey question
+EE,R90-92,services,3,0,False,missing
+EE,R93,services,1,0,False,missing
+EE,S94,services,1,0,False,missing
+EE,S95,services,1,0,False,missing
+EE,S96,services,1,0,False,missing
+EE,T,none,0,0,False,no survey question
+EE,U,none,0,0,False,no survey question
+EL,A01,none,0,0,False,no survey question
+EL,A02,none,0,0,False,no survey question
+EL,A03,none,0,0,False,no survey question
+EL,B,none,0,0,False,no survey question
+EL,C10-12,industry,3,2,False,partial
+EL,C13-15,industry,3,3,False,full
+EL,C16,industry,1,1,False,full
+EL,C17,industry,1,1,False,full
+EL,C18,industry,1,1,False,full
+EL,C19,industry,1,1,False,full
+EL,C20,industry,1,1,False,full
+EL,C21,industry,1,1,False,full
+EL,C22,industry,1,1,False,full
+EL,C23,industry,1,1,False,full
+EL,C24,industry,1,1,False,full
+EL,C25,industry,1,1,False,full
+EL,C26,industry,1,1,False,full
+EL,C27,industry,1,1,False,full
+EL,C28,industry,1,1,False,full
+EL,C29,industry,1,1,False,full
+EL,C30,industry,1,1,False,full
+EL,C31_32,industry,2,2,False,full
+EL,C33,industry,1,0,False,missing
+EL,D35,none,0,0,False,no survey question
+EL,E36,none,0,0,False,no survey question
+EL,E37-39,none,0,0,False,no survey question
+EL,F,building,3,3,True,full
+EL,G45,none,0,0,False,no survey question
+EL,G46,none,0,0,False,no survey question
+EL,G47,none,0,0,False,no survey question
+EL,H49,services,1,1,False,full
+EL,H50,services,1,1,False,full
+EL,H51,services,1,1,False,full
+EL,H52,services,1,1,False,full
+EL,H53,services,1,1,False,full
+EL,I,services,2,2,False,full
+EL,J58,services,1,1,False,full
+EL,J59_60,services,2,2,False,full
+EL,J61,services,1,1,False,full
+EL,J62_63,services,2,2,False,full
+EL,K64,services,1,1,False,full
+EL,K65,services,1,1,False,full
+EL,K66,services,1,1,False,full
+EL,L,services,1,1,False,full
+EL,M69_70,services,2,2,False,full
+EL,M71,services,1,1,False,full
+EL,M72,services,1,0,False,missing
+EL,M73,services,1,1,False,full
+EL,M74_75,services,2,1,False,partial
+EL,N77,services,1,1,False,full
+EL,N78,services,1,1,False,full
+EL,N79,services,1,1,False,full
+EL,N80-82,services,3,3,False,full
+EL,O84,none,0,0,False,no survey question
+EL,P85,none,0,0,False,no survey question
+EL,Q86,none,0,0,False,no survey question
+EL,Q87_88,none,0,0,False,no survey question
+EL,R90-92,services,3,1,False,partial
+EL,R93,services,1,0,False,missing
+EL,S94,services,1,0,False,missing
+EL,S95,services,1,1,False,full
+EL,S96,services,1,1,False,full
+EL,T,none,0,0,False,no survey question
+EL,U,none,0,0,False,no survey question
+ES,A01,none,0,0,False,no survey question
+ES,A02,none,0,0,False,no survey question
+ES,A03,none,0,0,False,no survey question
+ES,B,none,0,0,False,no survey question
+ES,C10-12,industry,3,3,False,full
+ES,C13-15,industry,3,3,False,full
+ES,C16,industry,1,1,False,full
+ES,C17,industry,1,1,False,full
+ES,C18,industry,1,1,False,full
+ES,C19,industry,1,1,False,full
+ES,C20,industry,1,1,False,full
+ES,C21,industry,1,1,False,full
+ES,C22,industry,1,1,False,full
+ES,C23,industry,1,1,False,full
+ES,C24,industry,1,1,False,full
+ES,C25,industry,1,1,False,full
+ES,C26,industry,1,1,False,full
+ES,C27,industry,1,1,False,full
+ES,C28,industry,1,1,False,full
+ES,C29,industry,1,1,False,full
+ES,C30,industry,1,1,False,full
+ES,C31_32,industry,2,2,False,full
+ES,C33,industry,1,1,False,full
+ES,D35,none,0,0,False,no survey question
+ES,E36,none,0,0,False,no survey question
+ES,E37-39,none,0,0,False,no survey question
+ES,F,building,3,3,True,full
+ES,G45,none,0,0,False,no survey question
+ES,G46,none,0,0,False,no survey question
+ES,G47,none,0,0,False,no survey question
+ES,H49,services,1,1,False,full
+ES,H50,services,1,1,False,full
+ES,H51,services,1,1,False,full
+ES,H52,services,1,1,False,full
+ES,H53,services,1,1,False,full
+ES,I,services,2,2,False,full
+ES,J58,services,1,1,False,full
+ES,J59_60,services,2,2,False,full
+ES,J61,services,1,1,False,full
+ES,J62_63,services,2,2,False,full
+ES,K64,services,1,1,False,full
+ES,K65,services,1,1,False,full
+ES,K66,services,1,1,False,full
+ES,L,services,1,1,False,full
+ES,M69_70,services,2,2,False,full
+ES,M71,services,1,1,False,full
+ES,M72,services,1,1,False,full
+ES,M73,services,1,1,False,full
+ES,M74_75,services,2,2,False,full
+ES,N77,services,1,1,False,full
+ES,N78,services,1,1,False,full
+ES,N79,services,1,1,False,full
+ES,N80-82,services,3,3,False,full
+ES,O84,none,0,0,False,no survey question
+ES,P85,none,0,0,False,no survey question
+ES,Q86,none,0,0,False,no survey question
+ES,Q87_88,none,0,0,False,no survey question
+ES,R90-92,services,3,3,False,full
+ES,R93,services,1,1,False,full
+ES,S94,services,1,1,False,full
+ES,S95,services,1,1,False,full
+ES,S96,services,1,1,False,full
+ES,T,none,0,0,False,no survey question
+ES,U,none,0,0,False,no survey question
+FI,A01,none,0,0,False,no survey question
+FI,A02,none,0,0,False,no survey question
+FI,A03,none,0,0,False,no survey question
+FI,B,none,0,0,False,no survey question
+FI,C10-12,industry,3,2,False,partial
+FI,C13-15,industry,3,3,False,full
+FI,C16,industry,1,1,False,full
+FI,C17,industry,1,1,False,full
+FI,C18,industry,1,1,False,full
+FI,C19,industry,1,0,False,missing
+FI,C20,industry,1,1,False,full
+FI,C21,industry,1,1,False,full
+FI,C22,industry,1,1,False,full
+FI,C23,industry,1,1,False,full
+FI,C24,industry,1,1,False,full
+FI,C25,industry,1,1,False,full
+FI,C26,industry,1,0,False,missing
+FI,C27,industry,1,1,False,full
+FI,C28,industry,1,1,False,full
+FI,C29,industry,1,1,False,full
+FI,C30,industry,1,1,False,full
+FI,C31_32,industry,2,2,False,full
+FI,C33,industry,1,1,False,full
+FI,D35,none,0,0,False,no survey question
+FI,E36,none,0,0,False,no survey question
+FI,E37-39,none,0,0,False,no survey question
+FI,F,building,3,3,True,full
+FI,G45,none,0,0,False,no survey question
+FI,G46,none,0,0,False,no survey question
+FI,G47,none,0,0,False,no survey question
+FI,H49,services,1,1,False,full
+FI,H50,services,1,0,False,missing
+FI,H51,services,1,0,False,missing
+FI,H52,services,1,0,False,missing
+FI,H53,services,1,0,False,missing
+FI,I,services,2,2,False,full
+FI,J58,services,1,1,False,full
+FI,J59_60,services,2,0,False,missing
+FI,J61,services,1,1,False,full
+FI,J62_63,services,2,1,False,partial
+FI,K64,services,1,1,False,full
+FI,K65,services,1,0,False,missing
+FI,K66,services,1,0,False,missing
+FI,L,services,1,0,False,missing
+FI,M69_70,services,2,0,False,missing
+FI,M71,services,1,1,False,full
+FI,M72,services,1,0,False,missing
+FI,M73,services,1,0,False,missing
+FI,M74_75,services,2,0,False,missing
+FI,N77,services,1,0,False,missing
+FI,N78,services,1,1,False,full
+FI,N79,services,1,1,False,full
+FI,N80-82,services,3,1,False,partial
+FI,O84,none,0,0,False,no survey question
+FI,P85,none,0,0,False,no survey question
+FI,Q86,none,0,0,False,no survey question
+FI,Q87_88,none,0,0,False,no survey question
+FI,R90-92,services,3,0,False,missing
+FI,R93,services,1,0,False,missing
+FI,S94,services,1,0,False,missing
+FI,S95,services,1,0,False,missing
+FI,S96,services,1,0,False,missing
+FI,T,none,0,0,False,no survey question
+FI,U,none,0,0,False,no survey question
+FR,A01,none,0,0,False,no survey question
+FR,A02,none,0,0,False,no survey question
+FR,A03,none,0,0,False,no survey question
+FR,B,none,0,0,False,no survey question
+FR,C10-12,industry,3,2,False,partial
+FR,C13-15,industry,3,3,False,full
+FR,C16,industry,1,1,False,full
+FR,C17,industry,1,1,False,full
+FR,C18,industry,1,1,False,full
+FR,C19,industry,1,1,False,full
+FR,C20,industry,1,1,False,full
+FR,C21,industry,1,1,False,full
+FR,C22,industry,1,1,False,full
+FR,C23,industry,1,1,False,full
+FR,C24,industry,1,1,False,full
+FR,C25,industry,1,1,False,full
+FR,C26,industry,1,1,False,full
+FR,C27,industry,1,1,False,full
+FR,C28,industry,1,1,False,full
+FR,C29,industry,1,1,False,full
+FR,C30,industry,1,1,False,full
+FR,C31_32,industry,2,2,False,full
+FR,C33,industry,1,1,False,full
+FR,D35,none,0,0,False,no survey question
+FR,E36,none,0,0,False,no survey question
+FR,E37-39,none,0,0,False,no survey question
+FR,F,building,3,3,True,full
+FR,G45,none,0,0,False,no survey question
+FR,G46,none,0,0,False,no survey question
+FR,G47,none,0,0,False,no survey question
+FR,H49,services,1,1,False,full
+FR,H50,services,1,0,False,missing
+FR,H51,services,1,0,False,missing
+FR,H52,services,1,1,False,full
+FR,H53,services,1,1,False,full
+FR,I,services,2,2,False,full
+FR,J58,services,1,1,False,full
+FR,J59_60,services,2,2,False,full
+FR,J61,services,1,1,False,full
+FR,J62_63,services,2,2,False,full
+FR,K64,services,1,0,False,missing
+FR,K65,services,1,0,False,missing
+FR,K66,services,1,0,False,missing
+FR,L,services,1,1,False,full
+FR,M69_70,services,2,2,False,full
+FR,M71,services,1,1,False,full
+FR,M72,services,1,0,False,missing
+FR,M73,services,1,1,False,full
+FR,M74_75,services,2,1,False,partial
+FR,N77,services,1,1,False,full
+FR,N78,services,1,1,False,full
+FR,N79,services,1,1,False,full
+FR,N80-82,services,3,3,False,full
+FR,O84,none,0,0,False,no survey question
+FR,P85,none,0,0,False,no survey question
+FR,Q86,none,0,0,False,no survey question
+FR,Q87_88,none,0,0,False,no survey question
+FR,R90-92,services,3,0,False,missing
+FR,R93,services,1,0,False,missing
+FR,S94,services,1,0,False,missing
+FR,S95,services,1,1,False,full
+FR,S96,services,1,1,False,full
+FR,T,none,0,0,False,no survey question
+FR,U,none,0,0,False,no survey question
+HR,A01,none,0,0,False,no survey question
+HR,A02,none,0,0,False,no survey question
+HR,A03,none,0,0,False,no survey question
+HR,B,none,0,0,False,no survey question
+HR,C10-12,industry,3,2,False,partial
+HR,C13-15,industry,3,3,False,full
+HR,C16,industry,1,1,False,full
+HR,C17,industry,1,1,False,full
+HR,C18,industry,1,1,False,full
+HR,C19,industry,1,0,False,missing
+HR,C20,industry,1,1,False,full
+HR,C21,industry,1,1,False,full
+HR,C22,industry,1,1,False,full
+HR,C23,industry,1,1,False,full
+HR,C24,industry,1,1,False,full
+HR,C25,industry,1,1,False,full
+HR,C26,industry,1,1,False,full
+HR,C27,industry,1,1,False,full
+HR,C28,industry,1,1,False,full
+HR,C29,industry,1,1,False,full
+HR,C30,industry,1,1,False,full
+HR,C31_32,industry,2,2,False,full
+HR,C33,industry,1,1,False,full
+HR,D35,none,0,0,False,no survey question
+HR,E36,none,0,0,False,no survey question
+HR,E37-39,none,0,0,False,no survey question
+HR,F,building,3,3,True,full
+HR,G45,none,0,0,False,no survey question
+HR,G46,none,0,0,False,no survey question
+HR,G47,none,0,0,False,no survey question
+HR,H49,services,1,1,False,full
+HR,H50,services,1,1,False,full
+HR,H51,services,1,1,False,full
+HR,H52,services,1,1,False,full
+HR,H53,services,1,1,False,full
+HR,I,services,2,2,False,full
+HR,J58,services,1,1,False,full
+HR,J59_60,services,2,2,False,full
+HR,J61,services,1,1,False,full
+HR,J62_63,services,2,2,False,full
+HR,K64,services,1,1,False,full
+HR,K65,services,1,0,False,missing
+HR,K66,services,1,1,False,full
+HR,L,services,1,1,False,full
+HR,M69_70,services,2,2,False,full
+HR,M71,services,1,1,False,full
+HR,M72,services,1,1,False,full
+HR,M73,services,1,1,False,full
+HR,M74_75,services,2,2,False,full
+HR,N77,services,1,1,False,full
+HR,N78,services,1,1,False,full
+HR,N79,services,1,1,False,full
+HR,N80-82,services,3,3,False,full
+HR,O84,none,0,0,False,no survey question
+HR,P85,none,0,0,False,no survey question
+HR,Q86,none,0,0,False,no survey question
+HR,Q87_88,none,0,0,False,no survey question
+HR,R90-92,services,3,3,False,full
+HR,R93,services,1,1,False,full
+HR,S94,services,1,1,False,full
+HR,S95,services,1,1,False,full
+HR,S96,services,1,1,False,full
+HR,T,none,0,0,False,no survey question
+HR,U,none,0,0,False,no survey question
+HU,A01,none,0,0,False,no survey question
+HU,A02,none,0,0,False,no survey question
+HU,A03,none,0,0,False,no survey question
+HU,B,none,0,0,False,no survey question
+HU,C10-12,industry,3,2,False,partial
+HU,C13-15,industry,3,3,False,full
+HU,C16,industry,1,1,False,full
+HU,C17,industry,1,1,False,full
+HU,C18,industry,1,1,False,full
+HU,C19,industry,1,0,False,missing
+HU,C20,industry,1,1,False,full
+HU,C21,industry,1,1,False,full
+HU,C22,industry,1,1,False,full
+HU,C23,industry,1,1,False,full
+HU,C24,industry,1,1,False,full
+HU,C25,industry,1,1,False,full
+HU,C26,industry,1,1,False,full
+HU,C27,industry,1,1,False,full
+HU,C28,industry,1,1,False,full
+HU,C29,industry,1,1,False,full
+HU,C30,industry,1,1,False,full
+HU,C31_32,industry,2,2,False,full
+HU,C33,industry,1,1,False,full
+HU,D35,none,0,0,False,no survey question
+HU,E36,none,0,0,False,no survey question
+HU,E37-39,none,0,0,False,no survey question
+HU,F,building,3,3,True,full
+HU,G45,none,0,0,False,no survey question
+HU,G46,none,0,0,False,no survey question
+HU,G47,none,0,0,False,no survey question
+HU,H49,services,1,1,False,full
+HU,H50,services,1,0,False,missing
+HU,H51,services,1,0,False,missing
+HU,H52,services,1,1,False,full
+HU,H53,services,1,0,False,missing
+HU,I,services,2,2,False,full
+HU,J58,services,1,0,False,missing
+HU,J59_60,services,2,0,False,missing
+HU,J61,services,1,1,False,full
+HU,J62_63,services,2,1,False,partial
+HU,K64,services,1,0,False,missing
+HU,K65,services,1,0,False,missing
+HU,K66,services,1,0,False,missing
+HU,L,services,1,1,False,full
+HU,M69_70,services,2,1,False,partial
+HU,M71,services,1,0,False,missing
+HU,M72,services,1,1,False,full
+HU,M73,services,1,0,False,missing
+HU,M74_75,services,2,0,False,missing
+HU,N77,services,1,1,False,full
+HU,N78,services,1,1,False,full
+HU,N79,services,1,1,False,full
+HU,N80-82,services,3,2,False,partial
+HU,O84,none,0,0,False,no survey question
+HU,P85,none,0,0,False,no survey question
+HU,Q86,none,0,0,False,no survey question
+HU,Q87_88,none,0,0,False,no survey question
+HU,R90-92,services,3,0,False,missing
+HU,R93,services,1,1,False,full
+HU,S94,services,1,0,False,missing
+HU,S95,services,1,0,False,missing
+HU,S96,services,1,1,False,full
+HU,T,none,0,0,False,no survey question
+HU,U,none,0,0,False,no survey question
+IE,A01,none,0,0,False,no survey question
+IE,A02,none,0,0,False,no survey question
+IE,A03,none,0,0,False,no survey question
+IE,B,none,0,0,False,no survey question
+IE,C10-12,industry,3,0,False,missing
+IE,C13-15,industry,3,0,False,missing
+IE,C16,industry,1,0,False,missing
+IE,C17,industry,1,0,False,missing
+IE,C18,industry,1,0,False,missing
+IE,C19,industry,1,0,False,missing
+IE,C20,industry,1,0,False,missing
+IE,C21,industry,1,0,False,missing
+IE,C22,industry,1,0,False,missing
+IE,C23,industry,1,0,False,missing
+IE,C24,industry,1,0,False,missing
+IE,C25,industry,1,0,False,missing
+IE,C26,industry,1,0,False,missing
+IE,C27,industry,1,0,False,missing
+IE,C28,industry,1,0,False,missing
+IE,C29,industry,1,0,False,missing
+IE,C30,industry,1,0,False,missing
+IE,C31_32,industry,2,0,False,missing
+IE,C33,industry,1,0,False,missing
+IE,D35,none,0,0,False,no survey question
+IE,E36,none,0,0,False,no survey question
+IE,E37-39,none,0,0,False,no survey question
+IE,F,building,3,0,False,missing
+IE,G45,none,0,0,False,no survey question
+IE,G46,none,0,0,False,no survey question
+IE,G47,none,0,0,False,no survey question
+IE,H49,services,1,0,False,missing
+IE,H50,services,1,0,False,missing
+IE,H51,services,1,0,False,missing
+IE,H52,services,1,0,False,missing
+IE,H53,services,1,0,False,missing
+IE,I,services,2,0,False,missing
+IE,J58,services,1,0,False,missing
+IE,J59_60,services,2,0,False,missing
+IE,J61,services,1,0,False,missing
+IE,J62_63,services,2,0,False,missing
+IE,K64,services,1,0,False,missing
+IE,K65,services,1,0,False,missing
+IE,K66,services,1,0,False,missing
+IE,L,services,1,0,False,missing
+IE,M69_70,services,2,0,False,missing
+IE,M71,services,1,0,False,missing
+IE,M72,services,1,0,False,missing
+IE,M73,services,1,0,False,missing
+IE,M74_75,services,2,0,False,missing
+IE,N77,services,1,0,False,missing
+IE,N78,services,1,0,False,missing
+IE,N79,services,1,0,False,missing
+IE,N80-82,services,3,0,False,missing
+IE,O84,none,0,0,False,no survey question
+IE,P85,none,0,0,False,no survey question
+IE,Q86,none,0,0,False,no survey question
+IE,Q87_88,none,0,0,False,no survey question
+IE,R90-92,services,3,0,False,missing
+IE,R93,services,1,0,False,missing
+IE,S94,services,1,0,False,missing
+IE,S95,services,1,0,False,missing
+IE,S96,services,1,0,False,missing
+IE,T,none,0,0,False,no survey question
+IE,U,none,0,0,False,no survey question
+IT,A01,none,0,0,False,no survey question
+IT,A02,none,0,0,False,no survey question
+IT,A03,none,0,0,False,no survey question
+IT,B,none,0,0,False,no survey question
+IT,C10-12,industry,3,3,False,full
+IT,C13-15,industry,3,3,False,full
+IT,C16,industry,1,1,False,full
+IT,C17,industry,1,1,False,full
+IT,C18,industry,1,1,False,full
+IT,C19,industry,1,1,False,full
+IT,C20,industry,1,1,False,full
+IT,C21,industry,1,1,False,full
+IT,C22,industry,1,1,False,full
+IT,C23,industry,1,1,False,full
+IT,C24,industry,1,1,False,full
+IT,C25,industry,1,1,False,full
+IT,C26,industry,1,1,False,full
+IT,C27,industry,1,1,False,full
+IT,C28,industry,1,1,False,full
+IT,C29,industry,1,1,False,full
+IT,C30,industry,1,1,False,full
+IT,C31_32,industry,2,2,False,full
+IT,C33,industry,1,1,False,full
+IT,D35,none,0,0,False,no survey question
+IT,E36,none,0,0,False,no survey question
+IT,E37-39,none,0,0,False,no survey question
+IT,F,building,3,3,True,full
+IT,G45,none,0,0,False,no survey question
+IT,G46,none,0,0,False,no survey question
+IT,G47,none,0,0,False,no survey question
+IT,H49,services,1,1,False,full
+IT,H50,services,1,1,False,full
+IT,H51,services,1,1,False,full
+IT,H52,services,1,1,False,full
+IT,H53,services,1,1,False,full
+IT,I,services,2,2,False,full
+IT,J58,services,1,1,False,full
+IT,J59_60,services,2,2,False,full
+IT,J61,services,1,1,False,full
+IT,J62_63,services,2,2,False,full
+IT,K64,services,1,0,False,missing
+IT,K65,services,1,0,False,missing
+IT,K66,services,1,0,False,missing
+IT,L,services,1,1,False,full
+IT,M69_70,services,2,2,False,full
+IT,M71,services,1,1,False,full
+IT,M72,services,1,1,False,full
+IT,M73,services,1,1,False,full
+IT,M74_75,services,2,2,False,full
+IT,N77,services,1,1,False,full
+IT,N78,services,1,1,False,full
+IT,N79,services,1,1,False,full
+IT,N80-82,services,3,3,False,full
+IT,O84,none,0,0,False,no survey question
+IT,P85,none,0,0,False,no survey question
+IT,Q86,none,0,0,False,no survey question
+IT,Q87_88,none,0,0,False,no survey question
+IT,R90-92,services,3,3,False,full
+IT,R93,services,1,1,False,full
+IT,S94,services,1,0,False,missing
+IT,S95,services,1,1,False,full
+IT,S96,services,1,1,False,full
+IT,T,none,0,0,False,no survey question
+IT,U,none,0,0,False,no survey question
+LT,A01,none,0,0,False,no survey question
+LT,A02,none,0,0,False,no survey question
+LT,A03,none,0,0,False,no survey question
+LT,B,none,0,0,False,no survey question
+LT,C10-12,industry,3,2,False,partial
+LT,C13-15,industry,3,3,False,full
+LT,C16,industry,1,1,False,full
+LT,C17,industry,1,1,False,full
+LT,C18,industry,1,1,False,full
+LT,C19,industry,1,0,False,missing
+LT,C20,industry,1,1,False,full
+LT,C21,industry,1,1,False,full
+LT,C22,industry,1,1,False,full
+LT,C23,industry,1,1,False,full
+LT,C24,industry,1,1,False,full
+LT,C25,industry,1,1,False,full
+LT,C26,industry,1,1,False,full
+LT,C27,industry,1,1,False,full
+LT,C28,industry,1,1,False,full
+LT,C29,industry,1,1,False,full
+LT,C30,industry,1,1,False,full
+LT,C31_32,industry,2,2,False,full
+LT,C33,industry,1,1,False,full
+LT,D35,none,0,0,False,no survey question
+LT,E36,none,0,0,False,no survey question
+LT,E37-39,none,0,0,False,no survey question
+LT,F,building,3,3,True,full
+LT,G45,none,0,0,False,no survey question
+LT,G46,none,0,0,False,no survey question
+LT,G47,none,0,0,False,no survey question
+LT,H49,services,1,1,False,full
+LT,H50,services,1,1,False,full
+LT,H51,services,1,1,False,full
+LT,H52,services,1,1,False,full
+LT,H53,services,1,1,False,full
+LT,I,services,2,2,False,full
+LT,J58,services,1,1,False,full
+LT,J59_60,services,2,2,False,full
+LT,J61,services,1,1,False,full
+LT,J62_63,services,2,2,False,full
+LT,K64,services,1,0,False,missing
+LT,K65,services,1,0,False,missing
+LT,K66,services,1,0,False,missing
+LT,L,services,1,1,False,full
+LT,M69_70,services,2,2,False,full
+LT,M71,services,1,1,False,full
+LT,M72,services,1,1,False,full
+LT,M73,services,1,1,False,full
+LT,M74_75,services,2,2,False,full
+LT,N77,services,1,1,False,full
+LT,N78,services,1,1,False,full
+LT,N79,services,1,1,False,full
+LT,N80-82,services,3,3,False,full
+LT,O84,none,0,0,False,no survey question
+LT,P85,none,0,0,False,no survey question
+LT,Q86,none,0,0,False,no survey question
+LT,Q87_88,none,0,0,False,no survey question
+LT,R90-92,services,3,3,False,full
+LT,R93,services,1,1,False,full
+LT,S94,services,1,0,False,missing
+LT,S95,services,1,1,False,full
+LT,S96,services,1,1,False,full
+LT,T,none,0,0,False,no survey question
+LT,U,none,0,0,False,no survey question
+LU,A01,none,0,0,False,no survey question
+LU,A02,none,0,0,False,no survey question
+LU,A03,none,0,0,False,no survey question
+LU,B,none,0,0,False,no survey question
+LU,C10-12,industry,3,3,False,full
+LU,C13-15,industry,3,1,False,partial
+LU,C16,industry,1,1,False,full
+LU,C17,industry,1,1,False,full
+LU,C18,industry,1,1,False,full
+LU,C19,industry,1,0,False,missing
+LU,C20,industry,1,1,False,full
+LU,C21,industry,1,1,False,full
+LU,C22,industry,1,1,False,full
+LU,C23,industry,1,1,False,full
+LU,C24,industry,1,1,False,full
+LU,C25,industry,1,1,False,full
+LU,C26,industry,1,1,False,full
+LU,C27,industry,1,1,False,full
+LU,C28,industry,1,1,False,full
+LU,C29,industry,1,1,False,full
+LU,C30,industry,1,0,False,missing
+LU,C31_32,industry,2,1,False,partial
+LU,C33,industry,1,1,False,full
+LU,D35,none,0,0,False,no survey question
+LU,E36,none,0,0,False,no survey question
+LU,E37-39,none,0,0,False,no survey question
+LU,F,building,3,3,True,full
+LU,G45,none,0,0,False,no survey question
+LU,G46,none,0,0,False,no survey question
+LU,G47,none,0,0,False,no survey question
+LU,H49,services,1,0,False,missing
+LU,H50,services,1,0,False,missing
+LU,H51,services,1,0,False,missing
+LU,H52,services,1,0,False,missing
+LU,H53,services,1,0,False,missing
+LU,I,services,2,0,False,missing
+LU,J58,services,1,0,False,missing
+LU,J59_60,services,2,0,False,missing
+LU,J61,services,1,0,False,missing
+LU,J62_63,services,2,0,False,missing
+LU,K64,services,1,0,False,missing
+LU,K65,services,1,0,False,missing
+LU,K66,services,1,0,False,missing
+LU,L,services,1,0,False,missing
+LU,M69_70,services,2,0,False,missing
+LU,M71,services,1,0,False,missing
+LU,M72,services,1,0,False,missing
+LU,M73,services,1,0,False,missing
+LU,M74_75,services,2,0,False,missing
+LU,N77,services,1,0,False,missing
+LU,N78,services,1,0,False,missing
+LU,N79,services,1,0,False,missing
+LU,N80-82,services,3,0,False,missing
+LU,O84,none,0,0,False,no survey question
+LU,P85,none,0,0,False,no survey question
+LU,Q86,none,0,0,False,no survey question
+LU,Q87_88,none,0,0,False,no survey question
+LU,R90-92,services,3,0,False,missing
+LU,R93,services,1,0,False,missing
+LU,S94,services,1,0,False,missing
+LU,S95,services,1,0,False,missing
+LU,S96,services,1,0,False,missing
+LU,T,none,0,0,False,no survey question
+LU,U,none,0,0,False,no survey question
+LV,A01,none,0,0,False,no survey question
+LV,A02,none,0,0,False,no survey question
+LV,A03,none,0,0,False,no survey question
+LV,B,none,0,0,False,no survey question
+LV,C10-12,industry,3,2,False,partial
+LV,C13-15,industry,3,3,False,full
+LV,C16,industry,1,1,False,full
+LV,C17,industry,1,1,False,full
+LV,C18,industry,1,1,False,full
+LV,C19,industry,1,1,False,full
+LV,C20,industry,1,1,False,full
+LV,C21,industry,1,1,False,full
+LV,C22,industry,1,1,False,full
+LV,C23,industry,1,1,False,full
+LV,C24,industry,1,1,False,full
+LV,C25,industry,1,1,False,full
+LV,C26,industry,1,1,False,full
+LV,C27,industry,1,1,False,full
+LV,C28,industry,1,1,False,full
+LV,C29,industry,1,1,False,full
+LV,C30,industry,1,1,False,full
+LV,C31_32,industry,2,2,False,full
+LV,C33,industry,1,1,False,full
+LV,D35,none,0,0,False,no survey question
+LV,E36,none,0,0,False,no survey question
+LV,E37-39,none,0,0,False,no survey question
+LV,F,building,3,3,True,full
+LV,G45,none,0,0,False,no survey question
+LV,G46,none,0,0,False,no survey question
+LV,G47,none,0,0,False,no survey question
+LV,H49,services,1,1,False,full
+LV,H50,services,1,1,False,full
+LV,H51,services,1,1,False,full
+LV,H52,services,1,1,False,full
+LV,H53,services,1,1,False,full
+LV,I,services,2,2,False,full
+LV,J58,services,1,1,False,full
+LV,J59_60,services,2,2,False,full
+LV,J61,services,1,1,False,full
+LV,J62_63,services,2,2,False,full
+LV,K64,services,1,1,False,full
+LV,K65,services,1,1,False,full
+LV,K66,services,1,1,False,full
+LV,L,services,1,1,False,full
+LV,M69_70,services,2,2,False,full
+LV,M71,services,1,1,False,full
+LV,M72,services,1,1,False,full
+LV,M73,services,1,1,False,full
+LV,M74_75,services,2,2,False,full
+LV,N77,services,1,1,False,full
+LV,N78,services,1,1,False,full
+LV,N79,services,1,1,False,full
+LV,N80-82,services,3,3,False,full
+LV,O84,none,0,0,False,no survey question
+LV,P85,none,0,0,False,no survey question
+LV,Q86,none,0,0,False,no survey question
+LV,Q87_88,none,0,0,False,no survey question
+LV,R90-92,services,3,0,False,missing
+LV,R93,services,1,0,False,missing
+LV,S94,services,1,0,False,missing
+LV,S95,services,1,0,False,missing
+LV,S96,services,1,0,False,missing
+LV,T,none,0,0,False,no survey question
+LV,U,none,0,0,False,no survey question
+MT,A01,none,0,0,False,no survey question
+MT,A02,none,0,0,False,no survey question
+MT,A03,none,0,0,False,no survey question
+MT,B,none,0,0,False,no survey question
+MT,C10-12,industry,3,2,False,partial
+MT,C13-15,industry,3,3,False,full
+MT,C16,industry,1,1,False,full
+MT,C17,industry,1,1,False,full
+MT,C18,industry,1,1,False,full
+MT,C19,industry,1,0,False,missing
+MT,C20,industry,1,1,False,full
+MT,C21,industry,1,1,False,full
+MT,C22,industry,1,1,False,full
+MT,C23,industry,1,1,False,full
+MT,C24,industry,1,0,False,missing
+MT,C25,industry,1,1,False,full
+MT,C26,industry,1,1,False,full
+MT,C27,industry,1,1,False,full
+MT,C28,industry,1,1,False,full
+MT,C29,industry,1,1,False,full
+MT,C30,industry,1,0,False,missing
+MT,C31_32,industry,2,2,False,full
+MT,C33,industry,1,1,False,full
+MT,D35,none,0,0,False,no survey question
+MT,E36,none,0,0,False,no survey question
+MT,E37-39,none,0,0,False,no survey question
+MT,F,building,3,3,True,full
+MT,G45,none,0,0,False,no survey question
+MT,G46,none,0,0,False,no survey question
+MT,G47,none,0,0,False,no survey question
+MT,H49,services,1,1,False,full
+MT,H50,services,1,1,False,full
+MT,H51,services,1,1,False,full
+MT,H52,services,1,1,False,full
+MT,H53,services,1,1,False,full
+MT,I,services,2,2,False,full
+MT,J58,services,1,1,False,full
+MT,J59_60,services,2,2,False,full
+MT,J61,services,1,1,False,full
+MT,J62_63,services,2,1,False,partial
+MT,K64,services,1,1,False,full
+MT,K65,services,1,1,False,full
+MT,K66,services,1,1,False,full
+MT,L,services,1,1,False,full
+MT,M69_70,services,2,2,False,full
+MT,M71,services,1,1,False,full
+MT,M72,services,1,0,False,missing
+MT,M73,services,1,1,False,full
+MT,M74_75,services,2,1,False,partial
+MT,N77,services,1,1,False,full
+MT,N78,services,1,1,False,full
+MT,N79,services,1,1,False,full
+MT,N80-82,services,3,3,False,full
+MT,O84,none,0,0,False,no survey question
+MT,P85,none,0,0,False,no survey question
+MT,Q86,none,0,0,False,no survey question
+MT,Q87_88,none,0,0,False,no survey question
+MT,R90-92,services,3,2,False,partial
+MT,R93,services,1,1,False,full
+MT,S94,services,1,0,False,missing
+MT,S95,services,1,0,False,missing
+MT,S96,services,1,1,False,full
+MT,T,none,0,0,False,no survey question
+MT,U,none,0,0,False,no survey question
+NL,A01,none,0,0,False,no survey question
+NL,A02,none,0,0,False,no survey question
+NL,A03,none,0,0,False,no survey question
+NL,B,none,0,0,False,no survey question
+NL,C10-12,industry,3,3,False,full
+NL,C13-15,industry,3,3,False,full
+NL,C16,industry,1,1,False,full
+NL,C17,industry,1,1,False,full
+NL,C18,industry,1,1,False,full
+NL,C19,industry,1,1,False,full
+NL,C20,industry,1,1,False,full
+NL,C21,industry,1,1,False,full
+NL,C22,industry,1,1,False,full
+NL,C23,industry,1,1,False,full
+NL,C24,industry,1,1,False,full
+NL,C25,industry,1,1,False,full
+NL,C26,industry,1,1,False,full
+NL,C27,industry,1,1,False,full
+NL,C28,industry,1,1,False,full
+NL,C29,industry,1,1,False,full
+NL,C30,industry,1,1,False,full
+NL,C31_32,industry,2,2,False,full
+NL,C33,industry,1,1,False,full
+NL,D35,none,0,0,False,no survey question
+NL,E36,none,0,0,False,no survey question
+NL,E37-39,none,0,0,False,no survey question
+NL,F,building,3,3,True,full
+NL,G45,none,0,0,False,no survey question
+NL,G46,none,0,0,False,no survey question
+NL,G47,none,0,0,False,no survey question
+NL,H49,services,1,1,False,full
+NL,H50,services,1,1,False,full
+NL,H51,services,1,1,False,full
+NL,H52,services,1,1,False,full
+NL,H53,services,1,1,False,full
+NL,I,services,2,2,False,full
+NL,J58,services,1,1,False,full
+NL,J59_60,services,2,2,False,full
+NL,J61,services,1,1,False,full
+NL,J62_63,services,2,2,False,full
+NL,K64,services,1,0,False,missing
+NL,K65,services,1,0,False,missing
+NL,K66,services,1,0,False,missing
+NL,L,services,1,1,False,full
+NL,M69_70,services,2,2,False,full
+NL,M71,services,1,1,False,full
+NL,M72,services,1,1,False,full
+NL,M73,services,1,1,False,full
+NL,M74_75,services,2,2,False,full
+NL,N77,services,1,1,False,full
+NL,N78,services,1,1,False,full
+NL,N79,services,1,1,False,full
+NL,N80-82,services,3,3,False,full
+NL,O84,none,0,0,False,no survey question
+NL,P85,none,0,0,False,no survey question
+NL,Q86,none,0,0,False,no survey question
+NL,Q87_88,none,0,0,False,no survey question
+NL,R90-92,services,3,3,False,full
+NL,R93,services,1,1,False,full
+NL,S94,services,1,1,False,full
+NL,S95,services,1,1,False,full
+NL,S96,services,1,1,False,full
+NL,T,none,0,0,False,no survey question
+NL,U,none,0,0,False,no survey question
+PL,A01,none,0,0,False,no survey question
+PL,A02,none,0,0,False,no survey question
+PL,A03,none,0,0,False,no survey question
+PL,B,none,0,0,False,no survey question
+PL,C10-12,industry,3,3,False,full
+PL,C13-15,industry,3,3,False,full
+PL,C16,industry,1,1,False,full
+PL,C17,industry,1,1,False,full
+PL,C18,industry,1,1,False,full
+PL,C19,industry,1,1,False,full
+PL,C20,industry,1,1,False,full
+PL,C21,industry,1,1,False,full
+PL,C22,industry,1,1,False,full
+PL,C23,industry,1,1,False,full
+PL,C24,industry,1,1,False,full
+PL,C25,industry,1,1,False,full
+PL,C26,industry,1,1,False,full
+PL,C27,industry,1,1,False,full
+PL,C28,industry,1,1,False,full
+PL,C29,industry,1,1,False,full
+PL,C30,industry,1,1,False,full
+PL,C31_32,industry,2,2,False,full
+PL,C33,industry,1,1,False,full
+PL,D35,none,0,0,False,no survey question
+PL,E36,none,0,0,False,no survey question
+PL,E37-39,none,0,0,False,no survey question
+PL,F,building,3,3,True,full
+PL,G45,none,0,0,False,no survey question
+PL,G46,none,0,0,False,no survey question
+PL,G47,none,0,0,False,no survey question
+PL,H49,services,1,1,False,full
+PL,H50,services,1,1,False,full
+PL,H51,services,1,1,False,full
+PL,H52,services,1,1,False,full
+PL,H53,services,1,1,False,full
+PL,I,services,2,2,False,full
+PL,J58,services,1,1,False,full
+PL,J59_60,services,2,2,False,full
+PL,J61,services,1,1,False,full
+PL,J62_63,services,2,2,False,full
+PL,K64,services,1,1,False,full
+PL,K65,services,1,1,False,full
+PL,K66,services,1,1,False,full
+PL,L,services,1,1,False,full
+PL,M69_70,services,2,2,False,full
+PL,M71,services,1,1,False,full
+PL,M72,services,1,1,False,full
+PL,M73,services,1,1,False,full
+PL,M74_75,services,2,2,False,full
+PL,N77,services,1,1,False,full
+PL,N78,services,1,1,False,full
+PL,N79,services,1,1,False,full
+PL,N80-82,services,3,3,False,full
+PL,O84,none,0,0,False,no survey question
+PL,P85,none,0,0,False,no survey question
+PL,Q86,none,0,0,False,no survey question
+PL,Q87_88,none,0,0,False,no survey question
+PL,R90-92,services,3,3,False,full
+PL,R93,services,1,1,False,full
+PL,S94,services,1,1,False,full
+PL,S95,services,1,1,False,full
+PL,S96,services,1,1,False,full
+PL,T,none,0,0,False,no survey question
+PL,U,none,0,0,False,no survey question
+PT,A01,none,0,0,False,no survey question
+PT,A02,none,0,0,False,no survey question
+PT,A03,none,0,0,False,no survey question
+PT,B,none,0,0,False,no survey question
+PT,C10-12,industry,3,3,False,full
+PT,C13-15,industry,3,3,False,full
+PT,C16,industry,1,1,False,full
+PT,C17,industry,1,1,False,full
+PT,C18,industry,1,1,False,full
+PT,C19,industry,1,1,False,full
+PT,C20,industry,1,1,False,full
+PT,C21,industry,1,1,False,full
+PT,C22,industry,1,1,False,full
+PT,C23,industry,1,1,False,full
+PT,C24,industry,1,1,False,full
+PT,C25,industry,1,1,False,full
+PT,C26,industry,1,1,False,full
+PT,C27,industry,1,1,False,full
+PT,C28,industry,1,1,False,full
+PT,C29,industry,1,1,False,full
+PT,C30,industry,1,1,False,full
+PT,C31_32,industry,2,2,False,full
+PT,C33,industry,1,1,False,full
+PT,D35,none,0,0,False,no survey question
+PT,E36,none,0,0,False,no survey question
+PT,E37-39,none,0,0,False,no survey question
+PT,F,building,3,3,True,full
+PT,G45,none,0,0,False,no survey question
+PT,G46,none,0,0,False,no survey question
+PT,G47,none,0,0,False,no survey question
+PT,H49,services,1,1,False,full
+PT,H50,services,1,1,False,full
+PT,H51,services,1,1,False,full
+PT,H52,services,1,1,False,full
+PT,H53,services,1,1,False,full
+PT,I,services,2,2,False,full
+PT,J58,services,1,1,False,full
+PT,J59_60,services,2,2,False,full
+PT,J61,services,1,1,False,full
+PT,J62_63,services,2,2,False,full
+PT,K64,services,1,0,False,missing
+PT,K65,services,1,0,False,missing
+PT,K66,services,1,0,False,missing
+PT,L,services,1,1,False,full
+PT,M69_70,services,2,2,False,full
+PT,M71,services,1,1,False,full
+PT,M72,services,1,1,False,full
+PT,M73,services,1,1,False,full
+PT,M74_75,services,2,2,False,full
+PT,N77,services,1,1,False,full
+PT,N78,services,1,1,False,full
+PT,N79,services,1,1,False,full
+PT,N80-82,services,3,3,False,full
+PT,O84,none,0,0,False,no survey question
+PT,P85,none,0,0,False,no survey question
+PT,Q86,none,0,0,False,no survey question
+PT,Q87_88,none,0,0,False,no survey question
+PT,R90-92,services,3,3,False,full
+PT,R93,services,1,1,False,full
+PT,S94,services,1,1,False,full
+PT,S95,services,1,1,False,full
+PT,S96,services,1,1,False,full
+PT,T,none,0,0,False,no survey question
+PT,U,none,0,0,False,no survey question
+RO,A01,none,0,0,False,no survey question
+RO,A02,none,0,0,False,no survey question
+RO,A03,none,0,0,False,no survey question
+RO,B,none,0,0,False,no survey question
+RO,C10-12,industry,3,3,False,full
+RO,C13-15,industry,3,3,False,full
+RO,C16,industry,1,1,False,full
+RO,C17,industry,1,1,False,full
+RO,C18,industry,1,1,False,full
+RO,C19,industry,1,1,False,full
+RO,C20,industry,1,1,False,full
+RO,C21,industry,1,1,False,full
+RO,C22,industry,1,1,False,full
+RO,C23,industry,1,1,False,full
+RO,C24,industry,1,1,False,full
+RO,C25,industry,1,1,False,full
+RO,C26,industry,1,1,False,full
+RO,C27,industry,1,1,False,full
+RO,C28,industry,1,1,False,full
+RO,C29,industry,1,1,False,full
+RO,C30,industry,1,1,False,full
+RO,C31_32,industry,2,2,False,full
+RO,C33,industry,1,1,False,full
+RO,D35,none,0,0,False,no survey question
+RO,E36,none,0,0,False,no survey question
+RO,E37-39,none,0,0,False,no survey question
+RO,F,building,3,3,True,full
+RO,G45,none,0,0,False,no survey question
+RO,G46,none,0,0,False,no survey question
+RO,G47,none,0,0,False,no survey question
+RO,H49,services,1,1,False,full
+RO,H50,services,1,1,False,full
+RO,H51,services,1,1,False,full
+RO,H52,services,1,1,False,full
+RO,H53,services,1,1,False,full
+RO,I,services,2,2,False,full
+RO,J58,services,1,1,False,full
+RO,J59_60,services,2,2,False,full
+RO,J61,services,1,1,False,full
+RO,J62_63,services,2,2,False,full
+RO,K64,services,1,0,False,missing
+RO,K65,services,1,0,False,missing
+RO,K66,services,1,0,False,missing
+RO,L,services,1,1,False,full
+RO,M69_70,services,2,2,False,full
+RO,M71,services,1,1,False,full
+RO,M72,services,1,1,False,full
+RO,M73,services,1,1,False,full
+RO,M74_75,services,2,2,False,full
+RO,N77,services,1,1,False,full
+RO,N78,services,1,1,False,full
+RO,N79,services,1,1,False,full
+RO,N80-82,services,3,3,False,full
+RO,O84,none,0,0,False,no survey question
+RO,P85,none,0,0,False,no survey question
+RO,Q86,none,0,0,False,no survey question
+RO,Q87_88,none,0,0,False,no survey question
+RO,R90-92,services,3,3,False,full
+RO,R93,services,1,1,False,full
+RO,S94,services,1,0,False,missing
+RO,S95,services,1,1,False,full
+RO,S96,services,1,1,False,full
+RO,T,none,0,0,False,no survey question
+RO,U,none,0,0,False,no survey question
+SE,A01,none,0,0,False,no survey question
+SE,A02,none,0,0,False,no survey question
+SE,A03,none,0,0,False,no survey question
+SE,B,none,0,0,False,no survey question
+SE,C10-12,industry,3,3,False,full
+SE,C13-15,industry,3,3,False,full
+SE,C16,industry,1,1,False,full
+SE,C17,industry,1,1,False,full
+SE,C18,industry,1,1,False,full
+SE,C19,industry,1,1,False,full
+SE,C20,industry,1,1,False,full
+SE,C21,industry,1,1,False,full
+SE,C22,industry,1,1,False,full
+SE,C23,industry,1,1,False,full
+SE,C24,industry,1,1,False,full
+SE,C25,industry,1,1,False,full
+SE,C26,industry,1,1,False,full
+SE,C27,industry,1,1,False,full
+SE,C28,industry,1,1,False,full
+SE,C29,industry,1,1,False,full
+SE,C30,industry,1,1,False,full
+SE,C31_32,industry,2,2,False,full
+SE,C33,industry,1,1,False,full
+SE,D35,none,0,0,False,no survey question
+SE,E36,none,0,0,False,no survey question
+SE,E37-39,none,0,0,False,no survey question
+SE,F,building,3,3,True,full
+SE,G45,none,0,0,False,no survey question
+SE,G46,none,0,0,False,no survey question
+SE,G47,none,0,0,False,no survey question
+SE,H49,services,1,1,False,full
+SE,H50,services,1,1,False,full
+SE,H51,services,1,1,False,full
+SE,H52,services,1,1,False,full
+SE,H53,services,1,1,False,full
+SE,I,services,2,2,False,full
+SE,J58,services,1,1,False,full
+SE,J59_60,services,2,2,False,full
+SE,J61,services,1,1,False,full
+SE,J62_63,services,2,2,False,full
+SE,K64,services,1,1,False,full
+SE,K65,services,1,1,False,full
+SE,K66,services,1,1,False,full
+SE,L,services,1,1,False,full
+SE,M69_70,services,2,2,False,full
+SE,M71,services,1,1,False,full
+SE,M72,services,1,0,False,missing
+SE,M73,services,1,1,False,full
+SE,M74_75,services,2,1,False,partial
+SE,N77,services,1,1,False,full
+SE,N78,services,1,1,False,full
+SE,N79,services,1,1,False,full
+SE,N80-82,services,3,3,False,full
+SE,O84,none,0,0,False,no survey question
+SE,P85,none,0,0,False,no survey question
+SE,Q86,none,0,0,False,no survey question
+SE,Q87_88,none,0,0,False,no survey question
+SE,R90-92,services,3,0,False,missing
+SE,R93,services,1,0,False,missing
+SE,S94,services,1,0,False,missing
+SE,S95,services,1,1,False,full
+SE,S96,services,1,1,False,full
+SE,T,none,0,0,False,no survey question
+SE,U,none,0,0,False,no survey question
+SI,A01,none,0,0,False,no survey question
+SI,A02,none,0,0,False,no survey question
+SI,A03,none,0,0,False,no survey question
+SI,B,none,0,0,False,no survey question
+SI,C10-12,industry,3,2,False,partial
+SI,C13-15,industry,3,3,False,full
+SI,C16,industry,1,1,False,full
+SI,C17,industry,1,1,False,full
+SI,C18,industry,1,1,False,full
+SI,C19,industry,1,0,False,missing
+SI,C20,industry,1,1,False,full
+SI,C21,industry,1,0,False,missing
+SI,C22,industry,1,1,False,full
+SI,C23,industry,1,1,False,full
+SI,C24,industry,1,1,False,full
+SI,C25,industry,1,1,False,full
+SI,C26,industry,1,1,False,full
+SI,C27,industry,1,1,False,full
+SI,C28,industry,1,1,False,full
+SI,C29,industry,1,1,False,full
+SI,C30,industry,1,1,False,full
+SI,C31_32,industry,2,2,False,full
+SI,C33,industry,1,1,False,full
+SI,D35,none,0,0,False,no survey question
+SI,E36,none,0,0,False,no survey question
+SI,E37-39,none,0,0,False,no survey question
+SI,F,building,3,3,True,full
+SI,G45,none,0,0,False,no survey question
+SI,G46,none,0,0,False,no survey question
+SI,G47,none,0,0,False,no survey question
+SI,H49,services,1,1,False,full
+SI,H50,services,1,0,False,missing
+SI,H51,services,1,0,False,missing
+SI,H52,services,1,1,False,full
+SI,H53,services,1,1,False,full
+SI,I,services,2,2,False,full
+SI,J58,services,1,1,False,full
+SI,J59_60,services,2,2,False,full
+SI,J61,services,1,1,False,full
+SI,J62_63,services,2,2,False,full
+SI,K64,services,1,1,False,full
+SI,K65,services,1,1,False,full
+SI,K66,services,1,1,False,full
+SI,L,services,1,1,False,full
+SI,M69_70,services,2,2,False,full
+SI,M71,services,1,1,False,full
+SI,M72,services,1,1,False,full
+SI,M73,services,1,1,False,full
+SI,M74_75,services,2,2,False,full
+SI,N77,services,1,1,False,full
+SI,N78,services,1,1,False,full
+SI,N79,services,1,1,False,full
+SI,N80-82,services,3,3,False,full
+SI,O84,none,0,0,False,no survey question
+SI,P85,none,0,0,False,no survey question
+SI,Q86,none,0,0,False,no survey question
+SI,Q87_88,none,0,0,False,no survey question
+SI,R90-92,services,3,1,False,partial
+SI,R93,services,1,1,False,full
+SI,S94,services,1,0,False,missing
+SI,S95,services,1,1,False,full
+SI,S96,services,1,1,False,full
+SI,T,none,0,0,False,no survey question
+SI,U,none,0,0,False,no survey question
+SK,A01,none,0,0,False,no survey question
+SK,A02,none,0,0,False,no survey question
+SK,A03,none,0,0,False,no survey question
+SK,B,none,0,0,False,no survey question
+SK,C10-12,industry,3,2,False,partial
+SK,C13-15,industry,3,3,False,full
+SK,C16,industry,1,1,False,full
+SK,C17,industry,1,1,False,full
+SK,C18,industry,1,1,False,full
+SK,C19,industry,1,0,False,missing
+SK,C20,industry,1,1,False,full
+SK,C21,industry,1,1,False,full
+SK,C22,industry,1,1,False,full
+SK,C23,industry,1,1,False,full
+SK,C24,industry,1,1,False,full
+SK,C25,industry,1,1,False,full
+SK,C26,industry,1,1,False,full
+SK,C27,industry,1,1,False,full
+SK,C28,industry,1,1,False,full
+SK,C29,industry,1,1,False,full
+SK,C30,industry,1,1,False,full
+SK,C31_32,industry,2,2,False,full
+SK,C33,industry,1,1,False,full
+SK,D35,none,0,0,False,no survey question
+SK,E36,none,0,0,False,no survey question
+SK,E37-39,none,0,0,False,no survey question
+SK,F,building,3,3,True,full
+SK,G45,none,0,0,False,no survey question
+SK,G46,none,0,0,False,no survey question
+SK,G47,none,0,0,False,no survey question
+SK,H49,services,1,1,False,full
+SK,H50,services,1,0,False,missing
+SK,H51,services,1,1,False,full
+SK,H52,services,1,1,False,full
+SK,H53,services,1,1,False,full
+SK,I,services,2,2,False,full
+SK,J58,services,1,1,False,full
+SK,J59_60,services,2,2,False,full
+SK,J61,services,1,1,False,full
+SK,J62_63,services,2,2,False,full
+SK,K64,services,1,1,False,full
+SK,K65,services,1,1,False,full
+SK,K66,services,1,1,False,full
+SK,L,services,1,1,False,full
+SK,M69_70,services,2,2,False,full
+SK,M71,services,1,1,False,full
+SK,M72,services,1,0,False,missing
+SK,M73,services,1,1,False,full
+SK,M74_75,services,2,1,False,partial
+SK,N77,services,1,1,False,full
+SK,N78,services,1,1,False,full
+SK,N79,services,1,1,False,full
+SK,N80-82,services,3,3,False,full
+SK,O84,none,0,0,False,no survey question
+SK,P85,none,0,0,False,no survey question
+SK,Q86,none,0,0,False,no survey question
+SK,Q87_88,none,0,0,False,no survey question
+SK,R90-92,services,3,1,False,partial
+SK,R93,services,1,1,False,full
+SK,S94,services,1,0,False,missing
+SK,S95,services,1,1,False,full
+SK,S96,services,1,1,False,full
+SK,T,none,0,0,False,no survey question
+SK,U,none,0,0,False,no survey question

@@ -1,0 +1,17 @@
+scb_group,scb_label,a64_industries,a64_count,scb_employees,nama_employees,nama_industries_with_value,ratio_scb_to_nama,occupations_with_employees
+00,okänd verksamhet,,0,36119,,0,,408
+A,"jordbruk, skogsbruk och fiske",A01 A02 A03,3,38960,43000,3,0.906,365
+B+C,tillverkning och utvinning,B C10-12 C13-15 C16 C17 C18 C19 C20 C21 C22 C23 C24 C25 C26 C27 C28 C29 C30 C31_32 C33,20,549509,538000,18,1.021,417
+D+E,energiförsörjning; miljöverksamhet,D35 E36 E37-39,3,60589,65000,3,0.932,365
+F,byggverksamhet,F,1,344674,350000,1,0.985,413
+G,handel,G45 G46 G47,3,583505,606000,3,0.963,428
+H,transport och magasinering,H49 H50 H51 H52 H53,5,223111,145000,3,1.539,402
+I,hotell- och restaurangverksamhet,I,1,187348,198000,1,0.946,391
+J,information och kommunikation,J58 J59_60 J61 J62_63,4,236469,240000,4,0.985,416
+K,finans- och försäkringsverksamhet,K64 K65 K66,3,111239,112000,3,0.993,374
+L,fastighetsverksamhet,L,1,80481,84000,1,0.958,410
+M+N,företagstjänster,M69_70 M71 M72 M73 M74_75 N77 N78 N79 N80-82,9,632825,476000,7,1.329,430
+O,offentlig förvaltning och försvar,O84,1,348825,265000,1,1.316,410
+P,utbildning ,P85,1,539508,561000,1,0.962,416
+Q,vård och omsorg; sociala tjänster,Q86 Q87_88,2,838795,938000,2,0.894,422
+R+S+T+U,kulturella och personliga tjänster m.m.,R90-92 R93 S94 S95 S96 T U,7,194685,226000,7,0.861,425

@@ -1,0 +1,65 @@
+figaro_code,label,nace_section,nace_divisions,nama_code,ecfin_survey,ecfin_divisions,scb_group
+A01,"Crop and animal production, hunting and related service activities",A,01,A01,,,A
+A02,Forestry and logging,A,02,A02,,,A
+A03,Fishing and aquaculture,A,03,A03,,,A
+B,Mining and quarrying,B,05 06 07 08 09,B,,,B+C
+C10-12,Manufacture of food products; beverages and tobacco products,C,10 11 12,C10-C12,industry,10 11 12,B+C
+C13-15,"Manufacture of textiles, wearing apparel, leather and related products",C,13 14 15,C13-C15,industry,13 14 15,B+C
+C16,"Manufacture of wood and of products of wood and cork, except furniture; manufacture of articles of straw and plaiting materials",C,16,C16,industry,16,B+C
+C17,Manufacture of paper and paper products,C,17,C17,industry,17,B+C
+C18,Printing and reproduction of recorded media,C,18,C18,industry,18,B+C
+C19,Manufacture of coke and refined petroleum products,C,19,C19,industry,19,B+C
+C20,Manufacture of chemicals and chemical products,C,20,C20,industry,20,B+C
+C21,Manufacture of basic pharmaceutical products and pharmaceutical preparations,C,21,C21,industry,21,B+C
+C22,Manufacture of rubber and plastic products,C,22,C22,industry,22,B+C
+C23,Manufacture of other non-metallic mineral products,C,23,C23,industry,23,B+C
+C24,Manufacture of basic metals,C,24,C24,industry,24,B+C
+C25,"Manufacture of fabricated metal products, except machinery and equipment",C,25,C25,industry,25,B+C
+C26,"Manufacture of computer, electronic and optical products",C,26,C26,industry,26,B+C
+C27,Manufacture of electrical equipment,C,27,C27,industry,27,B+C
+C28,Manufacture of machinery and equipment n.e.c.,C,28,C28,industry,28,B+C
+C29,"Manufacture of motor vehicles, trailers and semi-trailers",C,29,C29,industry,29,B+C
+C30,Manufacture of other transport equipment,C,30,C30,industry,30,B+C
+C31_32,Manufacture of furniture; other manufacturing,C,31 32,C31_C32,industry,31 32,B+C
+C33,Repair and installation of machinery and equipment,C,33,C33,industry,33,B+C
+D35,"Electricity, gas, steam and air conditioning supply",D,35,D35,,,D+E
+E36,"Water collection, treatment and supply",E,36,E36,,,D+E
+E37-39,"Sewerage, waste management, remediation activities",E,37 38 39,E37-E39,,,D+E
+F,Construction,F,41 42 43,F,building,41 42 43,F
+G45,Wholesale and retail trade and repair of motor vehicles and motorcycles,G,45,G45,,,G
+G46,"Wholesale trade, except of motor vehicles and motorcycles",G,46,G46,,,G
+G47,"Retail trade, except of motor vehicles and motorcycles",G,47,G47,,,G
+H49,Land transport and transport via pipelines,H,49,H49,services,49,H
+H50,Water transport,H,50,H50,services,50,H
+H51,Air transport,H,51,H51,services,51,H
+H52,Warehousing and support activities for transportation,H,52,H52,services,52,H
+H53,Postal and courier activities,H,53,H53,services,53,H
+I,Accommodation and food service activities,I,55 56,I,services,55 56,I
+J58,Publishing activities,J,58,J58,services,58,J
+J59_60,"Motion picture, video, television programme production; programming and broadcasting activities",J,59 60,J59_J60,services,59 60,J
+J61,Telecommunications,J,61,J61,services,61,J
+J62_63,"Computer programming, consultancy, and information service activities",J,62 63,J62_J63,services,62 63,J
+K64,"Financial service activities, except insurance and pension funding",K,64,K64,services,64,K
+K65,"Insurance, reinsurance and pension funding, except compulsory social security",K,65,K65,services,65,K
+K66,Activities auxiliary to financial services and insurance activities,K,66,K66,services,66,K
+L,Real estate activities,L,68,L,services,68,L
+M69_70,Legal and accounting activities; activities of head offices; management consultancy activities,M,69 70,M69_M70,services,69 70,M+N
+M71,Architectural and engineering activities; technical testing and analysis,M,71,M71,services,71,M+N
+M72,Scientific research and development,M,72,M72,services,72,M+N
+M73,Advertising and market research,M,73,M73,services,73,M+N
+M74_75,"Other professional, scientific and technical activities; veterinary activities",M,74 75,M74_M75,services,74 75,M+N
+N77,Rental and leasing activities,N,77,N77,services,77,M+N
+N78,Employment activities,N,78,N78,services,78,M+N
+N79,"Travel agency, tour operator reservation service and related activities",N,79,N79,services,79,M+N
+N80-82,"Security and investigation, service and landscape, office administrative and support activities",N,80 81 82,N80-N82,services,80 81 82,M+N
+O84,Public administration and defence; compulsory social security,O,84,O84,,,O
+P85,Education,P,85,P85,,,P
+Q86,Human health activities,Q,86,Q86,,,Q
+Q87_88,Residential care activities and social work activities without accommodation,Q,87 88,Q87_Q88,,,Q
+R90-92,"Creative, arts and entertainment activities; libraries, archives, museums and other cultural activities; gambling and betting activities",R,90 91 92,R90-R92,services,90 91 92,R+S+T+U
+R93,Sports activities and amusement and recreation activities,R,93,R93,services,93,R+S+T+U
+S94,Activities of membership organisations,S,94,S94,services,94,R+S+T+U
+S95,Repair of computers and personal and household goods,S,95,S95,services,95,R+S+T+U
+S96,Other personal service activities,S,96,S96,services,96,R+S+T+U
+T,Activities of households as employers; undifferentiated goods- and services-producing activities of households for own use,T,97 98,T,,,R+S+T+U
+U,Activities of extraterritorial organisations and bodies,U,99,U,,,R+S+T+U

@@ -10,8 +10,8 @@ The result locates pressure. It does not size price changes, it has no deficit o
 
 | Phase | Content | State |
 | :--- | :--- | :--- |
-| 0 | Scaffold, Railway health check | Done, awaiting gate |
-| 1 | Data acquisition, gate 1 | Not started |
+| 0 | Scaffold, Railway health check | Done |
+| 1 | Data acquisition, gate 1 | Report written, awaiting FIGARO 2025 download and gate |
 | 2 | Model engine, gate 2 | Not started |
 | 3 | EU-wide results, reviewer package | Not started |
 | 4 | Web application | Not started |
@@ -28,6 +28,7 @@ docs/       specification, CDM baseline, method note, data register, decisions, 
 data/raw/   downloaded files, never edited (not committed; rebuilt by `python -m engine fetch`)
 data/processed/  parquet files written by the engine (not committed)
 engine/     plain Python package, no Django; reproduces every number from the command line
+  concordances/  industry concordance, generated and committed
 tests/      pytest, including the fixed test set of runs
 web/        Django app from Phase 4; until then a health check only
 notebooks/  exploratory, not load-bearing
@@ -44,6 +45,8 @@ pip install -r requirements-dev.txt
 pre-commit install
 pytest
 python -m engine fetch --dry-run   # lists every planned source
+python -m engine fetch             # downloads, parses and validates every source
+python -m engine gate1             # rebuilds the gate 1 coverage tables
 ```
 
 ## Reproducing a result
