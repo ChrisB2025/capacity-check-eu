@@ -1,0 +1,18 @@
+# Alternative A, contractor-led. PROPOSED. See docs/composition-table.md.
+name: alt_contractor
+status: proposed
+confirmed_by: null
+confirmed_on: null
+description: >
+  The KfW retrofit programme assumption as it stands: 80% specialised
+  construction work, with all materials and equipment bought by the
+  contractors, and 20% planning and site supervision.
+lines:
+  - code: F
+    share: 0.8
+    label: Construction work, including all materials and equipment
+    sources: [KFW2016]
+  - code: M71
+    share: 0.2
+    label: Design, planning and site supervision
+    sources: [KFW2016]

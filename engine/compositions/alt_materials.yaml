@@ -1,0 +1,34 @@
+# Alternative B, materials bought directly. PROPOSED. See docs/composition-table.md.
+name: alt_materials
+status: proposed
+confirmed_by: null
+confirmed_on: null
+description: >
+  The GEM-E3 allocation of energy efficiency spending used by Cambridge
+  Econometrics et al. (2015) for DG ENER, Table 4.2: materials and
+  components bought as separate products alongside construction work.
+lines:
+  - code: F
+    share: 0.60
+    label: Construction work
+    sources: [CE2015]
+  - code: C23
+    share: 0.08
+    label: Non-metallic minerals (mineral wool, glass, plaster)
+    sources: [CE2015]
+  - code: C22
+    share: 0.07
+    label: Chemical products, mapped to rubber and plastics (foam insulation)
+    sources: [CE2015]
+  - code: C24
+    share: 0.08
+    label: Ferrous and non-ferrous metals
+    sources: [CE2015]
+  - code: C27
+    share: 0.02
+    label: Electrical goods
+    sources: [CE2015]
+  - code: M71
+    share: 0.15
+    label: Market services, mapped to design and engineering
+    sources: [CE2015]

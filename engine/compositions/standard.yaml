@@ -1,0 +1,28 @@
+# Standard shock composition. PROPOSED: not run until the reviewer has seen it
+# and Chris has confirmed it. Derivation and sources: docs/composition-table.md.
+name: standard
+status: proposed
+confirmed_by: null
+confirmed_on: null
+description: >
+  Design and supervision fees from the KfW retrofit programme assumption
+  (20%); the remaining 80% split by Quirion's input-output allocation of
+  deep residential renovation in France (450 EUR per m2: insulation 315,
+  heating equipment 53, heating installation 45, distribution 37).
+lines:
+  - code: F
+    share: 0.64
+    label: Construction work, including insulation and heating installation
+    sources: [Q2013, KFW2016]
+  - code: C28
+    share: 0.094222222222
+    label: Heating and ventilation equipment
+    sources: [Q2013, KFW2016]
+  - code: G46
+    share: 0.065777777778
+    label: Distribution margin on heating equipment
+    sources: [Q2013, KFW2016]
+  - code: M71
+    share: 0.2
+    label: Design, planning and site supervision
+    sources: [KFW2016]

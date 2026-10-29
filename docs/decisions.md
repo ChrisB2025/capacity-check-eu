@@ -107,3 +107,7 @@ Choices made in the engine, each a parameter in `engine/params.py` and listed in
 Additions to the brief's layout: `engine/params.py` (run parameters), `engine/pipeline.py` (runs the steps in order and saves a run), `engine/compositions/` (composition files with a status). The Leontief inverse is cached as a NumPy file with a JSON record of its source checksum, rather than as parquet, because it is a dense matrix.
 
 The baseline mapping found six gaps beyond the three in the brief; all nine are change requests in `docs/cdm-mapping.md`.
+
+## 2026-10-29: Composition table proposed
+
+Four compositions drafted from sources opened and checked on 29 October 2026, all with status "proposed": `standard` (KfW fee share plus Quirion's input-output allocation of deep renovation), `alt_contractor` (KfW as it stands), `alt_materials` (GEM-E3 split used for DG ENER) and `alt_heating` (Danish Energy Agency heat pump split). The guiding principle, to be challenged by the reviewer: list a product separately only when it is bought separately from the installer, or when construction's average supply chain lacks it, so that materials are not counted twice. Chris decides the final values after review (`docs/composition-table.md`).

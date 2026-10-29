@@ -1,0 +1,18 @@
+# Alternative C, heating replacement. PROPOSED. See docs/composition-table.md.
+name: alt_heating
+status: proposed
+confirmed_by: null
+confirmed_on: null
+description: >
+  A programme of heat pump installations in existing homes, split by the
+  Danish Energy Agency's statement that about 70% of a heat pump's price is
+  equipment and about 30% soft cost (installation, sales, service).
+lines:
+  - code: C28
+    share: 0.70
+    label: Heat pump equipment, including installation accessories
+    sources: [DEA2026]
+  - code: F
+    share: 0.30
+    label: Installation and other soft cost
+    sources: [DEA2026]
