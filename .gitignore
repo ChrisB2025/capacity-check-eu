@@ -1,0 +1,28 @@
+# Data files are regenerated from docs/data-register.md via `python -m engine fetch`
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Secrets and local config
+.env
+.env.*
+!.env.example
+
+# Web
+node_modules/
+web/staticfiles/
+
+# Editors and OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "capacity-check-eu"
+version = "0.0.1"
+description = "Where an identical public spending shock presses on industries in each EU member state, from open official data."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+
+[tool.setuptools.packages.find]
+include = ["engine*"]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
