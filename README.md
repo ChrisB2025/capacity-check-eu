@@ -57,11 +57,11 @@ python -m engine run --shock 1.0 --edition 2026
 
 ## Hosting
 
-Railway project `capacity-check-eu`, separate from every other MML EU or US service.
+Railway project `capacity-check-eu`, separate from every other MML EU or US service. Public URL: https://web-production-d723d.up.railway.app (health check only until Phase 4).
 
 | Service | Role |
 | :--- | :--- |
-| `web` | Built from this repository's Dockerfile. Health check at `/health/`. Volume mounted at `/data`. |
+| `web` | Built from this repository's Dockerfile on every push to `main`. Health check at `/health/`. Volume `web-data` mounted at `/data`. |
 | `Postgres` | Railway PostgreSQL. Used from Phase 4. |
 
 Variables on `web` (values live only in Railway, never in the repository):
