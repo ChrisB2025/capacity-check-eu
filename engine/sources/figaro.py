@@ -96,9 +96,14 @@ def fetch_sdmx(year: int, edition: str = "2026", force: bool = False) -> RawFile
     held = None if force else find_raw(DATASET, ed, "zip")
     if held is not None:
         return RawFile(
-            key, DATASET, ed, url_pattern, _download_date(held), held,
+            key,
+            DATASET,
+            ed,
+            url_pattern,
+            _download_date(held),
+            held,
             sha256_file(held),
-        )  # fmt: skip
+        )
 
     origins = _origins(code, year, sess)
     now = utc_now()
@@ -127,8 +132,9 @@ def fetch_sdmx(year: int, edition: str = "2026", force: bool = False) -> RawFile
             f"Downloaded {now.isoformat()}.\n",
         )
     tmp.replace(dest)
-    return RawFile(key, DATASET, ed, url_pattern, now.isoformat(), dest,
-                   sha256_file(dest))  # fmt: skip
+    return RawFile(
+        key, DATASET, ed, url_pattern, now.isoformat(), dest, sha256_file(dest)
+    )
 
 
 CATEGORICAL = ("c_orig", "ind_ava", "c_dest", "ind_use", "OBS_FLAG")
@@ -146,11 +152,13 @@ def parse_sdmx_zip(path) -> pd.DataFrame:
                 pd.read_csv(
                     io.BytesIO(raw),
                     usecols=[*CATEGORICAL, "OBS_VALUE"],
-                    dtype={"OBS_VALUE": "float64", **dict.fromkeys(CATEGORICAL,
-                                                                   "category")},
+                    dtype={
+                        "OBS_VALUE": "float64",
+                        **dict.fromkeys(CATEGORICAL, "category"),
+                    },
                     keep_default_na=False,
                     na_values={"OBS_VALUE": [""]},
-                )  # fmt: skip
+                )
             )
     if not frames:
         raise SourceError(f"{path}: no API responses inside")
@@ -271,11 +279,16 @@ def parse_circabc_flat(path) -> pd.DataFrame:
             table = pacsv.read_csv(
                 fh,
                 convert_options=pacsv.ConvertOptions(
-                    include_columns=["refArea", "rowIi", "counterpartArea", "colIi",
-                                     "obsValue"],
+                    include_columns=[
+                        "refArea",
+                        "rowIi",
+                        "counterpartArea",
+                        "colIi",
+                        "obsValue",
+                    ],
                     column_types={"obsValue": pa.float64()},
                 ),
-            )  # fmt: skip
+            )
     df = pd.DataFrame(
         {
             "c_orig": table["refArea"].dictionary_encode().to_pandas(),
@@ -286,9 +299,7 @@ def parse_circabc_flat(path) -> pd.DataFrame:
         }
     )
     for col in ("c_orig", "c_dest"):
-        df[col] = df[col].cat.rename_categories(
-            lambda c: CIRCABC_AREAS.get(c, c)
-        )  # fmt: skip
+        df[col] = df[col].cat.rename_categories(lambda c: CIRCABC_AREAS.get(c, c))
     for col in ("ind_ava", "ind_use"):
         df[col] = df[col].cat.rename_categories(_circabc_code)
     df["flag"] = pd.Categorical([""] * len(df))
@@ -303,8 +314,9 @@ def compare(a: pd.DataFrame, b: pd.DataFrame) -> dict:
     for t in (left, right):
         for k in keys:
             t[k] = t[k].astype(str)
-    merged = left.merge(right, on=keys, how="outer", suffixes=("_a", "_b"),
-                        indicator=True)  # fmt: skip
+    merged = left.merge(
+        right, on=keys, how="outer", suffixes=("_a", "_b"), indicator=True
+    )
     both = merged[merged["_merge"] == "both"]
     diff = (both["value_a"] - both["value_b"]).abs()
     return {
@@ -327,10 +339,14 @@ def load_circabc(edition: str, year: int):
             "run python -m engine import-figaro first"
         )
     raw = RawFile(
-        f"figaro_{edition}_y{year}_circabc", f"{DATASET}-circabc",
-        f"{edition}ed-y{year}", f"{CIRCABC_LIBRARY} (manual download)",
-        _download_date(held), held, sha256_file(held),
-    )  # fmt: skip
+        f"figaro_{edition}_y{year}_circabc",
+        f"{DATASET}-circabc",
+        f"{edition}ed-y{year}",
+        f"{CIRCABC_LIBRARY} (manual download)",
+        _download_date(held),
+        held,
+        sha256_file(held),
+    )
     df = parse_circabc_flat(raw.path)
     checks = validate(df)
     if checks["missing_values"] or checks["output_identity_max_rel_gap"] > 1e-3:
@@ -345,9 +361,15 @@ def load_circabc(edition: str, year: int):
     else:
         name = f"figaro_{edition}_y{year}"
     out = write_parquet(
-        df, name, [raw], edition=edition, reference_year=year, unit="MIO_EUR",
-        checks=checks, loader="circabc",
-    )  # fmt: skip
+        df,
+        name,
+        [raw],
+        edition=edition,
+        reference_year=year,
+        unit="MIO_EUR",
+        checks=checks,
+        loader="circabc",
+    )
     return raw, out, checks
 
 

@@ -90,3 +90,20 @@ Also noted: the baseline field is `activity_description`, not `description`.
 ## 2026-10-29: FIGARO 2025 edition not available
 
 Chris checked the CIRCABC FIGARO library in a browser: it holds only the 2026 edition. He downloaded the 2026 industry-by-industry flat file for 2024 and the description workbook, both imported and registered. The CIRCABC parser reproduces the API copy exactly (11,060,700 flows, largest difference zero). The 2025 edition is not on the API, CIRCABC, DBnomics or any public deposit found; it has to be requested from Eurostat (ESTAT-IGA@ec.europa.eu). Every edition is now saved with a checksum on download, so this does not recur.
+
+## 2026-10-29: Phase 2 engine, judgement calls
+
+Chris said go for Phase 2 while the Eurostat request is outstanding. The edition comparison is built and waits for the 2025 file. No results are run until the composition table has been to the reviewer and Chris has confirmed it; the engine enforces this, refusing any composition whose status is not "confirmed".
+
+Choices made in the engine, each a parameter in `engine/params.py` and listed in `docs/method-note.md` for the reviewer:
+
+- **Application: simultaneous by default.** The scenario is every member state applying the shock, so cross-border demand adds up. "own" is a variant.
+- **Origin split from gross fixed capital formation.** Public renovation is investment; the member state's existing investment purchases of each product decide home, rest-of-EU and non-EU shares, with stated fallbacks.
+- **Multi-division industries take the simple mean of their survey divisions.** DG ECFIN's weights file weights countries, not divisions; employment weights would need another dataset.
+- **Current slack is the latest four-quarter mean, placed in the history of the same rolling mean.** Monthly series use complete quarters only.
+- **Missing industry employment uses the NACE section ratio, flagged.**
+- **Provisional, pending Chris (gate 1 decisions 5 to 7):** industries with no survey question get no rating; persons employed is the jobs measure with hours shown; minimum slack history is five years.
+
+Additions to the brief's layout: `engine/params.py` (run parameters), `engine/pipeline.py` (runs the steps in order and saves a run), `engine/compositions/` (composition files with a status). The Leontief inverse is cached as a NumPy file with a JSON record of its source checksum, rather than as parquet, because it is a dense matrix.
+
+The baseline mapping found six gaps beyond the three in the brief; all nine are change requests in `docs/cdm-mapping.md`.

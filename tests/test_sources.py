@@ -81,15 +81,27 @@ def test_parse_sheet_long_format():
 def test_labour_answers_found_by_label():
     cb = pd.DataFrame(
         [
-            ("building_total_nsa_nace2.xlsx", "Answers", "F3",
-             "Weather conditions (% n.s.a. - monthly question 2)"),
-            ("building_total_nsa_nace2.xlsx", "Answers", "F4",
-             "Shortage of labour force (% n.s.a. - monthly question 2)"),
-            ("industry_total_nsa_nace2.xlsx", "Answers", "F3",
-             "Labour (% n.s.a - quarterly question 8)"),
+            (
+                "building_total_nsa_nace2.xlsx",
+                "Answers",
+                "F3",
+                "Weather conditions (% n.s.a. - monthly question 2)",
+            ),
+            (
+                "building_total_nsa_nace2.xlsx",
+                "Answers",
+                "F4",
+                "Shortage of labour force (% n.s.a. - monthly question 2)",
+            ),
+            (
+                "industry_total_nsa_nace2.xlsx",
+                "Answers",
+                "F3",
+                "Labour (% n.s.a - quarterly question 8)",
+            ),
         ],
         columns=["workbook", "section", "code", "label"],
-    )  # fmt: skip
+    )
     assert ecfin.labour_answers(cb) == {
         "building": ("2", "F4"),
         "industry": ("8", "F3"),
@@ -158,12 +170,16 @@ def test_read_jsonstat2(tmp_path: Path):
         "id": ["Yrke", "Tid"],
         "size": [2, 2],
         "dimension": {
-            "Yrke": {"category": {"index": {"7111": 0, "7112": 1},
-                                  "label": {"7111": "Snickare", "7112": "Murare"}}},
+            "Yrke": {
+                "category": {
+                    "index": {"7111": 0, "7112": 1},
+                    "label": {"7111": "Snickare", "7112": "Murare"},
+                }
+            },
             "Tid": {"category": {"index": {"2023": 0, "2024": 1}}},
         },
         "value": [1, 2, 3, None],
-    }  # fmt: skip
+    }
     p = tmp_path / "x.json"
     p.write_text(json.dumps(ds), encoding="utf-8")
     df = pxweb.read_jsonstat2(p)
@@ -183,8 +199,9 @@ def test_record_is_idempotent(tmp_path: Path, monkeypatch):
     monkeypatch.setattr(_common, "CHECKSUMS", sums)
     f = tmp_path / "file.bin"
     f.write_bytes(b"abc")
-    raw = _common.RawFile("k", "ds", "ed", "url", "2026-10-29", f,
-                          _common.sha256_file(f))  # fmt: skip
+    raw = _common.RawFile(
+        "k", "ds", "ed", "url", "2026-10-29", f, _common.sha256_file(f)
+    )
     _common.record(raw, "pub", "lic")
     _common.record(raw, "pub", "lic")
     assert reg.read_text(encoding="utf-8").count(raw.sha256) == 1
@@ -195,8 +212,9 @@ def test_parquet_carries_provenance(tmp_path: Path, monkeypatch):
     monkeypatch.setattr(_common, "PROCESSED_DIR", tmp_path)
     f = tmp_path / "raw.bin"
     f.write_bytes(b"abc")
-    raw = _common.RawFile("k", "ds", "ed", "url", "2026-10-29", f,
-                          _common.sha256_file(f))  # fmt: skip
+    raw = _common.RawFile(
+        "k", "ds", "ed", "url", "2026-10-29", f, _common.sha256_file(f)
+    )
     out = _common.write_parquet(pd.DataFrame({"a": [1]}), "t", [raw], edition="x")
     prov = _common.read_provenance(out)
     assert prov["sources"][0]["sha256"] == raw.sha256

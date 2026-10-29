@@ -4,7 +4,7 @@
 ``import-figaro``  register a FIGARO file downloaded by hand from CIRCABC
 ``concordance``    regenerate engine/concordances/a64.csv
 ``gate1``          write the gate 1 coverage tables to docs/gate-1/
-``run``            the model (Phase 2)
+``run``            run the model; refuses compositions not yet confirmed
 """
 
 from __future__ import annotations
@@ -19,6 +19,7 @@ from engine.sources.catalogue import PLANNED_SOURCES
 EXIT_BAD_ARGS = 2
 EXIT_NOT_IMPLEMENTED = 3
 EXIT_SOURCE_FAILED = 4
+EXIT_NOT_CONFIRMED = 5
 
 
 def _loaders(force: bool) -> dict[str, Callable[[], object]]:
@@ -82,7 +83,15 @@ def build_parser() -> argparse.ArgumentParser:
         default=1.0,
         help="Shock size as a percentage of 2024 GDP, from 0.5 to 2.",
     )
-    run.add_argument("--edition", type=int, default=2026, help="FIGARO edition year.")
+    run.add_argument("--edition", default="2026", help="FIGARO edition year.")
+    run.add_argument("--year", type=int, default=2024, help="FIGARO reference year.")
+    run.add_argument("--composition", default="standard")
+    run.add_argument(
+        "--application", choices=["simultaneous", "own"], default="simultaneous"
+    )
+    run.add_argument("--slack", choices=["ecfin", "vacancy"], default="ecfin")
+    run.add_argument("--pressure-low", type=float, default=0.02)
+    run.add_argument("--pressure-high", type=float, default=0.05)
     return parser
 
 
@@ -131,8 +140,36 @@ def cmd_run(args: argparse.Namespace) -> int:
     if not 0.5 <= args.shock <= 2.0:
         print("--shock must be between 0.5 and 2.", file=sys.stderr)
         return EXIT_BAD_ARGS
-    print("The model arrives in Phase 2. No run was performed.", file=sys.stderr)
-    return EXIT_NOT_IMPLEMENTED
+    from engine import cdm, pipeline
+    from engine.params import RunParams, Thresholds
+    from engine.shock import CompositionNotConfirmed
+
+    params = RunParams(
+        shock_pct=args.shock,
+        edition=str(args.edition),
+        ref_year=args.year,
+        composition=args.composition,
+        application=args.application,
+        slack_indicator=args.slack,
+        thresholds=Thresholds(
+            pressure_low=args.pressure_low, pressure_high=args.pressure_high
+        ),
+    )
+    try:
+        result = pipeline.run(params)
+    except CompositionNotConfirmed as exc:
+        print(str(exc), file=sys.stderr)
+        return EXIT_NOT_CONFIRMED
+    except FileNotFoundError as exc:
+        print(f"Missing input: {exc.filename or exc}", file=sys.stderr)
+        return EXIT_BAD_ARGS
+    out = pipeline.save(result)
+    cdm_dir = out / "cdm"
+    cdm_dir.mkdir(exist_ok=True)
+    for name, df in cdm.write(result).items():
+        df.to_csv(cdm_dir / f"{name}.csv", index=False, lineterminator=chr(10))
+    print(out)
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:

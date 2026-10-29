@@ -20,17 +20,29 @@ PUBLISHER = "Arbetsförmedlingen (Swedish Public Employment Service)"
 LICENCE = "CC0 1.0 (DCAT metadata of the dataset)"
 NATIONAL = "00"
 KEEP = [
-    "omgang", "yrkesomrade", "yb_yrke", "yb_concept_id", "lan", "ssyk",
-    "ssyk_text", "antal_ssyk", "del_av_ssyk", "delvis_helt", "jobbmojligheter",
-    "rekryteringssituation", "prognos", "hogsta_bedomningsniva",
-]  # fmt: skip
+    "omgang",
+    "yrkesomrade",
+    "yb_yrke",
+    "yb_concept_id",
+    "lan",
+    "ssyk",
+    "ssyk_text",
+    "antal_ssyk",
+    "del_av_ssyk",
+    "delvis_helt",
+    "jobbmojligheter",
+    "rekryteringssituation",
+    "prognos",
+    "hogsta_bedomningsniva",
+]
 
 
 def load(force: bool = False):
     # The round (omgang) is only known after reading the file, so the raw file
     # is named by download date; the round goes in the register.
-    raw = download("af_yrkesbarometer", URL, "af-yrkesbarometer", "current", "json",
-                   force=force)  # fmt: skip
+    raw = download(
+        "af_yrkesbarometer", URL, "af-yrkesbarometer", "current", "json", force=force
+    )
     rel = download(
         "af_yrkesbarometer_relationer",
         RELATIONS_URL,

@@ -24,8 +24,14 @@ EXPECTED_TITLE = "EURES-Report on labour shortages and surpluses 2025"
 
 
 def load(force: bool = False):
-    raw = download("ela_shortages_2025", URL, "ela-eures-shortages", "2025-report",
-                   "pdf", force=force)  # fmt: skip
+    raw = download(
+        "ela_shortages_2025",
+        URL,
+        "ela-eures-shortages",
+        "2025-report",
+        "pdf",
+        force=force,
+    )
     reader = PdfReader(raw.path)
     title = (reader.metadata or {}).get("/Title", "")
     if title != EXPECTED_TITLE:

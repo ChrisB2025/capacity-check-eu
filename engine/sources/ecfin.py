@@ -53,8 +53,12 @@ SERIES_RE = re.compile(
     r"^(?P<survey>[A-Z]{4})\.(?P<country>[A-Z]{2})\.(?P<sector>[A-Z0-9]+)\."
     r"(?P<question>[A-Z0-9]+)\.(?P<answer>[A-Z0-9]+)\.(?P<freq>[MQ])$"
 )
-SURVEY_CODE = {"BUIL": "building", "INDU": "industry", "SERV": "services",
-               "RETA": "retail"}  # fmt: skip
+SURVEY_CODE = {
+    "BUIL": "building",
+    "INDU": "industry",
+    "SERV": "services",
+    "RETA": "retail",
+}
 
 
 def current_release(sess=None) -> str:
@@ -231,8 +235,16 @@ def load(force: bool = False) -> Result:
     df = df.drop_duplicates(
         subset=["series", "period", "seasonally_adjusted"], keep="first"
     )
-    for col in ("survey", "country", "sector", "question", "answer", "freq",
-                "series", "workbook"):  # fmt: skip
+    for col in (
+        "survey",
+        "country",
+        "sector",
+        "question",
+        "answer",
+        "freq",
+        "series",
+        "workbook",
+    ):
         df[col] = df[col].astype("category")
 
     labour = labour_answers(codebook)

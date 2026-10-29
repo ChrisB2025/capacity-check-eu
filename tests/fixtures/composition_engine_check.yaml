@@ -1,0 +1,10 @@
+# Engine check only. Not a proposal and never used for results: it exists so
+# the test suite can exercise the whole pipeline before any composition has
+# been confirmed. Its status prevents the engine using it outside tests.
+name: engine_check
+status: test-only
+description: All spending on construction work, to exercise the code path.
+lines:
+  - code: F
+    share: 1.0
+    label: Construction work

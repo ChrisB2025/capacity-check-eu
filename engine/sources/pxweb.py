@@ -39,16 +39,28 @@ def query(
     edition = f"upd{table_updated(table_url, sess)}"
     body = {
         "query": [
-            {"code": code, "selection": {"filter": "item" if vals != ["*"] else "all",
-                                          "values": vals}}
+            {
+                "code": code,
+                "selection": {
+                    "filter": "item" if vals != ["*"] else "all",
+                    "values": vals,
+                },
+            }
             for code, vals in selections.items()
         ],
         "response": {"format": "json-stat2"},
-    }  # fmt: skip
+    }
     return download(
-        key, table_url, dataset, edition, "json", sess=sess, force=force,
-        method="POST", json_body=body,
-    )  # fmt: skip
+        key,
+        table_url,
+        dataset,
+        edition,
+        "json",
+        sess=sess,
+        force=force,
+        method="POST",
+        json_body=body,
+    )
 
 
 def read_jsonstat2(path) -> pd.DataFrame:

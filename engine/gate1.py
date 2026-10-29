@@ -40,8 +40,17 @@ def _to_period(s: pd.Series, freq: str) -> pd.PeriodIndex:
 def ecfin_coverage() -> tuple[pd.DataFrame, Path]:
     path = _processed("ecfin_bcs_rel*")
     labour_codes = read_provenance(path)["labour_codes"]
-    cols = ["survey", "country", "sector", "question", "answer", "freq", "period",
-            "value", "seasonally_adjusted"]  # fmt: skip
+    cols = [
+        "survey",
+        "country",
+        "sector",
+        "question",
+        "answer",
+        "freq",
+        "period",
+        "value",
+        "seasonally_adjusted",
+    ]
     df = pd.read_parquet(path, columns=cols)
     lab = ecfin.labour_series(df, labour_codes, adjusted=False)
     lab = lab[lab["country"].isin(EU27)]

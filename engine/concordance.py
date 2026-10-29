@@ -51,17 +51,69 @@ SECTION_DIVISIONS = {
 ECFIN_INDUSTRY = set(range(10, 34))
 ECFIN_BUILDING = {41, 42, 43}
 ECFIN_SERVICES = {
-    49, 50, 51, 52, 53, 55, 56, 58, 59, 60, 61, 62, 63, 64, 65, 66, 68, 69, 70,
-    71, 72, 73, 74, 75, 77, 78, 79, 80, 81, 82, 90, 91, 92, 93, 94, 95, 96,
-}  # fmt: skip
+    49,
+    50,
+    51,
+    52,
+    53,
+    55,
+    56,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+}
 
 # Statistics Sweden YREG54BAS groups, keyed by NACE section.
 SCB_GROUP = {
-    "A": "A", "B": "B+C", "C": "B+C", "D": "D+E", "E": "D+E", "F": "F", "G": "G",
-    "H": "H", "I": "I", "J": "J", "K": "K", "L": "L", "M": "M+N", "N": "M+N",
-    "O": "O", "P": "P", "Q": "Q", "R": "R+S+T+U", "S": "R+S+T+U", "T": "R+S+T+U",
+    "A": "A",
+    "B": "B+C",
+    "C": "B+C",
+    "D": "D+E",
+    "E": "D+E",
+    "F": "F",
+    "G": "G",
+    "H": "H",
+    "I": "I",
+    "J": "J",
+    "K": "K",
+    "L": "L",
+    "M": "M+N",
+    "N": "M+N",
+    "O": "O",
+    "P": "P",
+    "Q": "Q",
+    "R": "R+S+T+U",
+    "S": "R+S+T+U",
+    "T": "R+S+T+U",
     "U": "R+S+T+U",
-}  # fmt: skip
+}
 
 
 def divisions(code: str) -> list[int]:
@@ -119,6 +171,7 @@ def build() -> pd.DataFrame:
                 "figaro_code": code,
                 "label": labels.get(code, ""),
                 "nace_section": code[0],
+                "section_label": labels.get(code[0], ""),
                 "nace_divisions": " ".join(f"{d:02d}" for d in divs),
                 "nama_code": nama_code(code),
                 "ecfin_survey": survey,
@@ -127,7 +180,9 @@ def build() -> pd.DataFrame:
             }
         )
     df = pd.DataFrame(rows)
-    missing = df.loc[df["label"] == "", "figaro_code"].tolist()
+    missing = df.loc[
+        (df["label"] == "") | (df["section_label"] == ""), "figaro_code"
+    ].tolist()
     if missing:
         raise ValueError(f"no Eurostat label for {missing}")
     return df

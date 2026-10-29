@@ -11,8 +11,8 @@ The result locates pressure. It does not size price changes, it has no deficit o
 | Phase | Content | State |
 | :--- | :--- | :--- |
 | 0 | Scaffold, Railway health check | Done |
-| 1 | Data acquisition, gate 1 | Report written, awaiting FIGARO 2025 download and gate |
-| 2 | Model engine, gate 2 | Not started |
+| 1 | Data acquisition, gate 1 | Report written; previous FIGARO edition requested from Eurostat |
+| 2 | Model engine, gate 2 | Engine built and tested; composition table awaiting review |
 | 3 | EU-wide results, reviewer package | Not started |
 | 4 | Web application | Not started |
 | 5 | Sweden layer | Not started |
