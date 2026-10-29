@@ -111,3 +111,7 @@ The baseline mapping found six gaps beyond the three in the brief; all nine are 
 ## 2026-10-29: Composition table proposed
 
 Four compositions drafted from sources opened and checked on 29 October 2026, all with status "proposed": `standard` (KfW fee share plus Quirion's input-output allocation of deep renovation), `alt_contractor` (KfW as it stands), `alt_materials` (GEM-E3 split used for DG ENER) and `alt_heating` (Danish Energy Agency heat pump split). The guiding principle, to be challenged by the reviewer: list a product separately only when it is bought separately from the installer, or when construction's average supply chain lacks it, so that materials are not counted twice. Chris decides the final values after review (`docs/composition-table.md`).
+
+## 2026-10-29: Provisional Gate 2 results published
+
+Chris decided to publish the provisional Gate 2 report, its tables in `docs/gate-2/` and the fixed test set's fixtures, although the composition is not yet confirmed. The report is marked provisional and unreviewed, and `summary.json` and each fixture manifest record the composition's status. All three are regenerated once a composition is confirmed.

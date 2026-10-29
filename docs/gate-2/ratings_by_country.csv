@@ -1,0 +1,28 @@
+country,industries_binding,industries_tight,industries_clear,industries_no_rating,rating_F,rating_M71,rating_C28,headline_tight_or_binding_share,unrated_share,data_quality,data_quality_flags
+AT,0,23,16,25,tight,tight,tight,0.7796585333257744,0.1307925001712011,limited,jobs on unrated lines 13%; jobs on section-ratio lines 0%
+BE,1,16,21,26,binding,tight,tight,0.7167684444081573,0.14426860229670407,limited,jobs on unrated lines 14%; jobs on section-ratio lines 0%
+BG,1,37,5,21,tight,binding,tight,0.7917718592854069,0.19144701298345956,limited,jobs on unrated lines 19%; jobs on section-ratio lines 0%
+CY,2,37,6,19,binding,binding,tight,0.8447467333371858,0.13889153400698026,limited,jobs on unrated lines 14%; jobs on section-ratio lines 0%
+CZ,2,39,7,16,binding,binding,tight,0.8311209551647173,0.13878196973888518,limited,jobs on unrated lines 14%; jobs on section-ratio lines 0%
+DE,1,26,17,20,binding,tight,tight,0.785256858896362,0.14994202007958188,limited,jobs on unrated lines 15%; jobs on section-ratio lines 0%
+DK,0,34,11,19,tight,tight,tight,0.7645998913536486,0.17220318314849034,limited,jobs on unrated lines 17%; jobs on section-ratio lines 0%
+EE,0,8,15,41,tight,tight,tight,0.7384004497302028,0.18720775919418098,limited,jobs on unrated lines 19%; jobs on section-ratio lines 1%
+EL,3,36,7,18,binding,binding,tight,0.8196950557765796,0.14488048417237903,limited,jobs on unrated lines 14%; jobs on section-ratio lines 0%
+ES,2,44,2,16,binding,binding,tight,0.8296970428719728,0.15450947481323507,limited,jobs on unrated lines 15%; jobs on section-ratio lines 0%
+FI,0,12,17,35,tight,tight,clear,0.6798125638737192,0.174933309422661,limited,jobs on unrated lines 17%; jobs on section-ratio lines 1%
+FR,0,18,21,25,tight,tight,tight,0.7478064035372225,0.13804773065757356,limited,jobs on unrated lines 14%; jobs on section-ratio lines 0%
+HR,1,37,10,16,tight,binding,tight,0.8165524764131715,0.15237192166962366,limited,jobs on unrated lines 15%; jobs on section-ratio lines 0%
+HU,0,24,13,27,tight,tight,tight,0.8222428172970445,0.13569772497407595,limited,jobs on unrated lines 14%; jobs on section-ratio lines 0%
+IE,0,31,16,17,tight,tight,tight,0.8367482242535466,0.10606988409100615,limited,jobs on unrated lines 11%; jobs on section-ratio lines 0%; construction slack history 8 years
+IT,2,39,3,20,binding,binding,tight,0.8169379856962168,0.1337066735442061,limited,jobs on unrated lines 13%; jobs on section-ratio lines 0%
+LT,0,29,14,21,tight,tight,tight,0.8245327990000759,0.12874725662697498,limited,jobs on unrated lines 13%; jobs on section-ratio lines 0%
+LU,1,17,1,45,binding,no rating,tight,0.5856277034809714,0.365288649130592,poor,jobs on unrated lines 37%; jobs on section-ratio lines 6%
+LV,0,29,14,21,tight,tight,tight,0.7997634564725664,0.1459841092842897,limited,jobs on unrated lines 15%; jobs on section-ratio lines 0%
+MT,2,35,9,18,binding,tight,tight,0.8358605775240833,0.1311917722077464,limited,jobs on unrated lines 13%; jobs on section-ratio lines 0%
+NL,2,39,4,19,binding,binding,tight,0.8121894286954369,0.131399226325981,limited,jobs on unrated lines 13%; jobs on section-ratio lines 0%
+PL,0,44,4,16,tight,tight,tight,0.8614429601422772,0.11955277230393456,limited,jobs on unrated lines 12%; jobs on section-ratio lines 0%
+PT,1,28,16,19,tight,binding,tight,0.8171705388936962,0.12081750297553935,limited,jobs on unrated lines 12%; jobs on section-ratio lines 0%
+RO,0,27,18,19,tight,tight,tight,0.7337930485285359,0.16527261125513368,limited,jobs on unrated lines 17%; jobs on section-ratio lines 0%
+SE,0,24,21,19,tight,tight,tight,0.7610207892878864,0.14409992543323757,limited,jobs on unrated lines 14%; jobs on section-ratio lines 16%
+SI,2,38,3,21,binding,binding,tight,0.8391948006658172,0.13479856426771736,limited,jobs on unrated lines 13%; jobs on section-ratio lines 0%
+SK,2,41,4,17,binding,binding,tight,0.8534571748036077,0.12955035617449007,limited,jobs on unrated lines 13%; jobs on section-ratio lines 0%

@@ -1,0 +1,373 @@
+{
+ "provisional": true,
+ "base_run": "dbe55db9208e",
+ "edition_test": {
+  "status": "not run",
+  "reason": "FIGARO 2025 edition not held; requested from Eurostat"
+ },
+ "reference_year_comparison": {
+  "run": "88b333547bc7",
+  "lines_compared": 1728,
+  "lines_rated_in_both": 1132,
+  "lines_unrated_in_either": 596,
+  "ratings_changed": 3,
+  "share_changed": 0.00265017667844523,
+  "transitions": [
+   {
+    "rating_base": "clear",
+    "rating_alt": "tight",
+    "lines": 1
+   },
+   {
+    "rating_base": "tight",
+    "rating_alt": "binding",
+    "lines": 2
+   }
+  ],
+  "note": "Same edition, reference year 2023 against 2024. Slack is identical in both runs, so only the requirement side varies. This is not the edition test and does not apply the stopping rule."
+ },
+ "runs": [
+  {
+   "run_id": "dbe55db9208e",
+   "params": {
+    "shock_pct": 1.0,
+    "gdp_year": 2024,
+    "edition": "2026",
+    "ref_year": 2024,
+    "composition": "standard",
+    "application": "simultaneous",
+    "import_basis": "P51G",
+    "slack_indicator": "ecfin",
+    "slack_seasonally_adjusted": false,
+    "slack_window_quarters": 4,
+    "slack_min_years": 5.0,
+    "jobs_measure": "persons",
+    "thresholds": {
+     "pressure_low": 0.02,
+     "pressure_high": 0.05,
+     "slack_median_quantile": 0.5,
+     "slack_top_quantile": 0.75
+    },
+    "countries": [
+     "AT",
+     "BE",
+     "BG",
+     "CY",
+     "CZ",
+     "DE",
+     "DK",
+     "EE",
+     "EL",
+     "ES",
+     "FI",
+     "FR",
+     "HR",
+     "HU",
+     "IE",
+     "IT",
+     "LT",
+     "LU",
+     "LV",
+     "MT",
+     "NL",
+     "PL",
+     "PT",
+     "RO",
+     "SE",
+     "SI",
+     "SK"
+    ]
+   },
+   "composition": {
+    "name": "standard",
+    "status": "proposed",
+    "confirmed_by": null,
+    "confirmed_on": null
+   },
+   "provisional": true,
+   "sources": [
+    {
+     "file": "figaro_2026_y2024.parquet",
+     "sha256": "61ba83e38dd4a1601ad00e86920034323291047da908e855072678348204e638",
+     "role": "FIGARO table"
+    },
+    {
+     "file": "nama-10-gdp_upd2026-10-22_20261029.csv.gz",
+     "sha256": "b0a3d27d1732d7ad5e5551b27f7e4859b389612bc74ee534a84a451ce058f59d",
+     "role": "nama_10_gdp"
+    },
+    {
+     "file": "nama-10-a64-e_upd2026-10-27_20261029.csv.gz",
+     "sha256": "644fc8ef896074cc117145a8ad57a064f93fe766fcfedd205ed3f163ffe549d9",
+     "role": "nama_10_a64_e"
+    },
+    {
+     "file": "jvs-q-nace2_upd2026-03-20_20261029.csv.gz",
+     "sha256": "002f9b4f966b89a635d322477b6a6b0fb68971075481138fc17a807a411564c9",
+     "role": "jvs_q_nace2"
+    },
+    {
+     "file": "ecfin-building-subsectors-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "8926fa1625aa88b15063a66fa5d0d76fc63bab9c3f54cc4b09bb1c7a7299fa87",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-building-total-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "504388f0ed6b14d4cb798fa73558f12e6134ac43af1a17afce4ece14b8ab9940",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-building-subsectors-sa-nace2_rel2610_20261029.zip",
+     "sha256": "9bf1b15aebf7abe708afe514b9aac31ba252d90bd4726e1dff18a1037b92c4ba",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-building-total-sa-nace2_rel2610_20261029.zip",
+     "sha256": "0afe358d8bfab2c4d96d57227618d0fb1b7321220e12ca52833ab71954a53f55",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-industry-subsectors-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "f8e3a7e51fa0a6328501ca41f618efa5fb1a2497506db403c4372651fbcd9697",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-industry-total-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "762825027c6b7f9772c6037c5a954d8b2cc4010beda8c0578cb3dc2fc613bf91",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-industry-subsectors-sa-nace2_rel2610_20261029.zip",
+     "sha256": "4f699d8741ad2dc8e9832218aa4c159ef8376ddb3ba533169a95e06e309e133c",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-industry-total-sa-nace2_rel2610_20261029.zip",
+     "sha256": "03a4c16f78f5d2833e7ceb6002d9c93eee97d1500cd3d57cfb320246e5ec2ebb",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-services-subsectors-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "a98f31d46f5d050b0c395f115ef3f5fabc06802f898ac1f3f06bfd640a27e361",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-services-total-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "7be85462afe9ebcdfca74611844f892563fb7047c39a412d48dd92c136986eee",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-services-subsectors-sa-nace2_rel2610_20261029.zip",
+     "sha256": "a02d3ed53a7b744172c29421e06d6a5555c8f2754c725b752135d70fe0496626",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-services-total-sa-nace2_rel2610_20261029.zip",
+     "sha256": "48b9df4992e7ca9051c8187b93e810d32fde6d88a8457250d5fe2a1dc0dec864",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-retail-subsectors-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "416bb649bff4e41f5f3f8209517b9f3ca73f05e06f9605fdf70ede7ac58ccd7d",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-retail-total-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "3f904fffbee16fb3b0f195dcdd3b9633cbadde5bddaf35038e6659dd35848156",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-retail-subsectors-sa-nace2_rel2610_20261029.zip",
+     "sha256": "9b72923e5ea22e9e5f0bc88bebf3c5e41a661e42f7a7daa1a16b4d56dc83e69e",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-retail-total-sa-nace2_rel2610_20261029.zip",
+     "sha256": "55da7740d86f9f7b7df0dc2f368c5828ef5beb82dbbf8cecea29b50a7b402f83",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-country-weights_rel2610_20261029.zip",
+     "sha256": "18137e1c520e43bf87f35c383c51dee1ebf94f6120d58d5c436ff0cab77cee5d",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "standard.yaml",
+     "sha256": "d19fb94a6d81dd2aeb46e3b22086541bd886182ad8a2e4fe5367a2fcfc47e965",
+     "role": "composition"
+    }
+   ]
+  },
+  {
+   "run_id": "88b333547bc7",
+   "params": {
+    "shock_pct": 1.0,
+    "gdp_year": 2024,
+    "edition": "2026",
+    "ref_year": 2023,
+    "composition": "standard",
+    "application": "simultaneous",
+    "import_basis": "P51G",
+    "slack_indicator": "ecfin",
+    "slack_seasonally_adjusted": false,
+    "slack_window_quarters": 4,
+    "slack_min_years": 5.0,
+    "jobs_measure": "persons",
+    "thresholds": {
+     "pressure_low": 0.02,
+     "pressure_high": 0.05,
+     "slack_median_quantile": 0.5,
+     "slack_top_quantile": 0.75
+    },
+    "countries": [
+     "AT",
+     "BE",
+     "BG",
+     "CY",
+     "CZ",
+     "DE",
+     "DK",
+     "EE",
+     "EL",
+     "ES",
+     "FI",
+     "FR",
+     "HR",
+     "HU",
+     "IE",
+     "IT",
+     "LT",
+     "LU",
+     "LV",
+     "MT",
+     "NL",
+     "PL",
+     "PT",
+     "RO",
+     "SE",
+     "SI",
+     "SK"
+    ]
+   },
+   "composition": {
+    "name": "standard",
+    "status": "proposed",
+    "confirmed_by": null,
+    "confirmed_on": null
+   },
+   "provisional": true,
+   "sources": [
+    {
+     "file": "figaro_2026_y2023.parquet",
+     "sha256": "0be08d99da929dc829e748fd0638de3aa9f5e5b25b58472202ea0ca9f9bff926",
+     "role": "FIGARO table"
+    },
+    {
+     "file": "nama-10-gdp_upd2026-10-22_20261029.csv.gz",
+     "sha256": "b0a3d27d1732d7ad5e5551b27f7e4859b389612bc74ee534a84a451ce058f59d",
+     "role": "nama_10_gdp"
+    },
+    {
+     "file": "nama-10-a64-e_upd2026-10-27_20261029.csv.gz",
+     "sha256": "644fc8ef896074cc117145a8ad57a064f93fe766fcfedd205ed3f163ffe549d9",
+     "role": "nama_10_a64_e"
+    },
+    {
+     "file": "jvs-q-nace2_upd2026-03-20_20261029.csv.gz",
+     "sha256": "002f9b4f966b89a635d322477b6a6b0fb68971075481138fc17a807a411564c9",
+     "role": "jvs_q_nace2"
+    },
+    {
+     "file": "ecfin-building-subsectors-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "8926fa1625aa88b15063a66fa5d0d76fc63bab9c3f54cc4b09bb1c7a7299fa87",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-building-total-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "504388f0ed6b14d4cb798fa73558f12e6134ac43af1a17afce4ece14b8ab9940",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-building-subsectors-sa-nace2_rel2610_20261029.zip",
+     "sha256": "9bf1b15aebf7abe708afe514b9aac31ba252d90bd4726e1dff18a1037b92c4ba",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-building-total-sa-nace2_rel2610_20261029.zip",
+     "sha256": "0afe358d8bfab2c4d96d57227618d0fb1b7321220e12ca52833ab71954a53f55",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-industry-subsectors-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "f8e3a7e51fa0a6328501ca41f618efa5fb1a2497506db403c4372651fbcd9697",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-industry-total-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "762825027c6b7f9772c6037c5a954d8b2cc4010beda8c0578cb3dc2fc613bf91",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-industry-subsectors-sa-nace2_rel2610_20261029.zip",
+     "sha256": "4f699d8741ad2dc8e9832218aa4c159ef8376ddb3ba533169a95e06e309e133c",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-industry-total-sa-nace2_rel2610_20261029.zip",
+     "sha256": "03a4c16f78f5d2833e7ceb6002d9c93eee97d1500cd3d57cfb320246e5ec2ebb",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-services-subsectors-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "a98f31d46f5d050b0c395f115ef3f5fabc06802f898ac1f3f06bfd640a27e361",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-services-total-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "7be85462afe9ebcdfca74611844f892563fb7047c39a412d48dd92c136986eee",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-services-subsectors-sa-nace2_rel2610_20261029.zip",
+     "sha256": "a02d3ed53a7b744172c29421e06d6a5555c8f2754c725b752135d70fe0496626",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-services-total-sa-nace2_rel2610_20261029.zip",
+     "sha256": "48b9df4992e7ca9051c8187b93e810d32fde6d88a8457250d5fe2a1dc0dec864",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-retail-subsectors-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "416bb649bff4e41f5f3f8209517b9f3ca73f05e06f9605fdf70ede7ac58ccd7d",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-retail-total-nsa-nace2_rel2610_20261029.zip",
+     "sha256": "3f904fffbee16fb3b0f195dcdd3b9633cbadde5bddaf35038e6659dd35848156",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-retail-subsectors-sa-nace2_rel2610_20261029.zip",
+     "sha256": "9b72923e5ea22e9e5f0bc88bebf3c5e41a661e42f7a7daa1a16b4d56dc83e69e",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-retail-total-sa-nace2_rel2610_20261029.zip",
+     "sha256": "55da7740d86f9f7b7df0dc2f368c5828ef5beb82dbbf8cecea29b50a7b402f83",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "ecfin-country-weights_rel2610_20261029.zip",
+     "sha256": "18137e1c520e43bf87f35c383c51dee1ebf94f6120d58d5c436ff0cab77cee5d",
+     "role": "ecfin_bcs_rel2610"
+    },
+    {
+     "file": "standard.yaml",
+     "sha256": "d19fb94a6d81dd2aeb46e3b22086541bd886182ad8a2e4fe5367a2fcfc47e965",
+     "role": "composition"
+    }
+   ]
+  }
+ ]
+}

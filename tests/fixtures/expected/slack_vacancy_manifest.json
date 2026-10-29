@@ -1,0 +1,59 @@
+{
+ "run_id": "2407992dfbae",
+ "provisional": true,
+ "composition": {
+  "name": "standard",
+  "status": "proposed",
+  "confirmed_by": null,
+  "confirmed_on": null
+ },
+ "params": {
+  "shock_pct": 1.0,
+  "gdp_year": 2024,
+  "edition": "2026",
+  "ref_year": 2024,
+  "composition": "standard",
+  "application": "simultaneous",
+  "import_basis": "P51G",
+  "slack_indicator": "vacancy",
+  "slack_seasonally_adjusted": false,
+  "slack_window_quarters": 4,
+  "slack_min_years": 5.0,
+  "jobs_measure": "persons",
+  "thresholds": {
+   "pressure_low": 0.02,
+   "pressure_high": 0.05,
+   "slack_median_quantile": 0.5,
+   "slack_top_quantile": 0.75
+  },
+  "countries": [
+   "AT",
+   "BE",
+   "BG",
+   "CY",
+   "CZ",
+   "DE",
+   "DK",
+   "EE",
+   "EL",
+   "ES",
+   "FI",
+   "FR",
+   "HR",
+   "HU",
+   "IE",
+   "IT",
+   "LT",
+   "LU",
+   "LV",
+   "MT",
+   "NL",
+   "PL",
+   "PT",
+   "RO",
+   "SE",
+   "SI",
+   "SK"
+  ]
+ }
+}
