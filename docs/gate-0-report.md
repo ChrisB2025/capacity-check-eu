@@ -39,6 +39,7 @@ Variables on `web`: `DJANGO_SECRET_KEY`, `DATABASE_URL`, `DATA_DIR`, `PUBLIC_REA
 ## Risks found while scaffolding
 
 - **`railway.toml` is deprecated.** Railway says config-as-code files stop working on 1 December 2026, which falls inside the project. The same build and health-check settings are now also set on the service itself, so the deploy keeps working after that date. Removing `railway.toml` or migrating to Railway's new format is a choice for you; I recommend removing it before December and relying on the service settings.
+- **Region.** Railway placed `web` and its volume in `us-west2` by default. Nothing personal is stored, so this is not a data-protection issue, but an EU region suits the project. Moving is easiest now, while the volume is empty. I recommend `europe-west4`; say if you want it.
 - **Previous FIGARO edition.** Gate 1 depends on the 2025 edition still being in CIRCABC. CIRCABC cannot be listed from a script, so this may need a manual browser download in Phase 1.
 
 ## Open items carried to Phase 1
