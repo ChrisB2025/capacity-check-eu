@@ -33,6 +33,20 @@ def hundreds(v):
 
 
 @register.filter
+def bn(v):
+    """Millions of euros as billions, to the nearest billion."""
+    f = _num(v)
+    return "n/a" if f is None else f"{f / 1000:,.0f}"
+
+
+@register.filter
+def millions(v, digits=1):
+    """Persons as millions."""
+    f = _num(v)
+    return "n/a" if f is None else f"{f / 1e6:,.{int(digits)}f}"
+
+
+@register.filter
 def get(d, key):
     return d.get(key) if hasattr(d, "get") else None
 

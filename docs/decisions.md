@@ -148,3 +148,7 @@ Chris sent the composition table and method note to the outside reviewer and to 
 - **Edited compositions** are written to the data volume as `user-<hash>.yaml` with status "user-defined" and labelled as user-defined shocks on every page.
 - **CDM tables** are Django models with the baseline's exact field names; foreign keys are plain UUID columns so the names stay exact. The three change-request fields are in the project's own `RequirementExtension` table.
 - **Data on the volume** is copied from the local machine rather than fetched again on the server, so production runs read files with the same checksums as the local runs.
+
+## 30 October 2026: front page ("What is this?")
+
+Chris asked for a way for the team to grasp the premise in seconds, then more depth, then the full tool. Built as the site's front page rather than a deck or video, so the figures stay tied to the stored base run and update when it is regenerated. Three layers: the question, the headline figure and the map; five animated steps (spend, supply chains, people, firms' shortage reports, rating) with Germany's construction as the worked example; links into the run pages. The EU totals and the example are an engine table, `results.overview`, written to `docs/results/overview.csv` and stored with every run, so the web app computes nothing. The runs list moves to `/runs/`.

@@ -47,3 +47,23 @@ def test_public_read_only_refuses_runs(client, settings):
     settings.PUBLIC_READ_ONLY = True
     assert client.get("/").status_code == 200
     assert client.get("/new/").status_code == 403
+
+
+@pytest.mark.skipif(not HAVE_DATA, reason="processed data not present")
+def test_front_page_shows_engine_overview(client, settings):
+    from engine import results
+    from web.results import bridge
+    from web.results.templatetags.fmt import bn, hundreds, pct
+
+    settings.PUBLIC_READ_ONLY = True
+    res = testset.run_case("base", allow_unconfirmed=True)
+    bridge.execute(res.params)
+    ov = results.overview(res).iloc[0]
+    page = client.get("/").content.decode()
+    for shown in (
+        pct(ov["headline_jobs_weighted"]),
+        f"&euro;{bn(ov['shock_meur'])}bn",
+        hundreds(ov["example_extra_persons"]),
+        pct(ov["example_pressure"], 1),
+    ):
+        assert shown in page

@@ -79,6 +79,70 @@ def _legend():
     return out
 
 
+def _shapes(run: Run, by_c: dict) -> list[dict]:
+    """Map outlines filled by headline bin; ``by_c`` rows carry ``name``."""
+    shapes = []
+    for code, d in _map()["paths"].items():
+        row = by_c.get(code)
+        if row is None:
+            shapes.append({"code": code, "d": d, "fill": None, "title": ""})
+            continue
+        v = row["headline_tight_or_binding_share"]
+        k = _bin(v)
+        shapes.append(
+            {
+                "code": code,
+                "d": d,
+                "fill": MAP_COLOURS[k] if k is not None else "nodata",
+                "title": f"{row['name']}: "
+                + (f"{v:.0%} of jobs on tight or binding lines" if v is not None
+                   else "no headline"),  # fmt: skip
+                "url": f"/run/{run.run_id}/country/{code}/",
+            }
+        )
+    shapes.sort(key=lambda s: s["fill"] is not None)  # EU states drawn last
+    return shapes
+
+
+def _base_run() -> Run | None:
+    """The run with the default parameters, if it has been stored."""
+    params = json.loads(json.dumps(RunParams().as_dict()))
+    return Run.objects.filter(params=params).first()
+
+
+def overview(request):
+    """Front page: the premise, then how it works, then the way into the runs.
+    Every figure is a cell of the base run's engine ``overview`` table."""
+    run = _base_run()
+    ov = next(iter(_rows(run, "overview")), None) if run else None
+    if ov is None:
+        return render(request, "results/overview.html", {"run": run, "ov": None})
+    names = _names()
+    countries = _rows(run, "countries")
+    for c in countries:
+        c["name"] = names.get(c["country"], c["country"])
+    by_c = {c["country"]: c for c in countries}
+    m = _map()
+    total = sum(ov[f"lines_{k}"] for k in ("binding", "tight", "clear", "no_rating"))
+    return render(
+        request,
+        "results/overview.html",
+        {
+            "run": run,
+            "p": run.params,
+            "ov": ov,
+            "lines_total": total,
+            "example_name": names.get(ov["example_country"], ov["example_country"]),
+            "min_name": names.get(ov["headline_min_country"]),
+            "max_name": names.get(ov["headline_max_country"]),
+            "shapes": _shapes(run, by_c),
+            "viewbox": m["viewBox"],
+            "map_source": m["source"],
+            "legend": _legend(),
+        },
+    )
+
+
 def runs(request):
     items = []
     for run in Run.objects.select_related("composition"):
@@ -184,26 +248,7 @@ def run_detail(request, run_id):
         c["focus"] = [focus.get(c["country"], {}).get(code, {}) for code, _ in FOCUS]
 
     m = _map()
-    shapes = []
-    for code, d in m["paths"].items():
-        row = by_c.get(code)
-        if row is None:
-            shapes.append({"code": code, "d": d, "fill": None, "title": ""})
-            continue
-        v = row["headline_tight_or_binding_share"]
-        k = _bin(v)
-        shapes.append(
-            {
-                "code": code,
-                "d": d,
-                "fill": MAP_COLOURS[k] if k is not None else "nodata",
-                "title": f"{row['name']}: "
-                + (f"{v:.0%} of jobs on tight or binding lines" if v is not None
-                   else "no headline"),  # fmt: skip
-                "url": f"/run/{run.run_id}/country/{code}/",
-            }
-        )
-    shapes.sort(key=lambda s: s["fill"] is not None)  # EU states drawn last
+    shapes = _shapes(run, by_c)
     deps = _rows(run, "dependencies")
     tables = sorted(
         set(ResultRow.objects.filter(run=run).values_list("table", flat=True))

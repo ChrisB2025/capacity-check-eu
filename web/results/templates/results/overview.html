@@ -1,0 +1,196 @@
+{% extends "results/base.html" %}{% load fmt %}
+{% block title %}What is this? | Capacity Check Europe{% endblock %}
+{% block head %}<script>document.documentElement.classList.add("js");</script>{% endblock %}
+{% block content %}
+{% if not ov %}
+<div class="max-w-2xl">
+  <h1 class="text-2xl font-semibold tracking-tight">Capacity Check Europe</h1>
+  <p class="mt-2 text-stone-700">The base run has not been loaded yet. The saved runs are on the <a class="underline" href="{% url 'runs' %}">runs page</a>.</p>
+</div>
+{% else %}
+
+{# Layer 1: the premise, in a few seconds #}
+<section class="grid items-center gap-8 lg:grid-cols-2">
+  <div>
+    <p class="intro intro-1 text-sm font-medium text-stone-500">Capacity Check Europe <span class="ml-1 rounded bg-amber-100 px-1.5 py-0.5 text-xs text-amber-900">provisional, not yet reviewed</span></p>
+    <h1 class="intro intro-1 mt-3 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">If every EU country spent {{ ov.shock_pct|floatformat }}% of its GDP renovating homes, are there the workers to do it?</h1>
+    <p class="intro intro-2 mt-6 flex items-baseline gap-3">
+      <span class="text-6xl font-semibold tracking-tight text-[#104281] tabular-nums">{{ ov.headline_jobs_weighted|pct }}</span>
+      <span class="text-lg leading-snug text-stone-800">of the jobs it needs would be in industries where workers are already short, or would become short.</span>
+    </p>
+    <p class="intro intro-3 mt-4 text-stone-600">&euro;{{ ov.shock_meur|bn }}bn of spending in one year across {{ ov.countries }} member states, needing {{ ov.extra_persons_eu|millions }} million people in work. The darker the country, the more of its programme runs into shortages.</p>
+    <div class="intro intro-3 mt-6 flex flex-wrap gap-3">
+      <a href="#how" class="rounded bg-stone-900 px-4 py-2 text-sm font-medium text-white hover:bg-stone-700">How it works, in 30 seconds &darr;</a>
+      <a href="{% url 'run' run.run_id %}" class="rounded border border-stone-300 bg-white px-4 py-2 text-sm font-medium hover:bg-stone-100">Explore the results &rarr;</a>
+    </div>
+  </div>
+  <figure class="intro intro-2">
+    <svg viewBox="{{ viewbox }}" class="h-auto w-full" role="img" aria-label="Map: share of each member state's programme jobs on tight or binding lines. The figures are in the run's tables.">
+      {% for s in shapes %}
+        {% if s.fill == None %}
+          <path d="{{ s.d }}" fill="#e7e5e4" stroke="#fafaf9" stroke-width="0.6"/>
+        {% elif s.fill == "nodata" %}
+          <a href="{{ s.url }}"><path class="map-state" d="{{ s.d }}" fill="url(#hatch)" stroke="#fafaf9" stroke-width="0.8"><title>{{ s.title }}</title></path></a>
+        {% else %}
+          <a href="{{ s.url }}"><path class="map-state" d="{{ s.d }}" fill="{{ s.fill }}" stroke="#fafaf9" stroke-width="0.8"><title>{{ s.title }}</title></path></a>
+        {% endif %}
+      {% endfor %}
+      <defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#f5f5f4"/><line x1="0" y1="0" x2="0" y2="6" stroke="#a8a29e" stroke-width="2"/></pattern></defs>
+    </svg>
+    <figcaption class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-stone-600">
+      <span class="text-stone-500">Jobs on tight or binding lines:</span>
+      {% for b in legend %}<span class="flex items-center gap-1"><span class="inline-block h-3 w-4 rounded-sm" style="background: {{ b.colour }}"></span>{{ b.label }}</span>{% endfor %}
+    </figcaption>
+  </figure>
+</section>
+
+{# Layer 2: how it works, step by step #}
+<section id="how" class="mt-20 scroll-mt-6">
+  <h2 class="text-2xl font-semibold tracking-tight">How it works</h2>
+  <p class="mt-2 max-w-2xl text-stone-700">Spending is a claim on real resources: people, materials, energy. This asks a different question from the usual one. Not how to pay for a programme, but whether the people are there to do the work, and where they would run short. Five steps, using the figures from the base run.</p>
+
+  <ol class="mt-8 space-y-6">
+    <li class="step grid gap-4 rounded-lg border border-stone-200 bg-white p-5 sm:grid-cols-[3rem_1fr]">
+      <span class="step-num">1</span>
+      <div>
+        <h3 class="text-lg font-semibold">Spend the money</h3>
+        <p class="mt-1 text-stone-700"><strong class="text-stone-900">&euro;{{ ov.shock_meur|bn }}bn</strong>: {{ ov.shock_pct|floatformat }}% of {{ ov.gdp_year }} GDP in each of the {{ ov.countries }} member states, spent in one year on housing and energy renovation. Every country gets the same share of its GDP, so the same financial push, not the same physical programme.</p>
+        <div class="bar mt-4 flex h-6 overflow-hidden rounded" aria-hidden="true">
+          {% for ln in run.composition.lines %}<span class="seg-{{ forloop.counter }}" style="flex-grow: {{ ln.share }}"></span>{% endfor %}
+        </div>
+        <ul class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-stone-600">
+          {% for ln in run.composition.lines %}<li class="flex items-center gap-1.5"><span class="seg-{{ forloop.counter }} inline-block h-3 w-3 rounded-sm"></span>{{ ln.label }} <span class="tabular-nums text-stone-500">{{ ln.share|pct }}</span></li>{% endfor %}
+        </ul>
+        <p class="mt-2 text-xs text-stone-500">The spending mix is {{ run.composition.status }} and awaits review; every figure below changes when it is confirmed.</p>
+      </div>
+    </li>
+
+    <li class="step grid gap-4 rounded-lg border border-stone-200 bg-white p-5 sm:grid-cols-[3rem_1fr]">
+      <span class="step-num">2</span>
+      <div>
+        <h3 class="text-lg font-semibold">Follow it through supply chains</h3>
+        <p class="mt-1 text-stone-700">Builders buy materials, materials makers buy energy and metals, and so on down the chain. Eurostat's FIGARO tables trace every round across 64 industries in every EU country and its trading partners. In all, the programme needs <strong class="text-stone-900">&euro;{{ ov.required_output_meur|bn }}bn of output</strong>, made here:</p>
+        <div class="bar mt-4 flex h-6 overflow-hidden rounded" aria-hidden="true">
+          <span class="bg-[#104281]" style="flex-grow: {{ ov.required_home_share }}"></span>
+          <span class="bg-[#6da7ec]" style="flex-grow: {{ ov.required_rest_eu_share }}"></span>
+          <span class="bg-[#cde2fb]" style="flex-grow: {{ ov.required_non_eu_share }}"></span>
+        </div>
+        <ul class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-stone-600">
+          <li class="flex items-center gap-1.5"><span class="inline-block h-3 w-3 rounded-sm bg-[#104281]"></span>in the spending country <span class="tabular-nums text-stone-500">{{ ov.required_home_share|pct }}</span></li>
+          <li class="flex items-center gap-1.5"><span class="inline-block h-3 w-3 rounded-sm bg-[#6da7ec]"></span>elsewhere in the EU <span class="tabular-nums text-stone-500">{{ ov.required_rest_eu_share|pct }}</span></li>
+          <li class="flex items-center gap-1.5"><span class="inline-block h-3 w-3 rounded-sm bg-[#cde2fb] ring-1 ring-stone-300"></span>outside the EU <span class="tabular-nums text-stone-500">{{ ov.required_non_eu_share|pct }}</span></li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="step grid gap-4 rounded-lg border border-stone-200 bg-white p-5 sm:grid-cols-[3rem_1fr]">
+      <span class="step-num">3</span>
+      <div>
+        <h3 class="text-lg font-semibold">Count the people it needs</h3>
+        <p class="mt-1 text-stone-700">Each industry's output per worker turns that into people: <strong class="text-stone-900">{{ ov.extra_persons_eu|millions }} million</strong> more in work across the EU for a year.</p>
+        <div class="example mt-4 rounded border-l-4 border-[#3987e5] bg-stone-50 px-4 py-3">
+          <p class="text-xs font-medium uppercase tracking-wide text-stone-500">Example: {{ ov.example_industry_label|lower }} in {{ example_name }}</p>
+          <p class="mt-1 text-stone-800">{{ ov.example_industry_label }} in {{ example_name }} would need <strong>{{ ov.example_extra_persons|hundreds }}</strong> more people, on top of the {{ ov.example_employment|millions:2 }} million it employs now. That is <strong>{{ ov.example_pressure|pct:1 }}</strong> more.</p>
+        </div>
+      </div>
+    </li>
+
+    <li class="step grid gap-4 rounded-lg border border-stone-200 bg-white p-5 sm:grid-cols-[3rem_1fr]">
+      <span class="step-num">4</span>
+      <div>
+        <h3 class="text-lg font-semibold">Ask firms whether they can find them</h3>
+        <p class="mt-1 text-stone-700">The European Commission asks firms in every member state what is holding back their activity. One answer is "shortage of labour". Each industry's current reading is placed against its own history, so a country where firms always complain is not mistaken for one in sudden trouble.</p>
+        {% if ov.example_slack_percentile != None %}
+        <div class="example mt-4 rounded border-l-4 border-[#3987e5] bg-stone-50 px-4 py-3">
+          <p class="text-xs font-medium uppercase tracking-wide text-stone-500">Example: {{ ov.example_industry_label|lower }} in {{ example_name }}</p>
+          <p class="mt-1 text-stone-800"><strong>{{ ov.example_slack_current|num }}%</strong> of firms now name a shortage of labour. That is at or above <strong>{{ ov.example_slack_percentile|pct }}</strong> of readings in {{ ov.example_slack_years|num }} years of records.</p>
+          <div class="history relative mt-4 h-8" aria-hidden="true">
+            <div class="absolute inset-x-0 top-3 flex h-2 overflow-hidden rounded">
+              <span class="bg-stone-200" style="flex-grow: {{ p.thresholds.slack_median_quantile }}"></span>
+              <span class="bg-amber-200" style="flex-grow: calc({{ p.thresholds.slack_top_quantile }} - {{ p.thresholds.slack_median_quantile }})"></span>
+              <span class="bg-red-300" style="flex-grow: calc(1 - {{ p.thresholds.slack_top_quantile }})"></span>
+            </div>
+            <span class="marker absolute top-0 h-8 w-1 -translate-x-1/2 rounded bg-stone-900" style="left: {{ ov.example_slack_percentile|pct:1 }}; --at: {{ ov.example_slack_percentile|pct:1 }}"></span>
+          </div>
+          <div class="flex justify-between text-xs text-stone-500"><span>lowest on record</span><span>median</span><span>top quarter</span><span>highest</span></div>
+        </div>
+        {% endif %}
+      </div>
+    </li>
+
+    <li class="step grid gap-4 rounded-lg border border-stone-200 bg-white p-5 sm:grid-cols-[3rem_1fr]">
+      <span class="step-num">5</span>
+      <div>
+        <h3 class="text-lg font-semibold">Rate each industry, then add up</h3>
+        <p class="mt-1 text-stone-700">Each of the 64 industries in each country gets one of four ratings, combining the extra people needed (step 3) with what firms report (step 4).</p>
+        <dl class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+          <div><dt class="inline"><span class="rating rating-binding">binding</span></dt> <dd class="inline text-stone-700">adds more than {{ p.thresholds.pressure_high|pct }} to the workforce, and shortages are in the top quarter of their history</dd></div>
+          <div><dt class="inline"><span class="rating rating-tight">tight</span></dt> <dd class="inline text-stone-700">adds at least {{ p.thresholds.pressure_low|pct }}, or shortages are above their usual level</dd></div>
+          <div><dt class="inline"><span class="rating rating-clear">clear</span></dt> <dd class="inline text-stone-700">neither</dd></div>
+          <div><dt class="inline"><span class="rating rating-none">no rating</span></dt> <dd class="inline text-stone-700">the evidence is missing; no score is forced</dd></div>
+        </dl>
+        <p class="mt-3 text-stone-800">{{ ov.example_industry_label }} in {{ example_name }}: <span class="rating {{ ov.example_rating|rating_class }}">{{ ov.example_rating }}</span></p>
+        <p class="mt-4 text-sm text-stone-600">All {{ lines_total|num }} industry lines across the EU:</p>
+        <div class="bar mt-1 flex h-6 gap-0.5 overflow-hidden rounded" aria-hidden="true">
+          <span class="bg-red-300" style="flex-grow: {{ ov.lines_binding }}" title="binding"></span>
+          <span class="bg-amber-200" style="flex-grow: {{ ov.lines_tight }}" title="tight"></span>
+          <span class="bg-emerald-200" style="flex-grow: {{ ov.lines_clear }}" title="clear"></span>
+          <span class="bg-stone-200" style="flex-grow: {{ ov.lines_no_rating }}" title="no rating"></span>
+        </div>
+        <p class="mt-1 text-sm text-stone-600 tabular-nums">{{ ov.lines_binding|num }} binding, {{ ov.lines_tight|num }} tight, {{ ov.lines_clear|num }} clear, {{ ov.lines_no_rating|num }} no rating</p>
+        <p class="mt-4 text-stone-800">Count the jobs that land on tight or binding lines and you have the headline: <strong>{{ ov.headline_jobs_weighted|pct }}</strong> across the EU, from {{ ov.headline_min|pct }} in {{ min_name }} to {{ ov.headline_max|pct }} in {{ max_name }}. A further {{ ov.unrated_jobs_weighted|pct }} of jobs are on lines with no rating.</p>
+      </div>
+    </li>
+  </ol>
+
+  <div class="step mt-6 rounded-lg border border-amber-200 bg-amber-50 p-5 text-stone-800">
+    <h3 class="font-semibold">What it does not tell you</h3>
+    <p class="mt-1">It shows where a programme would press on workers. It does not forecast prices, say whether a programme is affordable, or see limits in permits, grid connections or training places. The results also depend on which shortage measure is used, a question now with the reviewer. The full list is at the foot of every page.</p>
+  </div>
+</section>
+
+{# Layer 3: the way in #}
+<section class="mt-16">
+  <h2 class="text-2xl font-semibold tracking-tight">Go deeper</h2>
+  <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <a href="{% url 'run' run.run_id %}" class="card">
+      <span class="font-semibold">Every country</span>
+      <span class="mt-1 text-sm text-stone-600">The map, all 64 industries in each country, and where the materials come from.</span>
+    </a>
+    {% if not PUBLIC_READ_ONLY %}
+    <a href="{% url 'new_run' %}" class="card">
+      <span class="font-semibold">Change the assumptions</span>
+      <span class="mt-1 text-sm text-stone-600">Shock size, spending mix, shortage measure, thresholds. A run takes about 15 seconds.</span>
+    </a>
+    {% endif %}
+    {% if "SE" in p.countries %}
+    <a href="{% url 'sweden' run.run_id %}" class="card">
+      <span class="font-semibold">Sweden, by occupation</span>
+      <span class="mt-1 text-sm text-stone-600">The extra jobs split into carpenters, electricians and others, against Arbetsf&ouml;rmedlingen's forecasts.</span>
+    </a>
+    {% endif %}
+    <a href="{% url 'about' %}" class="card">
+      <span class="font-semibold">Method and sources</span>
+      <span class="mt-1 text-sm text-stone-600">Every figure traces to a dataset, edition and checksum.</span>
+    </a>
+  </div>
+  <p class="mt-4 text-xs text-stone-500">Figures on this page: run <a class="underline" href="{% url 'run' run.run_id %}">{{ run.run_id }}</a>, engine table <a class="underline" href="{% url 'csv' run.run_id 'overview' %}">overview.csv</a>. {{ map_source }}</p>
+</section>
+
+<script>
+(function () {
+  var els = document.querySelectorAll(".step");
+  if (!("IntersectionObserver" in window)) {
+    els.forEach(function (e) { e.classList.add("in"); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.25 });
+  els.forEach(function (e) { io.observe(e); });
+})();
+</script>
+{% endif %}
+{% endblock %}

@@ -15,6 +15,8 @@ saves each run to ``data/processed/runs/<run_id>/``, and writes to
 ``plausibility.csv``  France and Ireland against official job estimates
 ``sweden_*.csv``      the Sweden layer for the base run (Phase 5)
 ``matrix.csv``        every run in the matrix with its parameters and results
+``overview.csv``      the EU totals and one worked example shown on the
+                      web app's front page
 ``summary.json``      run ids, sources and checksums
 
 The base run is the default parameters. Tables other than ``matrix.csv`` and
@@ -157,6 +159,70 @@ def dependencies_table(res) -> pd.DataFrame:
               "non_eu_share"]]  # fmt: skip
 
 
+EXAMPLE_COUNTRY = "DE"
+EXAMPLE_INDUSTRY = "F"
+
+
+def overview(res) -> pd.DataFrame:
+    """One row: EU totals and a worked example, for the front page.
+
+    The example is construction in Germany, or in the country with the largest
+    shock when Germany is not in the run.
+    """
+    c = res.tables["countries"]
+    lines = res.tables["lines"]
+    out = c["required_output_meur"]
+    jobs = c["extra_persons_eu"]
+    head = c["headline_tight_or_binding_share"]
+    counts = lines["rating"].value_counts()
+    ex = (
+        EXAMPLE_COUNTRY
+        if EXAMPLE_COUNTRY in set(c["country"])
+        else c.loc[c["shock_meur"].idxmax(), "country"]
+    )
+    exc = c.set_index("country").loc[ex]
+    exl = lines[(lines["economy"] == ex) & (lines["industry"] == EXAMPLE_INDUSTRY)]
+    exl = exl.iloc[0]
+    rated = head.notna()
+    row = {
+        "shock_pct": res.params.shock_pct,
+        "gdp_year": res.params.gdp_year,
+        "countries": len(c),
+        "shock_meur": c["shock_meur"].sum(),
+        "required_output_meur": out.sum(),
+        **{
+            f"required_{k}_share": (out * c[f"required_{k}_share"]).sum() / out.sum()
+            for k in ("home", "rest_eu", "non_eu")
+        },
+        "extra_persons_eu": jobs.sum(),
+        "headline_jobs_weighted": (head[rated] * jobs[rated]).sum() / jobs[rated].sum(),
+        "headline_min": head.min(),
+        "headline_min_country": c.loc[head.idxmin(), "country"],
+        "headline_max": head.max(),
+        "headline_max_country": c.loc[head.idxmax(), "country"],
+        "unrated_jobs_weighted": (c["unrated_share"] * jobs).sum() / jobs.sum(),
+        **{
+            f"lines_{k.replace(' ', '_')}": int(counts.get(k, 0))
+            for k in (rating.BINDING, rating.TIGHT, rating.CLEAR, rating.NO_RATING)
+        },
+        "example_country": ex,
+        "example_shock_meur": exc["shock_meur"],
+        "example_extra_persons_eu": exc["extra_persons_eu"],
+        "example_headline": exc["headline_tight_or_binding_share"],
+        "example_industry": EXAMPLE_INDUSTRY,
+        "example_industry_label": exl["label"],
+        "example_extra_persons": exl["extra_persons_all"],
+        "example_employment": exl["persons_employment"],
+        "example_pressure": exl["pressure"],
+        "example_slack_current": exl["slack_current"],
+        "example_slack_percentile": exl["slack_percentile"],
+        "example_slack_class": exl["slack_class"],
+        "example_slack_years": exl["slack_years"],
+        "example_rating": exl["rating"],
+    }
+    return pd.DataFrame([row])
+
+
 def _summary_row(name: str, res) -> dict:
     c = res.tables["countries"]
     lines = res.tables["lines"]
@@ -241,6 +307,7 @@ def run(allow_unconfirmed: bool = False, progress=print) -> dict:
         "robustness.csv": pd.DataFrame(robust),
         "matrix.csv": pd.DataFrame(rows),
         "plausibility.csv": pd.DataFrame(plausibility.run(base)),
+        "overview.csv": overview(base),
     }
     for name, df in sweden.run(base).items():
         if "publishable" in df.columns:

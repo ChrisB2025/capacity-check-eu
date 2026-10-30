@@ -206,6 +206,7 @@ def engine_tables(res) -> dict:
     tables = dict(res.tables)
     tables["country_lines"] = results.lines_table(res)
     tables["dependencies"] = results.dependencies_table(res)
+    tables["overview"] = results.overview(res)
     if SWEDEN in res.params.countries:
         tables.update(sweden.run(res))
     return tables

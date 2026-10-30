@@ -10,4 +10,33 @@
   .rating-none { @apply bg-stone-100 text-stone-600; }
   .map-state { cursor: pointer; }
   .map-state:hover { stroke: #1c1917; stroke-width: 1.5; }
+
+  /* Front page. Steps reveal as they scroll into view; without JavaScript or
+     with reduced motion everything is shown at once. */
+  .step-num { @apply flex h-10 w-10 items-center justify-center rounded-full bg-stone-900 text-lg font-semibold text-white; }
+  .card { @apply flex flex-col rounded-lg border border-stone-200 bg-white p-4 hover:border-stone-400 hover:shadow-sm; }
+  .seg-1 { background: #104281; }
+  .seg-2 { background: #6da7ec; }
+  .seg-3 { background: #cde2fb; }
+  .seg-4 { background: #a8a29e; }
+  .seg-5 { background: #d6d3d1; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .intro { animation: rise 700ms ease-out both; }
+  .js .intro-2 { animation-delay: 600ms; }
+  .js .intro-3 { animation-delay: 1300ms; }
+  .js .step { opacity: 0; transform: translateY(16px); transition: opacity 600ms ease-out, transform 600ms ease-out; }
+  .js .step.in { opacity: 1; transform: none; }
+  .js .step .bar { clip-path: inset(0 100% 0 0); transition: clip-path 1100ms ease-out 300ms; }
+  .js .step.in .bar { clip-path: inset(0 0 0 0); }
+  .js .step .example { opacity: 0; transition: opacity 600ms ease-out 700ms; }
+  .js .step.in .example { opacity: 1; }
+  .js .step .marker { left: 0 !important; transition: left 1400ms cubic-bezier(.2,.7,.2,1) 1100ms; }
+  .js .step.in .marker { left: var(--at) !important; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
 }
