@@ -1,6 +1,6 @@
 # **Real Resource Scoring for Europe: Season 1 Demonstrator Specification**
 
-Oct 9, 2026 · @ChrisB
+Oct 9, 2026 · @ChrisB · revised 30 Oct 2026: eurozone framing
 
 ## **Executive summary**
 
@@ -94,7 +94,7 @@ The demonstrator answers one question: when the same spending shock is applied i
 | Cross-border supply chains | Not modelled | Modelled for 49 economies |
 | Product | A service in four phases | A one-off proof |
 
-**Framing for the eurozone.** Eurozone members are currency users, so the US argument for a resource score beside the deficit score does not carry over. The demonstrator makes no claim about how spending is financed. It reports whether the work could be delivered and where price pressure is likely. Sweden, with its own currency, is the cleaner case for the wider argument.
+**Framing for the eurozone.** Eurozone members are rules-bound issuers of the euro. Their central banks belong to the Eurosystem, but the Treaty, including Article 123 TFEU's ban on central bank financing of governments, limits how they spend. What limits a eurozone government is the rules it has signed, not an inability to pay, so the US argument for a resource score beside the deficit score carries over in part: a resource score can sit beside the fiscal rules as evidence of what a programme would demand of real resources. The demonstrator makes no claim about how spending is financed or about the rules themselves. It reports whether the work could be delivered and where price pressure is likely. Sweden, which issues its own currency without those rules, is the cleaner case for the wider argument.
 
 ## **The standard shock**
 
@@ -325,7 +325,7 @@ The two largest risks are claiming more than the method can show and being dismi
 
 | Risk | Why it matters | Mitigation |
 | :---- | :---- | :---- |
-| Read as an inflation forecast or a fiscal space claim | The method locates pressure only; eurozone members are currency users | Call it a risk indicator; no deficit term; state limits in the report |
+| Read as an inflation forecast or a fiscal space claim | The method locates pressure only; for eurozone members, fiscal space is set by Treaty rules the model takes as given | Call it a risk indicator; no deficit term; state limits in the report |
 | Seen as built to show room to spend | An MMT-linked association will be assumed to want one answer | Neutral name, open code, outside reviewer, publish results that cut either way |
 | Thresholds look arbitrary | Output gap estimates lost credibility the same way | Tie them to each series' own history; show sensitivity; invite challenge |
 | Claiming novelty that others contradict | Germany's QuBe project already scored the 2025 investment package for occupational bottlenecks ([BMAS FB 683](https://www.bmas.de/DE/Service/Publikationen/Forschungsberichte/fb683-szenario-zu-den-auswirkungen-der-grundgesetzaenderungen.html)) | Claim only an open, comparable, cross-country method; read the German report first |

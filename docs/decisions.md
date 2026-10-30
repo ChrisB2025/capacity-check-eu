@@ -156,3 +156,5 @@ Chris asked for a way for the team to grasp the premise in seconds, then more de
 ## 30 October 2026: eurozone wording
 
 Chris corrected "currency users" in the "what the result does not claim" list. Eurozone members are rules-bound issuers of the euro: their central banks are part of the Eurosystem, and the Treaty (Article 123 TFEU, no central bank financing of governments) binds how they spend. The method note and the site footer now say so. This changes wording, not method. `spec-v1.md` still says "currency users" (lines 97 and 328) and is left as the frozen spec; the review package already with the reviewer carries the old wording.
+
+Follow-up the same day: `spec-v1.md` revised at Chris's request (header note, the eurozone framing paragraph, and the risks table). The framing paragraph changes substance, not only wording: the US argument for a resource score beside the deficit score now "carries over in part", beside the fiscal rules. The provisional review package was rebuilt with the corrected method note, for Chris to resend.
