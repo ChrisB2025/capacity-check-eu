@@ -152,3 +152,7 @@ Chris sent the composition table and method note to the outside reviewer and to 
 ## 30 October 2026: front page ("What is this?")
 
 Chris asked for a way for the team to grasp the premise in seconds, then more depth, then the full tool. Built as the site's front page rather than a deck or video, so the figures stay tied to the stored base run and update when it is regenerated. Three layers: the question, the headline figure and the map; five animated steps (spend, supply chains, people, firms' shortage reports, rating) with Germany's construction as the worked example; links into the run pages. The EU totals and the example are an engine table, `results.overview`, written to `docs/results/overview.csv` and stored with every run, so the web app computes nothing. The runs list moves to `/runs/`.
+
+## 30 October 2026: eurozone wording
+
+Chris corrected "currency users" in the "what the result does not claim" list. Eurozone members are rules-bound issuers of the euro: their central banks are part of the Eurosystem, and the Treaty (Article 123 TFEU, no central bank financing of governments) binds how they spend. The method note and the site footer now say so. This changes wording, not method. `spec-v1.md` still says "currency users" (lines 97 and 328) and is left as the frozen spec; the review package already with the reviewer carries the old wording.

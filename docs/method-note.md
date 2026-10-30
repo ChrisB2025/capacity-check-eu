@@ -14,7 +14,7 @@ The standard shock is additional public spending equal to 1% of each member stat
 
 - It locates pressure. It does not size price changes, because input-output analysis assumes fixed proportions and no price response.
 - It has no deficit or debt term.
-- It makes no claim about fiscal space for eurozone members, which are currency users.
+- It makes no claim about fiscal space. Eurozone members are rules-bound issuers of the euro: their central banks belong to the Eurosystem, but the Treaty, including Article 123 TFEU's ban on central bank financing of governments, limits how they spend. The model takes those rules as given.
 - It cannot see constraints in permits, grid connections, planning or training capacity.
 - It scores against labour available in the country. Migration and posted workers are a named limitation, not part of the model.
 - At 64 industries, results are bands, not point estimates.
