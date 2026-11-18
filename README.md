@@ -14,7 +14,7 @@ The result locates pressure. It does not size price changes, it has no deficit o
 | 1 | Data acquisition, gate 1 | Report written; previous FIGARO edition requested from Eurostat |
 | 2 | Model engine, gate 2 | Done; composition table and method note with the reviewer |
 | 3 | EU-wide results, reviewer package | Provisional results; gate 3 report written |
-| 4 | Web application | Built and deployed behind a shared login |
+| 4 | Web application | Built and deployed behind a shared login; review upgrades of 18 November 2026 (summary, named limits, allocation, glossary, thresholds, reviewer page) |
 | 5 | Sweden layer | Provisional results; Sweden page in the web app |
 | 6 | AI drafting features | Not started |
 | 7 | Report and handover | Not started |
@@ -24,11 +24,12 @@ All results so far are **provisional**: they use compositions not yet confirmed 
 ## Layout
 
 ```
-docs/       specification, CDM baseline, method note, data register, decisions, gate reports
+docs/       specification (spec-v2.md), glossary, CDM baseline, method note, data register, decisions, gate reports
 data/raw/   downloaded files, never edited (not committed; rebuilt by `python -m engine fetch`)
 data/processed/  parquet files written by the engine (not committed)
 engine/     plain Python package, no Django; reproduces every number from the command line
   concordances/  industry concordance, generated and committed
+  text/          glossary, composition notes, policy options, Swedish trade titles
 tests/      pytest, including the fixed test set of runs
 web/        Django app: calls the engine, stores its tables, computes nothing itself
 notebooks/  exploratory, not load-bearing
@@ -57,7 +58,10 @@ From Phase 2 onward:
 python -m engine fetch
 python -m engine run --shock 1.0 --edition 2026     # one run; add --provisional until a composition is confirmed
 python -m engine results                           # the full matrix and docs/results/
+python -m engine glossary                          # threshold reference table and docs/glossary.md
 ```
+
+After changing `engine/text/glossary.yaml`, run `python -m engine glossary`; a test fails if `docs/glossary.md` is out of date. After deploying engine changes that add tables, run `python manage.py import_runs --all` so stored runs gain them.
 
 The web app locally (SQLite when `DATABASE_URL` is unset):
 
@@ -88,6 +92,7 @@ Variables on `web` (values live only in Railway, never in the repository):
 | `PUBLIC_READ_ONLY` | `false` until reviewer sign-off; `true` opens read-only public access |
 | `ALLOWED_HOSTS` | The Railway domain |
 | `APP_USERNAME`, `APP_PASSWORD` | The single shared login, created at each start |
+| `STAFF_USERNAME`, `STAFF_PASSWORD` | A staff login, created at each start, that can read reviewer feedback at `/reviewers/feedback/` |
 | `ANTHROPIC_API_KEY` | Used from Phase 6 only. Set a monthly spend cap in the Anthropic console; the code will also enforce a cap. |
 
 Local development uses SQLite unless `DATABASE_URL` points at PostgreSQL. The data files on the volume were copied from the development machine, so production runs read files with the same checksums.

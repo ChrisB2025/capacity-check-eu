@@ -53,7 +53,7 @@ def test_glossary_markdown_is_in_sync():
 def test_no_em_or_en_dashes_in_user_text():
     for f in text.TEXT_DIR.glob("*.yaml"):
         body = f.read_text(encoding="utf-8")
-        assert not re.search("[–—]", body), f.name
+        assert not re.search("[" + chr(0x2013) + chr(0x2014) + "]", body), f.name
 
 
 def test_composition_notes_cover_every_code():

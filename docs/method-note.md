@@ -1,6 +1,6 @@
 # Method note
 
-Capacity Check Europe (working name), Season 1 demonstrator. Draft for review, 29 October 2026. Updated through Phase 7.
+Capacity Check Europe (working name), Season 1 demonstrator. Draft for review, 29 October 2026. Updated through Phase 7, and on 18 November 2026 after the first reviewer feedback: named limits, the mapping from spending to industries, the reasoning for each threshold, the jobs caveat and the risk-indicator framing. Every term used here is defined in the [glossary](glossary.md).
 
 ## The question
 
@@ -22,6 +22,27 @@ The standard shock is additional public spending equal to 1% of each member stat
 
 Of the five programme questions (what a policy requires, what exists, what can be mobilised, over what time, within what limits), this method answers the first, gives a partial answer to the second, and does not answer the last three. Survey shares of firms reporting shortages are evidence about the second question, not a measure of how much labour could be mobilised.
 
+## Risk indicators, not judgements
+
+Every rating is an **estimated risk category**: clear, tight or binding. Each is a risk indicator, built from two published signals (how large the shock is for an industry's workforce, and how often its firms already report labour shortages). None is a factual judgement that a programme can or cannot be delivered. The web app states this on every results page and on the second line of every CSV it exports; `docs/results/README.md` states it for the published tables.
+
+## Where the tool sits in the policy process
+
+The tool is an early screen of real resource risk, used before a programme is designed. It shows which industries to look at more closely, and where training, phasing or a different spending mix might be needed. It is not a forecast of what will happen, and it does not replace a country's own assessment of a real programme. Readers range from researchers to people facing an urgent policy choice, so the web app presents results in layers: a short summary, a plain-language explanation, then the method and data.
+
+## Named limits
+
+These limits bound what any result can claim. They are stated on the results pages, not only here.
+
+1. **One shock, 27 different countries.** Every member state gets the same shock: the same share of GDP with the same spending mix. Countries differ in climate, building stock, tenure (Finland's well-insulated cooperative flats are not Sweden's detached houses), incomes and habits; household water and energy use differ between neighbouring countries for reasons that are cultural, not physical. The renovation work a uniform shock implies may therefore be badly out of line with what any one country would actually do. A proper baseline would need energy use by building type, income group and season, which Season 1 does not attempt.
+   - *Valid comparisons*: where the same financial shock presses hardest relative to each industry's workforce and its own shortage history; which industries are tight or binding in many member states and which in few; how much of each programme's work is done outside the spending country.
+   - *Invalid comparisons*: what each country would need to spend or how many homes it would need to renovate; whether one country's programme is more feasible than another's; the size of any country's real renovation need.
+   - The uniform shock is deliberate. It makes cross-country variation visible and gives each country a common starting point. The method is built to be rerun with each country's own composition and data.
+2. **Construction is one industry.** See step 1: FIGARO cannot split construction into the trades renovation needs.
+3. **Jobs are not hires.** See step 3.
+4. **Survey shares count firms, not missing workers** (step 5).
+5. The limits listed under "What the result claims and does not claim" above.
+
 ## From shock to rating
 
 The engine is a Python package in `engine/`. Every step below names its module, and every parameter is in `engine/params.py` with the default shown here.
@@ -31,6 +52,19 @@ The engine is a Python package in `engine/`. Every step below names its module, 
 For member state *c*, the shock is *s* per cent of 2024 GDP at current prices (`nama_10_gdp`, B1GQ, million euros). It is split across products by the composition table (`docs/composition-table.md`).
 
 FIGARO's tables are industry by industry, so a purchase of a product is assigned to the industry with the same two-digit code. For example, construction work (CPA F) is assigned to construction (F).
+
+**How the shock is allocated.** The standard composition maps to four industries:
+
+| Spending line | Share | FIGARO industry | NACE divisions | Why this line, and why this industry |
+| :--- | ---: | :--- | :--- | :--- |
+| Construction work, including insulation and heating installation | 64.0% | F Construction | 41, 42, 43 | Insulation and installation are bought from contractors at their installed price. Materials come in through construction's own supply chain, so they are not listed again. |
+| Heating and ventilation equipment | 9.4% | C28 Machinery and equipment n.e.c. | 28 | Heat pumps, boilers and ventilation units. Listed separately because construction's average supply chain contains little machinery. |
+| Distribution margin on heating equipment | 6.6% | G46 Wholesale trade | 46 | The wholesale margin on the equipment, kept as its own purchase. |
+| Design, planning and site supervision | 20.0% | M71 Architectural and engineering activities | 71 | The KfW programme assumption for planning and supervision. |
+
+The shares and sources are derived in `docs/composition-table.md`; the alternatives tested are there too. The web app shows the same table for every run ("How the shock is allocated"), with the euro amounts and the share made at home. The reasons are kept in `engine/text/composition_notes.yaml`, so the files the engine runs, and their checksums, do not change.
+
+**Construction cannot be split at A64.** FIGARO has one construction industry, F, covering NACE divisions 41 (buildings), 42 (civil engineering) and 43 (specialised trades such as installation and finishing). The input-output layer therefore cannot separate insulation from heating installation, or renovation trades from road building: the construction line carries the average supply chain and workforce of all construction. The business surveys do publish divisions 41 to 43, but the tool uses the construction total because the demand side has no split to match. This is a limit of the data, not a choice. Where an occupational register exists, as in Sweden, the construction workforce can be broken down into trades (step 8): carpenters, electricians, plumbers and heating fitters, insulation workers, heat pump technicians and others. The web app shows these trades from the full Swedish occupation table, including those outside the 25 largest occupations.
 
 Each product's purchases are then split by origin economy. The split uses the shares in which *c* already buys that product for gross fixed capital formation (P51G) in the FIGARO table. If *c* records no such purchases, it falls back to all final demand of *c*, and then to all-domestic. The basis used is reported for every product and country.
 
@@ -47,6 +81,8 @@ Required output for direct demand *y* is *L y*: the output each industry in each
 Extra persons employed in industry *i* of member state *c* equal required output times persons employed per million euros of output. Persons come from `nama_10_a64_e` (EMP_DC, THS_PER) for the FIGARO reference year, and output from FIGARO for the same year. Hours worked (THS_HW) are computed the same way and shown where published.
 
 Where national accounts give no figure for an industry, the ratio for its NACE section is used and the line is flagged. Economies outside the EU get output requirements but no jobs estimate.
+
+**Jobs are not hires.** The extra persons measure the work the shock asks for, at today's output per person. They do not translate one for one into hiring. Firms can reprioritise existing capacity, moving staff from other work, and households or housing cooperatives can swap grant-funded work for work they had already planned (postponing a roof replacement to insulate, for example). Where that happens, the same work is done by people who were already employed, and the pressure shows up as displaced work rather than vacancies. A high estimated risk category therefore signals a risk of pressure, not certain hiring demand. The web app places this caveat beside every jobs figure.
 
 ### 4. Pressure (`engine/rating.py`)
 
@@ -79,7 +115,32 @@ The alternative indicator is the Eurostat job vacancy rate (`jvs_q_nace2`) for t
 | Clear | Pressure below 2%, and slack at or below its median |
 | No rating | No slack class, or no jobs estimate |
 
-The thresholds are parameters. A rating is never forced: missing or unusable evidence gives "no rating".
+The 2% and 5% are defaults: the thresholds are parameters, and the web app fills in the values of the run being shown. A rating is never forced: missing or unusable evidence gives "no rating". The bands are called **estimated risk categories** throughout.
+
+### Why these thresholds
+
+The team set the four cut-offs. They are judgements, and the reasoning for each is below so that reviewers can challenge it.
+
+- **Pressure of 2%: tight from here.** From 2011 to 2024, an industry's workforce in a member state grew by 2% or more in a year in about 31% of cases, weighted by employment (39% counting each country, industry and year once; 29% weighted, for construction alone). An extra 2% from one programme, on top of whatever growth the industry would have had anyway, is within what industries sometimes manage but large enough to notice.
+- **Pressure of 5%: binding above this, if shortages are also high.** Growth of 5% or more in a year happened in about 9% of cases weighted by employment (19% unweighted; 9% weighted for construction). Adding that much in one year asks an industry for something it rarely does.
+- **The median of each shortage series: elevated above it.** Firms in different countries answer the survey differently, so each series is compared with its own past, not with other countries. Above the median, more firms than usual already report labour as a limit.
+- **The top quarter of each series: high, and needed for binding.** It is the tightest quarter of periods on record for that series. Binding needs both this and pressure above 5%, so a single signal never makes a line binding.
+
+The reference figures are computed by `engine/sensitivity.py:employment_reference` from the national accounts series already used for jobs (`nama_10_a64_e`, persons, EMP_DC), and written to `docs/results/threshold_reference.csv`. They describe ordinary year-on-year changes, recessions included, not the capacity of an industry to grow under a programme.
+
+**How much rests on them.** For the standard run, `engine/sensitivity.py` re-rates every line with the thresholds moved, and the web app's threshold page shows the result:
+
+| Change | Ratings changed | EU jobs on tight or binding lines |
+| :--- | ---: | ---: |
+| Defaults (2% and 5%, median and top quarter) | none | 79.5% |
+| Pressure 1% and 3% | 40 (3.5%) | 80.9% |
+| Pressure 3% and 8% | 25 (2.2%) | 78.4% |
+| Pressure 2% and 8% | 14 (1.2%) | 79.5% |
+| High from the top third (0.67) | 11 (1.0%) | 79.5% |
+| High from the top fifth (0.80) | 9 (0.8%) | 79.4% |
+| Elevated above the 60% point, high from the top quarter | 91 (8.0%) | 76.6% |
+
+Moving the pressure thresholds changes few ratings, because the shock adds little to most of the 64 industries: most tight lines are tight on the shortage signal alone. The jobs sit mainly where pressure is higher (the gate 2 report finds 24% of the jobs on tight or binding lines on lines under 2%). The elevated cut-off for shortage reports matters more, and is reviewer question 6.
 
 ### 7. Headline
 
@@ -112,11 +173,15 @@ Steps 2 to 7 are repeated on:
 
 The report counts how many ratings change. Lines unrated in either run are counted separately, so a test cannot look stable by producing more unrated lines.
 
+For every run, `engine/sensitivity.py` also re-rates the run's own lines under a grid of pressure thresholds (tight from 1%, 2% or 3%; binding above 3%, 5% or 8%) and of slack cut-offs (elevated above the 50% or 60% point; high from the 67%, 75% or 80% point). Pressure does not depend on the thresholds, so the pressure grid is exact without rerunning the model; the slack grid reruns step 5 only. The results are stored with the run and shown on its threshold page.
+
 ### 10. Plausibility (`engine/plausibility.py`, Phase 3)
 
 The French and Irish results are scaled to their official programme sizes and compared with the official job estimates. These are, for France, 170,000 to 250,000 extra full-time jobs for building renovation by 2030; for Ireland, almost 80,000 extra construction workers, according to the Fiscal Advisory Council.
 
 ## Rating glossary
+
+The full glossary, which also drives the tooltips in the web app, is [glossary.md](glossary.md). The entries below use the default thresholds.
 
 **Clear.** The shock adds less than 2% to the industry's employment, and firms in the industry report labour as a limiting factor no more often than usual for that series. *Evidence*: both conditions hold. *Cannot establish*: that the extra workers exist and are willing and qualified; only that neither signal points to a problem.
 
@@ -134,7 +199,7 @@ A rating is a category of estimated risk, not a finding that a programme can or 
 | :--- | :--- | :--- |
 | Shock size | 1% of 2024 GDP | 0.5% and 2% as tests |
 | FIGARO edition and reference year | 2026 edition, 2024 | 2023 as a sensitivity; recent years are largely Eurostat projections |
-| Composition | standard | Two alternatives for sensitivity |
+| Composition | standard | Three alternatives for sensitivity |
 | Application | simultaneous | "own" as a variant |
 | Origin split | gross fixed capital formation (P51G) | Falls back as described in step 1 |
 | Slack indicator | DG ECFIN labour share | Job vacancy rate as the alternative |
@@ -171,3 +236,4 @@ Construction notes are raised when the construction slack series is missing or s
 5. **Prices.** FIGARO is at basic prices, while spending is at purchasers' prices. The shock is applied without removing taxes and margins, which overstates required output slightly. Should the shock be converted?
 6. **The rating rule**, in particular whether "tight" should follow from elevated slack alone even when pressure is tiny. Under the rule as written it does, but its weight in the headline is only the jobs on that line.
 7. **The minimum history for slack**, five years by default. Ireland's survey series start in 2016.
+8. **The threshold reasoning** above. Is year-on-year employment growth a fair reference for the pressure thresholds, or is there a better one, such as the growth industries achieved in past expansions?

@@ -1,0 +1,5 @@
+code,line,share,meur,home_share,rest_eu_share,non_eu_share,industry_label,nace_section,section_label,nace_divisions,sources
+F,"Construction work, including insulation and heating installation",0.64,116039.70944,0.9928721649009049,0.005801772246513121,0.0013260628525819265,Construction,F,Construction,"41, 42, 43","Q2013, KFW2016"
+C28,Heating and ventilation equipment,0.094222222222,17083.62388973749,0.43865676522088637,0.3859012652615431,0.17544196951757035,Manufacture of machinery and equipment n.e.c.,C,Manufacturing,28,"Q2013, KFW2016"
+G46,Distribution margin on heating equipment,0.065777777778,11926.303470262512,0.9329426336924761,0.03773081064185199,0.02932655566567203,"Wholesale trade, except of motor vehicles and motorcycles",G,Wholesale and retail trade services; repair services of motor vehicles and motorcycles,46,"Q2013, KFW2016"
+M71,"Design, planning and site supervision",0.2,36262.4092,0.9060055387469634,0.061150360869273244,0.03284410038376357,Architectural and engineering activities; technical testing and analysis,M,"Professional, scientific and technical services",71,KFW2016

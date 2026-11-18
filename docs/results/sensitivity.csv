@@ -1,0 +1,15 @@
+kind,pressure_low,pressure_high,slack_median_quantile,slack_top_quantile,current,lines_binding,lines_tight,lines_clear,lines_no_rating,ratings_changed,share_changed,transitions,jobs_tight_or_binding_share
+pressure,0.01,0.03,0.5,0.75,False,39,824,269,596,40,0.0353356890459364,clear to tight: 26; tight to binding: 14,0.8093468366903636
+pressure,0.01,0.05,0.5,0.75,False,25,838,269,596,26,0.022968197879858657,clear to tight: 26,0.8093468366903636
+pressure,0.01,0.08,0.5,0.75,False,11,852,269,596,40,0.0353356890459364,binding to tight: 14; clear to tight: 26,0.8093468366903636
+pressure,0.02,0.03,0.5,0.75,False,39,798,295,596,14,0.012367491166077738,tight to binding: 14,0.7946487615973574
+pressure,0.02,0.05,0.5,0.75,True,25,812,295,596,0,0.0,,0.7946487615973574
+pressure,0.02,0.08,0.5,0.75,False,11,826,295,596,14,0.012367491166077738,binding to tight: 14,0.7946487615973574
+pressure,0.03,0.05,0.5,0.75,False,25,801,306,596,11,0.009717314487632508,tight to clear: 11,0.7836724568584741
+pressure,0.03,0.08,0.5,0.75,False,11,815,306,596,25,0.022084805653710248,binding to tight: 14; tight to clear: 11,0.7836724568584741
+slack,0.02,0.05,0.5,0.67,False,28,817,287,596,11,0.009717314487632508,clear to tight: 8; tight to binding: 3,0.7947046435615245
+slack,0.02,0.05,0.5,0.75,True,25,812,295,596,0,0.0,,0.7946487615973574
+slack,0.02,0.05,0.5,0.8,False,23,807,302,596,9,0.007950530035335688,binding to tight: 2; tight to clear: 7,0.7944841657667495
+slack,0.02,0.05,0.6,0.67,False,28,726,378,596,102,0.09010600706713781,clear to tight: 8; tight to binding: 3; tight to clear: 91,0.7663363939057947
+slack,0.02,0.05,0.6,0.75,False,25,721,386,596,91,0.0803886925795053,tight to clear: 91,0.7662805119416277
+slack,0.02,0.05,0.6,0.8,False,23,716,393,596,100,0.08833922261484099,binding to tight: 2; tight to clear: 98,0.7661159161110197
