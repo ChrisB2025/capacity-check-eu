@@ -85,6 +85,7 @@ def _pct(v: float, digits: int = 0) -> str:
     return f"{v * 100:.{digits}f}%".replace(".0%", "%")
 
 
+@cache
 def _reference_values() -> dict:
     from engine import sensitivity
 
@@ -99,6 +100,11 @@ def _reference_values() -> dict:
                 out[f"ref_{key}_{name}"] = _pct(row["share_weighted"].iloc[0])
     out["ref_years"] = f"{ref['first_year'].min()} to {ref['last_year'].max()}"
     return out
+
+
+def reference_values() -> dict:
+    """Figures from docs/results/threshold_reference.csv, formatted."""
+    return dict(_reference_values())
 
 
 def values(params: dict | RunParams | None = None) -> dict:

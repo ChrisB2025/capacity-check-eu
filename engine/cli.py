@@ -260,6 +260,7 @@ def main(argv: list[str] | None = None) -> int:
         except FileNotFoundError:
             print("Employment data not held: reference table kept.", file=sys.stderr)
         text._load.cache_clear()
+        text._reference_values.cache_clear()
         print(text.write_glossary())
         return 0
     if args.command == "gate1":
