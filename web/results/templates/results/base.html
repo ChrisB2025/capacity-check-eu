@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Capacity Check Europe{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'css/output.css' %}">
+  <script>document.documentElement.classList.add("js");</script>
   <script src="{% static 'js/htmx.min.js' %}" defer></script>
   {% block head %}{% endblock %}
 </head>
@@ -12,11 +13,13 @@
   <header class="border-b border-stone-200 bg-white">
     <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
       <a href="{% url 'overview' %}" class="font-semibold tracking-tight">Capacity Check Europe <span class="font-normal text-stone-500">(working name)</span></a>
-      <nav class="flex gap-4 text-sm">
+      <nav class="flex flex-wrap gap-x-4 gap-y-1 text-sm">
         <a href="{% url 'overview' %}" class="hover:underline">What is this?</a>
         <a href="{% url 'runs' %}" class="hover:underline">Runs</a>
         {% if not PUBLIC_READ_ONLY %}<a href="{% url 'new_run' %}" class="hover:underline">New run</a>{% endif %}
         <a href="{% url 'about' %}" class="hover:underline">Method</a>
+        <a href="{% url 'glossary' %}" class="hover:underline">Glossary</a>
+        <a href="{% url 'reviewers' %}" class="hover:underline">For reviewers</a>
       </nav>
       {% if user.is_authenticated %}
       <form method="post" action="{% url 'logout' %}" class="ml-auto">{% csrf_token %}<button class="text-sm text-stone-600 hover:underline">Log out</button></form>
@@ -29,6 +32,7 @@
   </main>
   <footer class="mt-12 border-t border-stone-200 bg-white">
     <div class="mx-auto max-w-6xl px-4 py-6 text-sm text-stone-600">
+      <p class="mb-3 font-medium text-stone-800">{{ RISK_LABEL }}</p>
       <p class="mb-2 font-medium text-stone-800">What the result does not claim</p>
       <ul class="list-disc space-y-1 pl-5">
         {% for s in NOT_CLAIMED %}<li>{{ s }}</li>{% endfor %}
@@ -36,5 +40,51 @@
       <p class="mt-4">Data: Eurostat (FIGARO, national accounts, job vacancies), DG ECFIN business surveys, Statistics Sweden, Arbetsf&ouml;rmedlingen. Every figure is traceable to a dataset, edition and checksum listed with each run. Code and method: <a class="underline" href="{{ REPO_URL }}">{{ REPO_URL }}</a>.</p>
     </div>
   </footer>
+<script>
+(function () {
+  // Glossary popovers: place them in the viewport so scrolling tables do not
+  // clip them; open on tap, close on Escape or a tap elsewhere.
+  function place(term) {
+    var tip = term.querySelector(":scope > .term-tip");
+    var btn = term.querySelector(":scope > button");
+    if (!tip || !btn) return;
+    var r = btn.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
+    var left = Math.min(Math.max(8, r.left - 4), window.innerWidth - w - 8);
+    var top = r.bottom + 4;
+    if (top + h > window.innerHeight - 8 && r.top - h - 4 > 8) top = r.top - h - 4;
+    tip.style.left = left + "px";
+    tip.style.top = top + "px";
+  }
+  function closeAll(except) {
+    document.querySelectorAll(".term.open").forEach(function (t) { if (t !== except) t.classList.remove("open"); });
+  }
+  ["mouseover", "focusin"].forEach(function (ev) {
+    document.addEventListener(ev, function (e) {
+      var t = e.target.closest && e.target.closest(".term");
+      if (t) requestAnimationFrame(function () { place(t); });
+    });
+  });
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest && e.target.closest(".term > button");
+    if (btn) {
+      var t = btn.parentElement;
+      closeAll(t);
+      t.classList.toggle("open");
+      requestAnimationFrame(function () { place(t); });
+    } else if (!(e.target.closest && e.target.closest(".term-tip"))) {
+      closeAll(null);
+    }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    closeAll(null);
+    var a = document.activeElement;
+    if (a && a.closest && a.closest(".term")) a.blur();
+  });
+  window.addEventListener("scroll", function () {
+    document.querySelectorAll(".term:hover, .term:focus-within, .term.open").forEach(place);
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>

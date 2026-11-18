@@ -6,6 +6,7 @@
 ``gate1``          write the gate 1 coverage tables to docs/gate-1/
 ``sweden``         write the Sweden occupation tables for a saved run
 ``results``        run the full matrix and write docs/results/
+``glossary``       write the threshold reference table and docs/glossary.md
 ``run``            run the model; refuses compositions not yet confirmed
 """
 
@@ -77,6 +78,10 @@ def build_parser() -> argparse.ArgumentParser:
 
     sub.add_parser("concordance", help="Regenerate the A64 concordance.")
     sub.add_parser("gate1", help="Write the gate 1 coverage tables.")
+    sub.add_parser(
+        "glossary",
+        help="Write docs/results/threshold_reference.csv and docs/glossary.md.",
+    )
     ts = sub.add_parser("testset", help="Regenerate the fixed test set fixtures.")
     ts.add_argument(
         "--provisional",
@@ -246,6 +251,17 @@ def main(argv: list[str] | None = None) -> int:
             print(str(exc), file=sys.stderr)
             return EXIT_NOT_CONFIRMED
         print(json.dumps({k: summary[k] for k in ("base_run", "runs", "edition_test")}))
+        return 0
+    if args.command == "glossary":
+        from engine import sensitivity, text
+
+        try:
+            print(sensitivity.write_reference())
+        except FileNotFoundError:
+            print("Employment data not held: reference table kept.", file=sys.stderr)
+        text._load.cache_clear()
+        text._reference_values.cache_clear()
+        print(text.write_glossary())
         return 0
     if args.command == "gate1":
         from engine import gate1

@@ -1,0 +1,28 @@
+{% extends "results/base.html" %}
+{% block title %}Glossary | Capacity Check Europe{% endblock %}
+{% block content %}
+<div class="max-w-3xl">
+  <h1 class="text-2xl font-semibold tracking-tight">Glossary</h1>
+  <p class="mt-2 text-stone-700">Every term, value and indicator the tool shows: what it means, why it matters, where the data come from, and who else uses the same approach. The tooltips across the site come from the same text. Values here are the defaults; on a run's pages they follow that run.</p>
+  <p class="risk-label mt-4">{{ RISK_LABEL }}</p>
+  <nav class="mt-6 text-sm">
+    {% for g in groups %}<p class="mt-2 font-medium text-stone-800">{{ g.name }}</p>
+    <p class="text-stone-600">{% for t in g.terms %}<a class="underline" href="#{{ t.slug }}">{{ t.term }}</a>{% if not forloop.last %} &middot; {% endif %}{% endfor %}</p>{% endfor %}
+  </nav>
+  {% for g in groups %}
+  <h2 class="mt-10 text-xl font-semibold tracking-tight">{{ g.name }}</h2>
+  {% for t in g.terms %}
+  <article id="{{ t.slug }}" class="mt-5 scroll-mt-6 rounded-lg border border-stone-200 bg-white p-4 target:border-stone-500">
+    <h3 class="font-semibold">{{ t.term }}</h3>
+    <p class="mt-1 text-stone-800">{{ t.definition }}</p>
+    <p class="mt-2 text-sm text-stone-700"><strong>Why it matters.</strong> {{ t.why }}</p>
+    {% if t.caveat %}<p class="mt-2 text-sm text-stone-700"><strong>Limit.</strong> {{ t.caveat }}</p>{% endif %}
+    {% if t.reasoning %}<p class="mt-2 text-sm text-stone-700"><strong>Reasoning.</strong> {{ t.reasoning }}</p>{% endif %}
+    <p class="mt-2 text-sm text-stone-700"><strong>Source.</strong> <a class="underline" href="{{ t.source.url }}">{{ t.source.name }}</a>, {{ t.source.detail }}.</p>
+    {% if t.also_used_by %}<p class="mt-2 text-sm text-stone-700"><strong>Also used by.</strong> {% for a in t.also_used_by %}{% if a.url %}<a class="underline" href="{{ a.url }}">{{ a.name }}</a>{% else %}{{ a.name }}{% endif %}{% if not forloop.last %}; {% endif %}{% endfor %}.</p>{% endif %}
+  </article>
+  {% endfor %}
+  {% endfor %}
+  <p class="mt-8 text-xs text-stone-500">Source file: <a class="underline" href="{{ REPO_URL }}/blob/main/engine/text/glossary.yaml">engine/text/glossary.yaml</a>; also published as <a class="underline" href="{{ REPO_URL }}/blob/main/docs/glossary.md">docs/glossary.md</a>.</p>
+</div>
+{% endblock %}

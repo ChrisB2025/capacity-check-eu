@@ -1,6 +1,5 @@
-{% extends "results/base.html" %}{% load fmt %}
+{% extends "results/base.html" %}{% load fmt explain %}
 {% block title %}What is this? | Capacity Check Europe{% endblock %}
-{% block head %}<script>document.documentElement.classList.add("js");</script>{% endblock %}
 {% block content %}
 {% if not ov %}
 <div class="max-w-2xl">
@@ -44,6 +43,9 @@
   </figure>
 </section>
 
+<div class="mt-10">{% include "results/_risk_label.html" %}</div>
+<div class="mt-4">{% include "results/_exec_summary.html" %}</div>
+
 {# Layer 2: how it works, step by step #}
 <section id="how" class="mt-20 scroll-mt-6">
   <h2 class="text-2xl font-semibold tracking-tight">How it works</h2>
@@ -59,8 +61,9 @@
           {% for ln in run.composition.lines %}<span class="seg-{{ forloop.counter }}" style="flex-grow: {{ ln.share }}"></span>{% endfor %}
         </div>
         <ul class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-stone-600">
-          {% for ln in run.composition.lines %}<li class="flex items-center gap-1.5"><span class="seg-{{ forloop.counter }} inline-block h-3 w-3 rounded-sm"></span>{{ ln.label }} <span class="tabular-nums text-stone-500">{{ ln.share|pct }}</span></li>{% endfor %}
+          {% for ln in run.composition.lines %}<li class="flex items-center gap-1.5"><span class="seg-{{ forloop.counter }} inline-block h-3 w-3 rounded-sm"></span>{{ ln.label }} <span class="font-mono text-xs text-stone-500">{{ ln.code }}</span> <span class="tabular-nums text-stone-500">{{ ln.share|pct }}</span></li>{% endfor %}
         </ul>
+        <p class="mt-2 text-sm text-stone-600">Each line is assigned to the industry with the same code. Construction (F) is a single industry covering NACE 41 to 43, so it cannot be split into trades here. <a class="underline" href="{% url 'run' run.run_id %}#allocation">How the shock is allocated</a> {% term "composition" "" %}</p>
         <p class="mt-2 text-xs text-stone-500">The spending mix is {{ run.composition.status }} and awaits review; every figure below changes when it is confirmed.</p>
       </div>
     </li>
@@ -87,7 +90,8 @@
       <span class="step-num">3</span>
       <div>
         <h3 class="text-lg font-semibold">Count the people it needs</h3>
-        <p class="mt-1 text-stone-700">Each industry's output per worker turns that into people: <strong class="text-stone-900">{{ ov.extra_persons_eu|millions }} million</strong> more in work across the EU for a year.</p>
+        <p class="mt-1 text-stone-700">Each industry's output per worker turns that into people: <strong class="text-stone-900">{{ ov.extra_persons_eu|millions }} million</strong> more in work across the EU for a year. {% term "jobs-conversion" "" %}</p>
+        <p class="mt-2 text-sm text-stone-600">These are not all new hires. Firms can reprioritise work they already have, and households can swap grant-funded work for work they had planned anyway. A high estimated risk category signals a risk of pressure, not certain hiring.</p>
         <div class="example mt-4 rounded border-l-4 border-[#3987e5] bg-stone-50 px-4 py-3">
           <p class="text-xs font-medium uppercase tracking-wide text-stone-500">Example: {{ ov.example_industry_label|lower }} in {{ example_name }}</p>
           <p class="mt-1 text-stone-800">{{ ov.example_industry_label }} in {{ example_name }} would need <strong>{{ ov.example_extra_persons|hundreds }}</strong> more people, on top of the {{ ov.example_employment|millions:2 }} million it employs now. That is <strong>{{ ov.example_pressure|pct:1 }}</strong> more.</p>
@@ -122,14 +126,14 @@
       <span class="step-num">5</span>
       <div>
         <h3 class="text-lg font-semibold">Rate each industry, then add up</h3>
-        <p class="mt-1 text-stone-700">Each of the 64 industries in each country gets one of four ratings, combining the extra people needed (step 3) with what firms report (step 4).</p>
+        <p class="mt-1 text-stone-700">Each of the 64 industries in each country gets one of four estimated risk categories, combining the extra people needed (step 3) with what firms report (step 4). They are risk indicators, not factual judgements. {% term "thresholds" "Why these cut-offs" %}</p>
         <dl class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
-          <div><dt class="inline"><span class="rating rating-binding">binding</span></dt> <dd class="inline text-stone-700">adds more than {{ p.thresholds.pressure_high|pct }} to the workforce, and shortages are in the top quarter of their history</dd></div>
-          <div><dt class="inline"><span class="rating rating-tight">tight</span></dt> <dd class="inline text-stone-700">adds at least {{ p.thresholds.pressure_low|pct }}, or shortages are above their usual level</dd></div>
-          <div><dt class="inline"><span class="rating rating-clear">clear</span></dt> <dd class="inline text-stone-700">neither</dd></div>
-          <div><dt class="inline"><span class="rating rating-none">no rating</span></dt> <dd class="inline text-stone-700">the evidence is missing; no score is forced</dd></div>
+          <div><dt class="inline">{% rating_chip "binding" %}</dt> <dd class="inline text-stone-700">adds more than {{ p.thresholds.pressure_high|pct }} to the workforce, and shortages are in the top quarter of their history</dd></div>
+          <div><dt class="inline">{% rating_chip "tight" %}</dt> <dd class="inline text-stone-700">adds at least {{ p.thresholds.pressure_low|pct }}, or shortages are above their usual level</dd></div>
+          <div><dt class="inline">{% rating_chip "clear" %}</dt> <dd class="inline text-stone-700">neither</dd></div>
+          <div><dt class="inline">{% rating_chip "no rating" %}</dt> <dd class="inline text-stone-700">the evidence is missing; no score is forced</dd></div>
         </dl>
-        <p class="mt-3 text-stone-800">{{ ov.example_industry_label }} in {{ example_name }}: <span class="rating {{ ov.example_rating|rating_class }}">{{ ov.example_rating }}</span></p>
+        <p class="mt-3 text-stone-800">{{ ov.example_industry_label }} in {{ example_name }}: {% rating_chip ov.example_rating %}</p>
         <p class="mt-4 text-sm text-stone-600">All {{ lines_total|num }} industry lines across the EU:</p>
         <div class="bar mt-1 flex h-6 gap-0.5 overflow-hidden rounded" aria-hidden="true">
           <span class="bg-red-300" style="flex-grow: {{ ov.lines_binding }}" title="binding"></span>
@@ -142,6 +146,8 @@
       </div>
     </li>
   </ol>
+
+  <div class="step mt-6">{% include "results/_comparability.html" %}</div>
 
   <div class="step mt-6 rounded-lg border border-amber-200 bg-amber-50 p-5 text-stone-800">
     <h3 class="font-semibold">What it does not tell you</h3>
@@ -169,6 +175,10 @@
       <span class="mt-1 text-sm text-stone-600">The extra jobs split into carpenters, electricians and others, against Arbetsf&ouml;rmedlingen's forecasts.</span>
     </a>
     {% endif %}
+    <a href="{% url 'glossary' %}" class="card">
+      <span class="font-semibold">Glossary</span>
+      <span class="mt-1 text-sm text-stone-600">Every term, why it matters, and the data behind it.</span>
+    </a>
     <a href="{% url 'about' %}" class="card">
       <span class="font-semibold">Method and sources</span>
       <span class="mt-1 text-sm text-stone-600">Every figure traces to a dataset, edition and checksum.</span>

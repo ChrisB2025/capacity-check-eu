@@ -1,21 +1,29 @@
-{% extends "results/base.html" %}{% load fmt %}
+{% extends "results/base.html" %}{% load fmt explain %}
 {% block title %}Run {{ run.run_id }} | Capacity Check Europe{% endblock %}
 {% block content %}
 {% include "results/_run_header.html" %}
 
-<nav class="mb-6 flex flex-wrap gap-3 text-sm">
+<nav class="mb-6 flex flex-wrap gap-x-3 gap-y-1 text-sm" aria-label="On this page">
+  <a href="#summary" class="underline">In brief</a>
   <a href="#headline" class="underline">Headline</a>
+  <a href="#comparability" class="underline">What you can compare</a>
+  <a href="#allocation" class="underline">How the shock is allocated</a>
+  <span class="text-stone-400">|</span>
   <a href="#requirement" class="underline">1. Requirement</a>
   <a href="#availability" class="underline">2. Availability</a>
-  <a href="#rating" class="underline">3. Rating</a>
+  <a href="#rating" class="underline">3. Estimated risk category</a>
   <a href="#dependencies" class="underline">Dependencies</a>
+  {% if has_sensitivity %}<a href="{% url 'thresholds' run.run_id %}" class="underline">Thresholds</a>{% endif %}
   {% if has_sweden %}<a href="{% url 'sweden' run.run_id %}" class="underline">Sweden</a>{% endif %}
   <a href="#downloads" class="underline">Downloads and sources</a>
 </nav>
 
-<section id="headline" class="grid gap-6 lg:grid-cols-5">
+{# Layer 1: the headline #}
+{% include "results/_exec_summary.html" %}
+
+<section id="headline" class="mt-8 grid gap-6 lg:grid-cols-5">
   <div class="lg:col-span-3">
-    <h2 class="text-lg font-semibold">Share of each programme's jobs that fall on tight or binding lines</h2>
+    <h2 class="text-lg font-semibold">Share of each programme's jobs that fall on tight or binding lines {% term "headline" "" %}</h2>
     <p class="mt-1 text-sm text-stone-600">Jobs created anywhere in the EU by each member state's programme. Hover or tap a country; select it for its industry detail.</p>
     <figure class="mt-3 rounded border border-stone-200 bg-white p-2">
       <svg viewBox="{{ viewbox }}" class="h-auto w-full" role="img" aria-label="Map of the headline share by member state; the same figures are in the table below.">
@@ -40,24 +48,35 @@
   <div class="lg:col-span-2">
     <h3 class="text-sm font-semibold text-stone-700">How to read it</h3>
     <ul class="mt-2 list-disc space-y-2 pl-5 text-sm text-stone-700">
-      <li><strong>Requirement</strong> comes first: what the shock needs, by industry and where the output is produced.</li>
-      <li><strong>Availability</strong> second: how often firms in each industry report labour as limiting, against that series' own history.</li>
-      <li>The <strong>rating</strong> combines the two. Tight: the shock adds at least {{ p.thresholds.pressure_low|pct:0 }} to the industry's employment, or shortage reports are above their median. Binding: the shock adds more than {{ p.thresholds.pressure_high|pct:0 }} and shortage reports are in the top quarter of their history. Where evidence is missing the line gets no rating, never a forced score.</li>
+      <li><strong>Requirement</strong> comes first: what the shock needs, by industry and where the output is produced. {% term "required-output" "" %}</li>
+      <li><strong>Availability</strong> second: how often firms in each industry report labour as limiting, against that series' own history. {% term "labour-shortage-indicator" "" %}</li>
+      <li>The <strong>estimated risk category</strong> combines the two. Tight: the shock adds at least {{ p.thresholds.pressure_low|pct:1 }} to the industry's employment, or shortage reports are above their median. Binding: the shock adds more than {{ p.thresholds.pressure_high|pct:1 }} and shortage reports are in the top quarter of their history. Where evidence is missing the line gets no rating, never a forced score. {% term "thresholds" "Why these cut-offs" %}</li>
       <li>The headline separates member states only weakly: construction is under pressure everywhere, and shortage reports are high in most industries in 2025 and 2026.</li>
+      {% if has_sensitivity %}<li><a class="underline" href="{% url 'thresholds' run.run_id %}">How the categories change if the thresholds move</a>.</li>{% endif %}
     </ul>
   </div>
 </section>
 
-<section id="requirement" class="mt-10">
+{# Layer 2: what the result can and cannot say, and where the money goes #}
+<div class="mt-10">{% include "results/_comparability.html" %}</div>
+
+{% if alloc %}<div class="mt-10">{% include "results/_allocation.html" %}</div>{% endif %}
+
+{# Layer 3: method detail and data #}
+<h2 class="mt-14 border-t border-stone-200 pt-8 text-xl font-semibold tracking-tight">Detail: the method step by step</h2>
+<p class="mt-1 max-w-3xl text-sm text-stone-600">The tables behind the summary, in the order the method works. Every figure can be downloaded below.</p>
+
+<section id="requirement" class="mt-8">
   <h2 class="text-lg font-semibold">1. Requirement: what the shock needs</h2>
   <p class="mt-1 text-sm text-stone-600">Required output across all economies, where it is produced, and the persons employed it needs in EU member states, in one year.</p>
+  <div class="mt-3">{% include "results/_jobs_caveat.html" %}</div>
   <div class="mt-3 overflow-x-auto rounded border border-stone-200 bg-white">
   <table class="w-full text-sm">
     <thead class="bg-stone-100 text-left text-stone-600"><tr>
-      <th class="px-3 py-2">Member state</th><th class="px-3 py-2 text-right">Shock (EUR m)</th><th class="px-3 py-2 text-right">Required output (EUR m)</th>
-      <th class="px-3 py-2 text-right">At home</th><th class="px-3 py-2 text-right">Rest of EU</th><th class="px-3 py-2 text-right">Outside EU</th>
-      <th class="px-3 py-2 text-right">Extra persons in the EU</th>
-      {% for code, label in focus_labels %}<th class="px-3 py-2 text-right">Pressure: {{ label }}</th>{% endfor %}
+      <th class="px-3 py-2">Member state</th><th class="px-3 py-2 text-right">{% term "shock" "Shock (EUR m)" %}</th><th class="px-3 py-2 text-right">{% term "required-output" "Required output (EUR m)" %}</th>
+      <th class="px-3 py-2 text-right">{% term "origin" "At home" %}</th><th class="px-3 py-2 text-right">Rest of EU</th><th class="px-3 py-2 text-right">Outside EU</th>
+      <th class="px-3 py-2 text-right">{% term "extra-persons" "Extra persons in the EU" %}</th>
+      {% for code, label in focus_labels %}<th class="px-3 py-2 text-right">Pressure: {{ label }}{% if forloop.first %}{% term "pressure" "" %}{% endif %}</th>{% endfor %}
     </tr></thead>
     <tbody>
     {% for c in countries %}
@@ -80,13 +99,13 @@
 
 <section id="availability" class="mt-10">
   <h2 class="text-lg font-semibold">2. Availability: what firms report</h2>
-  <p class="mt-1 text-sm text-stone-600">Share of firms naming labour as a factor limiting activity, mean of the latest four complete quarters, placed in the series' own history. High: top quarter. Elevated: above median. Low: at or below median.</p>
+  <p class="mt-1 text-sm text-stone-600">Share of firms naming labour as a factor limiting activity, mean of the latest four complete quarters, placed in the series' own history. High: top quarter. Elevated: above median. Low: at or below median. {% term "slack-class" "" %}</p>
   <div class="mt-3 overflow-x-auto rounded border border-stone-200 bg-white">
   <table class="w-full text-sm">
     <thead class="bg-stone-100 text-left text-stone-600"><tr>
       <th class="px-3 py-2">Member state</th>
-      {% for code, label in focus_labels %}<th class="px-3 py-2">{{ label }}</th>{% endfor %}
-      <th class="px-3 py-2 text-right">Construction: share of firms now</th><th class="px-3 py-2 text-right">Construction: years of history</th>
+      {% for code, label in focus_labels %}<th class="px-3 py-2">{% if forloop.first %}{% term "slack-percentile" label %}{% else %}{{ label }}{% endif %}</th>{% endfor %}
+      <th class="px-3 py-2 text-right">{% term "slack-current" "Construction: share of firms now" %}</th><th class="px-3 py-2 text-right">Construction: years of history</th>
     </tr></thead>
     <tbody>
     {% for c in countries %}
@@ -102,22 +121,24 @@
     </tbody>
   </table>
   </div>
+  <p class="mt-1 text-xs text-stone-500">Percentages in brackets: where the current share sits in the series' own history.</p>
 </section>
 
 <section id="rating" class="mt-10">
-  <h2 class="text-lg font-semibold">3. Rating and headline</h2>
+  <h2 class="text-lg font-semibold">3. Estimated risk category and headline</h2>
+  <p class="mt-1 text-sm text-stone-600">Select a category for its rule and the reasoning behind its cut-offs. {{ RISK_LABEL }}</p>
   <div class="mt-3 overflow-x-auto rounded border border-stone-200 bg-white">
   <table class="w-full text-sm">
     <thead class="bg-stone-100 text-left text-stone-600"><tr>
       <th class="px-3 py-2">Member state</th>
       {% for code, label in focus_labels %}<th class="px-3 py-2">{{ label }}</th>{% endfor %}
-      <th class="px-3 py-2 text-right">Headline: jobs on tight or binding lines</th><th class="px-3 py-2 text-right">Jobs on unrated lines</th><th class="px-3 py-2">Data quality</th>
+      <th class="px-3 py-2 text-right">{% term "headline" "Headline: jobs on tight or binding lines" %}</th><th class="px-3 py-2 text-right">{% term "unrated-share" "Jobs on unrated lines" %}</th><th class="px-3 py-2">{% term "data-quality" "Data quality" %}</th>
     </tr></thead>
     <tbody>
     {% for c in countries %}
       <tr class="border-t border-stone-100">
         <td class="px-3 py-1.5"><a class="underline" href="{% url 'country' run.run_id c.country %}">{{ c.name }}</a></td>
-        {% for f in c.focus %}<td class="px-3 py-1.5"><span class="rating {{ f.rating|rating_class }}">{{ f.rating|default:"no rating" }}</span></td>{% endfor %}
+        {% for f in c.focus %}<td class="px-3 py-1.5">{% rating_chip f.rating brief=True %}</td>{% endfor %}
         <td class="px-3 py-1.5 text-right font-medium tabular-nums">{{ c.headline_tight_or_binding_share|pct }}</td>
         <td class="px-3 py-1.5 text-right tabular-nums">{{ c.unrated_share|pct }}</td>
         <td class="px-3 py-1.5" title="{{ c.data_quality_flags }}">{{ c.data_quality }}</td>
@@ -127,6 +148,9 @@
   </table>
   </div>
   <p class="mt-1 text-xs text-stone-500">Data quality: good when at most 10% of the programme's jobs are on unrated lines or lines with estimated employment; limited up to a third or with a construction note; poor otherwise. Hover a grade for its reasons.</p>
+  <div class="panel-note mt-4">
+    <strong>What this could mean.</strong> Where a line is tight or binding, possible responses include {% for o in responses.binding|slice:":3" %}{{ o.title|lower }}{% if not forloop.last %}, {% endif %}{% endfor %}. Each country page lists the options next to its tight and binding industries. {{ responses.intro }}
+  </div>
 </section>
 
 <section id="dependencies" class="mt-10">
@@ -154,6 +178,7 @@
 <section id="downloads" class="mt-10 grid gap-6 lg:grid-cols-2">
   <div>
     <h2 class="text-lg font-semibold">Downloads</h2>
+    <p class="mt-1 text-xs text-stone-500">Each file starts with two comment lines: the run's provenance, and the reminder that ratings are risk indicators, not factual judgements.</p>
     <ul class="mt-2 space-y-1 text-sm">
       {% for t in tables %}<li><a class="underline" href="{% url 'csv' run.run_id t %}">{{ t }}.csv</a></li>{% endfor %}
     </ul>

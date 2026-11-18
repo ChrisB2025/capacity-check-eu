@@ -1,0 +1,53 @@
+{% extends "results/base.html" %}
+{% block title %}For reviewers | Capacity Check Europe{% endblock %}
+{% block content %}
+<div class="max-w-3xl">
+  <h1 class="text-2xl font-semibold tracking-tight">For reviewers</h1>
+  <p class="mt-3 text-stone-800">Thank you for looking at this. Capacity Check Europe is a low-cost demonstrator from Modern Money Lab Europe's Real Resource Scoring project. It asks one question: if every EU member state spent the same share of its GDP on renovating homes, which industries would that spending press on, and are those industries already short of labour?</p>
+  <p class="mt-3 text-stone-800">It traces a spending shock through Eurostat's input-output tables to 64 industries in each member state, turns the output needed into jobs, and sets that against how often firms report labour shortages. Each industry in each country gets an estimated risk category: clear, tight or binding. These are risk indicators for early screening, not forecasts and not verdicts on whether a programme can be delivered.</p>
+  <p class="risk-label mt-4">All results are provisional: the spending mix has not yet been confirmed after review, and the review you are doing is part of that.</p>
+
+  <h2 class="mt-8 text-xl font-semibold">What to look at</h2>
+  <ol class="mt-3 list-decimal space-y-2 pl-5 text-stone-800">
+    <li><a class="underline" href="{% url 'overview' %}">The front page</a>: the question and the method in five steps.</li>
+    {% if base %}
+    <li><a class="underline" href="{% url 'run' base.run_id %}">The standard run</a>: the summary, how the shock is allocated to industries, what you can and cannot compare, and the full tables.</li>
+    <li>A country, for example <a class="underline" href="{% url 'country' base.run_id 'DE' %}">Germany</a>: every industry with its estimated risk category, and possible responses where it is tight or binding.</li>
+    <li><a class="underline" href="{% url 'thresholds' base.run_id %}">The thresholds page</a>: why the cut-offs are where they are, and how the results change when they move.</li>
+    {% if "SE" in base.params.countries %}<li><a class="underline" href="{% url 'sweden' base.run_id %}">Sweden by occupation</a>: how far an occupational register can split construction into trades.</li>{% endif %}
+    {% endif %}
+    <li><a class="underline" href="{% url 'glossary' %}">The glossary</a>: every term, why it matters and where the data come from. The "?" buttons across the site show the same text.</li>
+  </ol>
+  <p class="mt-3 text-stone-800">The method in full: the <a class="underline" href="{{ REPO_URL }}/blob/main/docs/spec-v2.md">specification (version 2)</a>, the <a class="underline" href="{{ REPO_URL }}/blob/main/docs/method-note.md">method note</a> and the <a class="underline" href="{{ REPO_URL }}/blob/main/docs/composition-table.md">composition table</a>.</p>
+
+  <h2 class="mt-8 text-xl font-semibold">What we would like to know</h2>
+  <ul class="mt-3 list-disc space-y-1 pl-5 text-stone-800">
+    {% for k, q in questions %}{% if k != "other" %}<li>{{ q }}</li>{% endif %}{% endfor %}
+  </ul>
+  <p class="mt-3 text-stone-700">Short answers are fine. Answer any or all; the form keeps nothing until you send it.</p>
+
+  <section id="feedback" class="panel mt-8 scroll-mt-6">
+    <h2 class="text-xl font-semibold">Send feedback</h2>
+    {% if sent %}
+    <p class="mt-3 rounded border border-emerald-300 bg-emerald-50 px-3 py-2 text-emerald-900">Thank you. Your feedback has been received.</p>
+    {% endif %}
+    <form method="post" action="{% url 'reviewers' %}#feedback" class="mt-4 space-y-4">
+      {% csrf_token %}
+      <input type="hidden" name="page" value="{{ request.META.HTTP_REFERER|default:'' }}">
+      {% if form.non_field_errors %}<div class="rounded border border-red-300 bg-red-50 px-3 py-2 text-sm">{{ form.non_field_errors|join:" " }}</div>{% endif %}
+      {% for field in form %}
+        {% if field.name == "website" %}
+        <div class="hidden" aria-hidden="true"><label>{{ field.label }} {{ field }}</label></div>
+        {% else %}
+        <label class="block text-sm font-medium text-stone-800">{{ field.label }}
+          {{ field.errors }}
+          <span class="mt-1 block [&>input]:w-full [&>input]:rounded [&>input]:border [&>input]:border-stone-300 [&>input]:px-2 [&>input]:py-1 [&>textarea]:w-full [&>textarea]:rounded [&>textarea]:border [&>textarea]:border-stone-300 [&>textarea]:px-2 [&>textarea]:py-1 font-normal">{{ field }}</span>
+        </label>
+        {% endif %}
+      {% endfor %}
+      <p class="text-xs text-stone-500">What you send is stored on the tool's server in the EU and read only by the project team, for this review. Name and email are optional.</p>
+      <button class="rounded bg-stone-900 px-4 py-2 text-sm font-medium text-white hover:bg-stone-700">Send feedback</button>
+    </form>
+  </section>
+</div>
+{% endblock %}

@@ -1,6 +1,8 @@
 # Composition table
 
-Draft for the outside reviewer, 29 October 2026. **Status: proposed.** No results have been run with any of these compositions. The engine refuses to run one until its status is set to confirmed, which Chris does after the reviewer has seen this table.
+Draft for the outside reviewer, 29 October 2026; note added 18 November 2026. **Status: proposed.** The engine refuses to run a composition until its status is set to confirmed, which Chris does after the reviewer has seen this table. Since 29 October, Chris has authorised provisional runs with the proposed compositions (decisions log, 29 October); every such result is marked provisional and is for checking, not publication.
+
+How each line maps to an industry and its NACE divisions, and the limit that construction is a single industry at A64, are shown on every run's page in the web app and in the method note, step 1.
 
 ## What the table does
 

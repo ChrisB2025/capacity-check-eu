@@ -86,3 +86,22 @@ class RequirementExtension(models.Model):
     required_quantity = models.FloatField(null=True)
     assessment_category = models.CharField(max_length=16)
     availability_basis = models.CharField(max_length=200, null=True)
+
+
+class Feedback(models.Model):
+    """A reviewer's answers from the "For reviewers" page. Kept for the review
+    only; read by staff accounts at /reviewers/feedback/."""
+
+    created = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=200, blank=True)
+    organisation = models.CharField(max_length=200, blank=True)
+    email = models.EmailField(blank=True)
+    question_right = models.TextField(blank=True)
+    weakest = models.TextField(blank=True)
+    trust = models.TextField(blank=True)
+    who_else = models.TextField(blank=True)
+    other = models.TextField(blank=True)
+    page = models.CharField(max_length=300, blank=True)
+
+    class Meta:
+        ordering = ["-created"]

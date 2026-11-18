@@ -1,0 +1,29 @@
+{% load fmt explain %}{% if sm %}<section id="summary" class="panel scroll-mt-6">
+  <h2 class="text-lg font-semibold">In brief</h2>
+  <dl class="mt-3 grid gap-4 text-sm text-stone-800 md:grid-cols-2">
+    <div>
+      <dt class="font-semibold">What was tested</dt>
+      <dd class="mt-1">Extra public spending of {{ sm.shock_pct|floatformat }}% of {{ sm.gdp_year }} GDP on housing and energy renovation, in one year, in {{ sm.countries }} member state{{ sm.countries|pluralize }}{% if sm.countries > 1 %}{% if p.application == "simultaneous" %}, all spending at once{% else %}, each counted on its own{% endif %}{% endif %}: &euro;{{ sm.shock_meur|bn }}bn in all. The spending mix is the same everywhere. The question is whether the industries that would do the work already show signs of labour shortage.</dd>
+    </div>
+    <div>
+      <dt class="font-semibold">What it found</dt>
+      <dd class="mt-1"><strong>{{ sm.headline_jobs_weighted|pct }}</strong> of the jobs the spending would create fall in industries rated tight or binding, where at least one of the two signals points to labour pressure.{% if sm.countries > 1 %} By member state the share runs from {{ sm.headline_min|pct }} ({{ min_name|default:sm.headline_min_country }}) to {{ sm.headline_max|pct }} ({{ max_name|default:sm.headline_max_country }}), so the headline separates countries only weakly.{% endif %} Construction is tight or binding in {{ sm.construction_tight_or_binding }} of the {{ sm.construction_rated }} member state{{ sm.construction_rated|pluralize }} with a rating, and binding in {{ sm.construction_binding }}. A further {{ sm.unrated_jobs_weighted|pct }} of the jobs fall in industries with no rating, mostly because the business surveys do not cover them.</dd>
+    </div>
+    <div>
+      <dt class="font-semibold">Main limits</dt>
+      <dd class="mt-1">
+        <ul class="list-disc space-y-1 pl-5">
+          <li>One shock for 27 different countries: compare relative pressure, not what each country would need to spend or do.{% if run %} <a class="underline" href="{% url 'run' run.run_id %}#comparability">What you can compare</a>{% endif %}</li>
+          <li>Estimated risk categories are risk indicators, not factual judgements.</li>
+          <li>Extra jobs are not new hires.</li>
+          {% if sm.provisional %}<li>The spending mix is {{ sm.composition_status }}, not yet confirmed after review, so every figure is provisional.</li>{% endif %}
+          <li>Data quality is {% if sm.quality_good %}good for {{ sm.quality_good }}, {% endif %}limited for {{ sm.quality_limited }} and poor for {{ sm.quality_poor }} member state{{ sm.quality_poor|pluralize }}. {% term "data-quality" "Why" %}</li>
+        </ul>
+      </dd>
+    </div>
+    <div>
+      <dt class="font-semibold">Where the tool sits</dt>
+      <dd class="mt-1">An early screen of real resource risk, before a programme is designed: it shows which industries to look at more closely, and where training or phasing might be needed. It is not a forecast, and not a verdict on whether a programme can be delivered.</dd>
+    </div>
+  </dl>
+</section>{% endif %}

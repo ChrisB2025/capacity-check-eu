@@ -12,4 +12,4 @@ COPY . .
 RUN python manage.py collectstatic --noinput
 
 # Data files live on the volume at DATA_DIR (/data); see README.
-CMD ["sh", "-c", "python manage.py migrate --noinput && python manage.py ensure_shared_user && gunicorn web.wsgi --bind 0.0.0.0:${PORT:-8080} --workers=2 --timeout=180 --access-logfile -"]
+CMD ["sh", "-c", "python manage.py migrate --noinput && python manage.py ensure_shared_user && python manage.py ensure_staff_user && gunicorn web.wsgi --bind 0.0.0.0:${PORT:-8080} --workers=2 --timeout=180 --access-logfile -"]

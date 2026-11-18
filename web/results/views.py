@@ -12,13 +12,15 @@ from django.conf import settings
 from django.contrib import messages
 from django.http import Http404, HttpResponse, HttpResponseForbidden, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.views.decorators.http import require_GET
 
-from engine import concordance, shock
+from engine import concordance, sensitivity, shock, text
 from engine.params import RunParams, Thresholds
 from engine.sources._common import EU27
 from web.results import bridge
-from web.results.models import ResultRow, Run
+from web.results.forms import QUESTIONS, FeedbackForm
+from web.results.models import Feedback, ResultRow, Run
 
 MAP_FILE = Path(__file__).parent / "static" / "results" / "map.json"
 # Headline bins for the map, and the sequential blue ramp (light to dark).
@@ -41,6 +43,52 @@ def _rows(run: Run, table: str, country: str | None = None) -> list[dict]:
 
 def _run(run_id: str) -> Run:
     return get_object_or_404(Run, run_id=run_id)
+
+
+def _first(run: Run, table: str) -> dict | None:
+    return next(iter(_rows(run, table)), None)
+
+
+def _allocation(run: Run) -> tuple[list[dict], str]:
+    """The run's allocation table with the reason for each line."""
+    notes = text.composition_notes()
+    rows = _rows(run, "allocation")
+    for a in rows:
+        a["note"] = notes["codes"].get(a["code"], "")
+    name = run.composition.name if run.composition else run.params["composition"]
+    comp_note = notes["compositions"].get(
+        name,
+        "This spending mix was edited on the inputs page, so the run is a "
+        "user-defined shock, not the standard one.",
+    )
+    return rows, comp_note
+
+
+def _trades(run: Run) -> list[dict]:
+    """Construction trades from the run's full Swedish occupation table."""
+    occ = {str(r["ssyk"]): r for r in _rows(run, "sweden_occupations")}
+    out = []
+    for g in text.trades_se() if occ else []:
+        rows = [
+            {**occ[code], "ssyk": code, "label": label}
+            for code, label in g["codes"].items()
+            if code in occ
+        ]
+        rows.sort(key=lambda r: -(r.get("extra_persons") or 0))
+        if rows:
+            out.append({"name": g["name"], "rows": rows})
+    return out
+
+
+def _summary(run: Run, names: dict) -> dict:
+    sm = _first(run, "summary")
+    if not sm:
+        return {"sm": None}
+    return {
+        "sm": sm,
+        "min_name": names.get(sm["headline_min_country"]),
+        "max_name": names.get(sm["headline_max_country"]),
+    }
 
 
 @lru_cache(maxsize=1)
@@ -139,6 +187,7 @@ def overview(request):
             "viewbox": m["viewBox"],
             "map_source": m["source"],
             "legend": _legend(),
+            **_summary(run, names),
         },
     )
 
@@ -171,6 +220,9 @@ def new_run(request):
         "editions": eds,
         "countries": [(c, names.get(c, c)) for c in EU27],
         "defaults": RunParams(),
+        # Pressure thresholds are entered in per cent.
+        "defaults_pressure_low": f"{RunParams().thresholds.pressure_low * 100:g}",
+        "defaults_pressure_high": f"{RunParams().thresholds.pressure_high * 100:g}",
         "values": request.POST or {},
         "selected": set(request.POST.getlist("countries")) or set(EU27),
     }
@@ -253,6 +305,7 @@ def run_detail(request, run_id):
     tables = sorted(
         set(ResultRow.objects.filter(run=run).values_list("table", flat=True))
     )
+    alloc, comp_note = _allocation(run)
     return render(
         request,
         "results/run.html",
@@ -268,6 +321,13 @@ def run_detail(request, run_id):
             "deps": deps,
             "tables": tables,
             "has_sweden": "sweden_occupations" in tables,
+            "has_sensitivity": "sensitivity" in tables,
+            "alloc": alloc,
+            "comp_note": comp_note,
+            "construction_limit": text.composition_notes()["construction_limit"],
+            "trades": _trades(run),
+            "responses": text.responses(),
+            **_summary(run, names),
         },
     )
 
@@ -281,6 +341,12 @@ def country(request, run_id, country):
     rows = _rows(run, "country_lines", country)
     rows.sort(key=lambda r: -(r.get("extra_persons_all") or 0))
     show_all = request.GET.get("all") == "1"
+    binding = [r for r in rows if r.get("rating") == "binding"]
+    tight = [r for r in rows if r.get("rating") == "tight"]
+    labels = {a["code"]: a["line"] for a in _rows(run, "allocation")}
+    direct = _rows(run, "direct_demand", country)
+    for d in direct:
+        d["line"] = labels.get(d["code"], "")
     return render(
         request,
         "results/country.html",
@@ -292,7 +358,11 @@ def country(request, run_id, country):
             "rows": rows if show_all else rows[:20],
             "show_all": show_all,
             "n_rows": len(rows),
-            "direct": _rows(run, "direct_demand", country),
+            "direct": direct,
+            "binding_lines": binding,
+            "tight_lines": tight[:5],
+            "more_tight": max(len(tight) - 5, 0),
+            "responses": text.responses(),
         },
     )
 
@@ -312,6 +382,7 @@ def sweden(request, run_id):
             "education": _rows(run, "sweden_education"),
             "konj": konj,
             "unknown": next((r for r in occ if not r.get("known_occupation")), None),
+            "trades": _trades(run),
         },
     )
 
@@ -327,6 +398,7 @@ def csv(request, run_id, table):
     resp["Content-Disposition"] = f'attachment; filename="{run_id}_{table}.csv"'
     resp.write(f"# run {run_id}; provisional={run.provisional}; "
                f"sources in /run/{run_id}/ and the run manifest\n")  # fmt: skip
+    resp.write(f"# {text.RISK_LABEL}\n")
     w = csvlib.DictWriter(resp, fieldnames=list(rows[0]), lineterminator="\n")
     w.writeheader()
     w.writerows(rows)
@@ -335,4 +407,91 @@ def csv(request, run_id, table):
 
 def about(request):
     a64 = concordance.load()
-    return render(request, "results/about.html", {"industries": len(a64)})
+    return render(
+        request, "results/about.html", {"industries": len(a64), "base": _base_run()}
+    )
+
+
+def glossary(request):
+    """Every term in engine/text/glossary.yaml, with the default values."""
+    vals = text.values()
+    groups = [
+        {
+            "name": g,
+            "terms": [
+                text.filled(t["slug"], vals) for t in text.glossary() if t["group"] == g
+            ],
+        }
+        for g in text.groups()
+    ]
+    return render(request, "results/glossary.html", {"groups": groups})
+
+
+def thresholds(request, run_id):
+    """How the estimated risk categories change when the thresholds move."""
+    run = _run(run_id)
+    rows = _rows(run, "sensitivity")
+    if not rows:
+        raise Http404
+    ref = sensitivity.load_reference()
+    vals = text.values(run.params)
+    return render(
+        request,
+        "results/thresholds.html",
+        {
+            "run": run,
+            "p": run.params,
+            "pressure": [r for r in rows if r["kind"] == "pressure"],
+            "slack": [r for r in rows if r["kind"] == "slack"],
+            "ref": (
+                ref.sort_values(["cutoff", "scope"]).to_dict(orient="records")
+                if ref is not None
+                else []
+            ),
+            "reasoning": text.filled("thresholds", vals)["reasoning"],
+        },
+    )
+
+
+def reviewers(request):
+    """For reviewers: what to look at, the questions, and the feedback form."""
+    form = FeedbackForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        if not form.cleaned_data.get("website"):  # honeypot left empty
+            fb = form.save(commit=False)
+            fb.page = (request.POST.get("page") or "")[:300]
+            fb.save()
+        return redirect(reverse("reviewers") + "?sent=1#feedback")
+    return render(
+        request,
+        "results/reviewers.html",
+        {
+            "form": form,
+            "questions": QUESTIONS,
+            "sent": request.GET.get("sent") == "1",
+            "base": _base_run(),
+        },
+        status=400 if request.method == "POST" else 200,
+    )
+
+
+def feedback_list(request):
+    """Feedback received; staff accounts only, not the shared login."""
+    if not (request.user.is_authenticated and request.user.is_staff):
+        return HttpResponseForbidden("Staff only.")
+    items = Feedback.objects.all()
+    if request.GET.get("format") == "csv":
+        resp = HttpResponse(content_type="text/csv; charset=utf-8")
+        resp["Content-Disposition"] = 'attachment; filename="feedback.csv"'
+        fields = ["created", "name", "organisation", "email",
+                  *[k for k, _ in QUESTIONS], "page"]  # fmt: skip
+        w = csvlib.writer(resp, lineterminator="\n")
+        w.writerow(fields)
+        for f in items:
+            w.writerow([getattr(f, k) for k in fields])
+        return resp
+    return render(
+        request,
+        "results/feedback_list.html",
+        {"items": items, "questions": QUESTIONS},
+    )

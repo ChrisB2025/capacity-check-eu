@@ -58,3 +58,8 @@ def rating_class(r):
         "tight": "rating-tight",
         "clear": "rating-clear",
     }.get(r, "rating-none")
+
+
+@register.filter
+def attr_of(obj, name):
+    return getattr(obj, name, None)

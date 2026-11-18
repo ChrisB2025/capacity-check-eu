@@ -1,0 +1,81 @@
+{% extends "results/base.html" %}{% load fmt explain %}
+{% block title %}Thresholds | Run {{ run.run_id }}{% endblock %}
+{% block content %}
+{% include "results/_run_header.html" %}
+<h1 class="text-2xl font-semibold tracking-tight">How much rests on the thresholds?</h1>
+<p class="mt-2 max-w-3xl text-stone-700">The estimated risk categories come from four cut-offs the team set {% term "thresholds" "(the thresholds)" %}. This page shows the same run with the cut-offs moved, so you can see how much of the result depends on them. The highlighted row is this run's setting.</p>
+
+<section class="panel mt-6 max-w-3xl">
+  <h2 class="font-semibold">Why these cut-offs</h2>
+  <p class="mt-1 text-sm text-stone-800">{{ reasoning }}</p>
+  {% if ref %}
+  <div class="mt-3 overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead class="text-left text-stone-600"><tr><th class="py-1 pr-3">Annual employment growth of at least</th><th class="px-3 py-1 text-right">All industries: share of cases</th><th class="px-3 py-1 text-right">weighted by employment</th><th class="px-3 py-1 text-right">Construction: share of cases</th><th class="px-3 py-1 text-right">weighted</th></tr></thead>
+    <tbody>
+    {% regroup ref by cutoff as by_cut %}
+    {% for c in by_cut %}
+      <tr class="border-t border-stone-100">
+        <td class="py-1 pr-3 tabular-nums">{{ c.grouper|pct }}</td>
+        {% for r in c.list %}<td class="px-3 py-1 text-right tabular-nums">{{ r.share_of_years|pct }}</td><td class="px-3 py-1 text-right tabular-nums">{{ r.share_weighted|pct }}</td>{% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="mt-1 text-xs text-stone-500">Persons employed in each of the 64 industries in each member state, year on year, {{ ref.0.first_year }} to {{ ref.0.last_year }} (Eurostat nama_10_a64_e). The weighted share counts large industries more. <a class="underline" href="{{ REPO_URL }}/blob/main/docs/results/threshold_reference.csv">threshold_reference.csv</a></p>
+  {% endif %}
+</section>
+
+<section class="mt-8">
+  <h2 class="text-lg font-semibold">Pressure thresholds</h2>
+  <p class="mt-1 max-w-3xl text-sm text-stone-600">Tight from the first figure; binding above the second, when shortage reports are also high. These rows re-rate the run's own lines, so the figures are exact.</p>
+  <div class="mt-3 overflow-x-auto rounded border border-stone-200 bg-white">
+  <table class="w-full text-sm">
+    <thead class="bg-stone-100 text-left text-stone-600"><tr>
+      <th class="px-3 py-2 text-right">Tight from</th><th class="px-3 py-2 text-right">Binding above</th>
+      <th class="px-3 py-2 text-right">Binding lines</th><th class="px-3 py-2 text-right">Tight</th><th class="px-3 py-2 text-right">Clear</th><th class="px-3 py-2 text-right">No rating</th>
+      <th class="px-3 py-2 text-right">Ratings changed</th><th class="px-3 py-2 text-right">{% term "headline" "EU jobs on tight or binding lines" %}</th><th class="px-3 py-2">Changes</th>
+    </tr></thead>
+    <tbody>
+    {% for r in pressure %}
+      <tr class="border-t border-stone-100{% if r.current %} bg-sky-50 font-medium{% endif %}">
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ r.pressure_low|pct:1 }}</td><td class="px-3 py-1.5 text-right tabular-nums">{{ r.pressure_high|pct:1 }}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ r.lines_binding|num }}</td><td class="px-3 py-1.5 text-right tabular-nums">{{ r.lines_tight|num }}</td><td class="px-3 py-1.5 text-right tabular-nums">{{ r.lines_clear|num }}</td><td class="px-3 py-1.5 text-right tabular-nums">{{ r.lines_no_rating|num }}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{% if r.current %}this run{% else %}{{ r.ratings_changed|num }} ({{ r.share_changed|pct:1 }}){% endif %}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ r.jobs_tight_or_binding_share|pct:1 }}</td>
+        <td class="px-3 py-1.5 text-xs text-stone-600">{{ r.transitions }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="mt-8">
+  <h2 class="text-lg font-semibold">Shortage-level cut-offs</h2>
+  <p class="mt-1 max-w-3xl text-sm text-stone-600">Elevated above the first point of each series' history (the median by default); high from the second (the top quarter). These rows recompute the shortage level from the survey series, then re-rate.</p>
+  <div class="mt-3 overflow-x-auto rounded border border-stone-200 bg-white">
+  <table class="w-full text-sm">
+    <thead class="bg-stone-100 text-left text-stone-600"><tr>
+      <th class="px-3 py-2 text-right">Elevated above</th><th class="px-3 py-2 text-right">High from</th>
+      <th class="px-3 py-2 text-right">Binding lines</th><th class="px-3 py-2 text-right">Tight</th><th class="px-3 py-2 text-right">Clear</th><th class="px-3 py-2 text-right">No rating</th>
+      <th class="px-3 py-2 text-right">Ratings changed</th><th class="px-3 py-2 text-right">EU jobs on tight or binding lines</th><th class="px-3 py-2">Changes</th>
+    </tr></thead>
+    <tbody>
+    {% for r in slack %}
+      <tr class="border-t border-stone-100{% if r.current %} bg-sky-50 font-medium{% endif %}">
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ r.slack_median_quantile|pct }} point</td><td class="px-3 py-1.5 text-right tabular-nums">{{ r.slack_top_quantile|pct }} point</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ r.lines_binding|num }}</td><td class="px-3 py-1.5 text-right tabular-nums">{{ r.lines_tight|num }}</td><td class="px-3 py-1.5 text-right tabular-nums">{{ r.lines_clear|num }}</td><td class="px-3 py-1.5 text-right tabular-nums">{{ r.lines_no_rating|num }}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{% if r.current %}this run{% else %}{{ r.ratings_changed|num }} ({{ r.share_changed|pct:1 }}){% endif %}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ r.jobs_tight_or_binding_share|pct:1 }}</td>
+        <td class="px-3 py-1.5 text-xs text-stone-600">{{ r.transitions }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="mt-2 max-w-3xl text-xs text-stone-500">Ratings changed counts lines rated in both settings; lines with no rating are left out, so a setting cannot look stable by rating fewer lines. The full robustness tests (other compositions, the job vacancy rate as the shortage measure, shock size) are in the method note.</p>
+</section>
+<p class="mt-6 text-sm"><a class="underline" href="{% url 'csv' run.run_id 'sensitivity' %}">sensitivity.csv</a> &middot; <a class="underline" href="{% url 'run' run.run_id %}">Back to the run</a></p>
+{% endblock %}
