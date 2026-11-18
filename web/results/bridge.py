@@ -16,7 +16,7 @@ from datetime import datetime
 import yaml
 from django.db import transaction
 
-from engine import cdm, pipeline, results, shock, sweden
+from engine import cdm, pipeline, results, sensitivity, shock, sweden
 from engine.params import RunParams
 from engine.rating import NO_RATING
 from engine.sources._common import DATA_DIR, PROCESSED_DIR
@@ -207,6 +207,9 @@ def engine_tables(res) -> dict:
     tables["country_lines"] = results.lines_table(res)
     tables["dependencies"] = results.dependencies_table(res)
     tables["overview"] = results.overview(res)
+    tables["summary"] = results.executive_summary(res)
+    tables["allocation"] = results.allocation(res)
+    tables["sensitivity"] = sensitivity.table(res)
     if SWEDEN in res.params.countries:
         tables.update(sweden.run(res))
     return tables

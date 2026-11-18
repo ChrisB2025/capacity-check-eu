@@ -17,6 +17,12 @@ saves each run to ``data/processed/runs/<run_id>/``, and writes to
 ``matrix.csv``        every run in the matrix with its parameters and results
 ``overview.csv``      the EU totals and one worked example shown on the
                       web app's front page
+``summary.csv``       the figures behind the executive summary
+``allocation.csv``    each composition line with its NACE codes and amount
+``sensitivity.csv``   ratings under other pressure and slack thresholds
+``threshold_reference.csv``  how often industries' employment has grown by
+                      each pressure threshold in one year (written by
+                      ``python -m engine glossary`` and kept here)
 ``summary.json``      run ids, sources and checksums
 
 The base run is the default parameters. Tables other than ``matrix.csv`` and
@@ -33,14 +39,24 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from engine import pipeline, plausibility, rating, robustness, sweden
+from engine import (
+    concordance,
+    pipeline,
+    plausibility,
+    rating,
+    robustness,
+    sensitivity,
+    shock,
+    sweden,
+)
 from engine.params import RunParams, Thresholds
 from engine.sources._common import REPO_ROOT
 
 OUT_DIR = REPO_ROOT / "docs" / "results"
 REVIEW_DIR = REPO_ROOT / "docs" / "review"
-REVIEW_DOCS = ("method-note.md", "composition-table.md", "gate-3-report.md",
-               "cdm-mapping.md", "data-register.md")  # fmt: skip
+REVIEW_DOCS = ("spec-v2.md", "method-note.md", "glossary.md",
+               "composition-table.md", "gate-3-report.md", "cdm-mapping.md",
+               "data-register.md")  # fmt: skip
 
 SHOCKS = (0.5, 1.0, 2.0)
 COMPOSITIONS = ("standard", "alt_contractor", "alt_materials", "alt_heating")
@@ -90,12 +106,12 @@ def _variant(name: str, **kw) -> tuple[str, RunParams]:
 def matrix() -> list[tuple[str, RunParams]]:
     """Every combination, base first. Names describe the departure from base."""
     runs = []
-    for (ed, year), shock, comp, (tname, t), sl in itertools.product(
+    for (ed, year), size, comp, (tname, t), sl in itertools.product(
         EDITIONS, SHOCKS, COMPOSITIONS, THRESHOLDS.items(), SLACK
     ):
         parts = [
             f"edition {ed}" if ed != "2026" else "",
-            f"shock {shock:g}%" if shock != 1.0 else "",
+            f"shock {size:g}%" if size != 1.0 else "",
             comp if comp != "standard" else "",
             f"thresholds {tname}" if tname != "default" else "",
             "vacancy slack" if sl != "ecfin" else "",
@@ -106,7 +122,7 @@ def matrix() -> list[tuple[str, RunParams]]:
                 name,
                 edition=ed,
                 ref_year=year,
-                shock_pct=shock,
+                shock_pct=size,
                 composition=comp,
                 thresholds=t,
                 slack_indicator=sl,
@@ -223,6 +239,89 @@ def overview(res) -> pd.DataFrame:
     return pd.DataFrame([row])
 
 
+def allocation(res) -> pd.DataFrame:
+    """Each composition line: its share, amount and the industry it maps to.
+
+    A purchase is assigned to the FIGARO industry with the same code; the
+    NACE divisions are those that industry covers. Amounts and origin shares
+    are totals over the member states in the run.
+    """
+    comp = shock.load_composition(res.params.composition)
+    dd = res.tables["direct_demand"]
+    a64 = concordance.load().set_index("figaro_code")
+    rows = []
+    for ln in comp.lines:
+        d = dd[dd["code"] == ln.code]
+        meur = float(d["meur"].sum())
+        ind = a64.loc[ln.code]
+        rows.append(
+            {
+                "code": ln.code,
+                "line": ln.label,
+                "share": ln.share,
+                "meur": meur,
+                **{
+                    f"{k}_share": (
+                        float((d["meur"] * d[k]).sum() / meur) if meur else np.nan
+                    )
+                    for k in ("home", "rest_eu", "non_eu")
+                },
+                "industry_label": ind["label"],
+                "nace_section": ind["nace_section"],
+                "section_label": ind["section_label"],
+                "nace_divisions": ", ".join(str(ind["nace_divisions"]).split()),
+                "sources": ", ".join(ln.sources),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def executive_summary(res) -> pd.DataFrame:
+    """One row: the figures the executive summary is written from."""
+    c = res.tables["countries"]
+    lines = res.tables["lines"]
+    p = res.params
+    head = c["headline_tight_or_binding_share"]
+    jobs = c["extra_persons_eu"]
+    rated = head.notna()
+    counts = lines["rating"].value_counts()
+    f = lines[(lines["industry"] == "F") & lines["economy"].isin(c["country"])]
+    f_rated = f[f["rating"] != rating.NO_RATING]
+    quality = c["data_quality"].value_counts()
+    row = {
+        "shock_pct": p.shock_pct,
+        "gdp_year": p.gdp_year,
+        "countries": len(c),
+        "composition": p.composition,
+        "composition_status": res.manifest["composition"]["status"],
+        "provisional": bool(res.manifest["provisional"]),
+        "shock_meur": c["shock_meur"].sum(),
+        "extra_persons_eu": jobs.sum(),
+        "headline_jobs_weighted": (
+            (head[rated] * jobs[rated]).sum() / jobs[rated].sum()
+            if rated.any()
+            else np.nan
+        ),
+        "headline_median": head.median(),
+        "headline_min": head.min(),
+        "headline_min_country": c.loc[head.idxmin(), "country"] if rated.any() else "",
+        "headline_max": head.max(),
+        "headline_max_country": c.loc[head.idxmax(), "country"] if rated.any() else "",
+        "unrated_jobs_weighted": (c["unrated_share"] * jobs).sum() / jobs.sum(),
+        "construction_rated": len(f_rated),
+        "construction_tight_or_binding": int(
+            f_rated["rating"].isin([rating.TIGHT, rating.BINDING]).sum()
+        ),
+        "construction_binding": int((f_rated["rating"] == rating.BINDING).sum()),
+        **{
+            f"lines_{k.replace(' ', '_')}": int(counts.get(k, 0))
+            for k in (rating.BINDING, rating.TIGHT, rating.CLEAR, rating.NO_RATING)
+        },
+        **{f"quality_{k}": int(quality.get(k, 0)) for k in ("good", "limited", "poor")},
+    }
+    return pd.DataFrame([row])
+
+
 def _summary_row(name: str, res) -> dict:
     c = res.tables["countries"]
     lines = res.tables["lines"]
@@ -308,6 +407,9 @@ def run(allow_unconfirmed: bool = False, progress=print) -> dict:
         "matrix.csv": pd.DataFrame(rows),
         "plausibility.csv": pd.DataFrame(plausibility.run(base)),
         "overview.csv": overview(base),
+        "summary.csv": executive_summary(base),
+        "allocation.csv": allocation(base),
+        "sensitivity.csv": sensitivity.table(base),
     }
     for name, df in sweden.run(base).items():
         if "publishable" in df.columns:
