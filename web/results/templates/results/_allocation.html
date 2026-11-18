@@ -1,0 +1,31 @@
+{% load fmt explain %}<section id="allocation" class="scroll-mt-6">
+  <h2 class="text-lg font-semibold">How the shock is allocated</h2>
+  <p class="mt-1 max-w-3xl text-sm text-stone-700">{{ comp_note }} Each line of spending is assigned to the FIGARO industry with the same code; the input-output table then adds that industry's supply chain. {% term "composition" "About the spending mix" %} {% term "nace-a64" "About the industry codes" %}</p>
+  <div class="mt-3 overflow-x-auto rounded border border-stone-200 bg-white">
+  <table class="w-full text-sm">
+    <thead class="bg-stone-100 text-left text-stone-600"><tr>
+      <th class="px-3 py-2">Spending line</th><th class="px-3 py-2 text-right">Share</th><th class="px-3 py-2 text-right">EUR m, all member states</th>
+      <th class="px-3 py-2">Industry it maps to</th><th class="px-3 py-2">NACE divisions</th><th class="px-3 py-2 text-right">{% term "origin" "Made at home" %}</th><th class="px-3 py-2">Why</th>
+    </tr></thead>
+    <tbody>
+    {% for a in alloc %}
+      <tr class="border-t border-stone-100 align-top">
+        <td class="px-3 py-1.5 font-medium">{{ a.line }}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ a.share|pct:1 }}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ a.meur|num }}</td>
+        <td class="px-3 py-1.5"><span class="font-mono">{{ a.code }}</span> {{ a.industry_label }}</td>
+        <td class="px-3 py-1.5 tabular-nums">{{ a.nace_divisions }}</td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ a.home_share|pct }}</td>
+        <td class="min-w-[16rem] px-3 py-1.5 text-stone-700">{{ a.note }}{% if a.sources %} <span class="text-xs text-stone-500">Sources: {{ a.sources }}.</span>{% endif %}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="mt-1 text-xs text-stone-500">Derivation, sources and the alternatives tested: <a class="underline" href="{{ REPO_URL }}/blob/main/docs/composition-table.md">composition table</a>. "Made at home" is the share of the first purchase made in the spending country, following where it already buys that product for investment.</p>
+  <div class="panel-limit mt-4">
+    <h3 class="font-semibold">Limit: construction is one industry</h3>
+    <p class="mt-1 text-sm text-stone-800">{{ construction_limit }}</p>
+  </div>
+  {% if trades %}{% include "results/_trades_se.html" %}{% endif %}
+</section>

@@ -54,10 +54,10 @@
       </select>
     </label>
     <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
-      <label>Tight from pressure (%)<input type="number" name="pressure_low" step="0.1" min="0" value="2" class="mt-1 block w-24 rounded border border-stone-300 px-2 py-1"></label>
-      <label>Binding above pressure (%)<input type="number" name="pressure_high" step="0.1" min="0" value="5" class="mt-1 block w-24 rounded border border-stone-300 px-2 py-1"></label>
-      <label>Slack elevated above quantile<input type="number" name="slack_median_quantile" step="0.05" min="0" max="1" value="{{ defaults.thresholds.slack_median_quantile }}" class="mt-1 block w-24 rounded border border-stone-300 px-2 py-1"></label>
-      <label>Slack high from quantile<input type="number" name="slack_top_quantile" step="0.05" min="0" max="1" value="{{ defaults.thresholds.slack_top_quantile }}" class="mt-1 block w-24 rounded border border-stone-300 px-2 py-1"></label>
+      <label>Tight from pressure (%)<input type="number" name="pressure_low" step="0.1" min="0" value="{{ values.pressure_low|default:defaults_pressure_low }}" class="mt-1 block w-24 rounded border border-stone-300 px-2 py-1"></label>
+      <label>Binding above pressure (%)<input type="number" name="pressure_high" step="0.1" min="0" value="{{ values.pressure_high|default:defaults_pressure_high }}" class="mt-1 block w-24 rounded border border-stone-300 px-2 py-1"></label>
+      <label>Slack elevated above quantile<input type="number" name="slack_median_quantile" step="0.05" min="0" max="1" value="{{ values.slack_median_quantile|default:defaults.thresholds.slack_median_quantile }}" class="mt-1 block w-24 rounded border border-stone-300 px-2 py-1"></label>
+      <label>Slack high from quantile<input type="number" name="slack_top_quantile" step="0.05" min="0" max="1" value="{{ values.slack_top_quantile|default:defaults.thresholds.slack_top_quantile }}" class="mt-1 block w-24 rounded border border-stone-300 px-2 py-1"></label>
     </div>
   </fieldset>
 
