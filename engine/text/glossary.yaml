@@ -1,0 +1,537 @@
+# The glossary. One file drives the tooltips in the web app, the glossary page
+# and docs/glossary.md (regenerate with `python -m engine glossary`).
+#
+# Fields: slug, term, group, definition, why (one line: why it matters),
+# optional caveat, optional reasoning, source {name, detail, url}, optional also_used_by
+# [{name, url}]. Placeholders in braces are filled from the run being shown,
+# or from the defaults on the glossary page:
+#   {shock_pct} {pressure_low} {pressure_high} {slack_median} {slack_top}
+#   {ref_all_low} {ref_all_high} {ref_f_low} {ref_f_high} {ref_years}
+# The ref_ values come from docs/results/threshold_reference.csv.
+
+groups:
+  - The question
+  - The model
+  - Measures shown
+  - Estimated risk categories
+  - Sweden
+
+terms:
+  - slug: shock
+    term: Shock
+    group: The question
+    definition: >-
+      The extra public spending tested: {shock_pct} of each member state's
+      2024 GDP, spent in one year on housing and energy renovation.
+    why: >-
+      A shock of the same size relative to each economy puts every member
+      state on the same footing. It is an identical financial shock, not an
+      identical physical programme.
+    caveat: >-
+      One shock cannot match each country's climate, housing stock, tenure,
+      income or habits. Compare relative pressure, not what each country
+      would need to spend or do.
+    source:
+      name: Eurostat, GDP and main components (nama_10_gdp)
+      detail: B1GQ, current prices, million euros, 2024
+      url: https://ec.europa.eu/eurostat/databrowser/view/nama_10_gdp/default/table
+
+  - slug: composition
+    term: Composition
+    group: The question
+    definition: >-
+      How the shock is split between the things bought directly: construction
+      work, heating equipment, the trade margin on that equipment, and design
+      and supervision. The same split is used in every member state.
+    why: >-
+      It is the main judgement in the method. It decides which industries the
+      money reaches first.
+    source:
+      name: Composition table (docs/composition-table.md)
+      detail: Quirion (2013) for France and the KfW retrofit monitoring (2016) for Germany
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/docs/composition-table.md
+    also_used_by:
+      - name: Quirion (2013), input-output allocation of deep renovation in France
+        url: https://negawatt.org/IMG/pdf/etude_p.quirion_emplois_et_scenario_negawatt_28-03-2013.pdf
+      - name: Cambridge Econometrics et al. (2015) for DG ENER, split of energy efficiency spending by sector
+        url: https://circabc.europa.eu/rest/download/4ba02aea-682c-4872-ab92-2d0284786e91
+
+  - slug: risk-indicator
+    term: Risk indicator
+    group: The question
+    definition: >-
+      What every result here is: an early signal of where a programme could
+      run into labour shortages, built from two published measures. It is
+      not a forecast and not a verdict on whether a programme can be
+      delivered.
+    why: >-
+      The tool screens for real resource risk before a programme is designed,
+      so that the industries flagged can be looked at more closely.
+    source:
+      name: Method note (docs/method-note.md)
+      detail: "Sections: Risk indicators, not judgements; Where the tool sits"
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/docs/method-note.md
+
+  - slug: input-output-table
+    term: Input-output table
+    group: The model
+    definition: >-
+      A table of who buys what from whom: each industry's purchases from every
+      other industry, at home and abroad, and what goes to final users such as
+      households, government and investment.
+    why: >-
+      It lets the model follow spending down supply chains, so renovation
+      also shows up as demand for cement, machinery and transport.
+    source:
+      name: Eurostat, FIGARO inter-country input-output tables
+      detail: 2026 edition, industry by industry, reference year 2024
+      url: https://ec.europa.eu/eurostat/cache/metadata/en/naio_10_fcp_esms.htm
+    also_used_by:
+      - name: Quirion (2013), employment effect of the energy transition in France
+        url: https://negawatt.org/IMG/pdf/etude_p.quirion_emplois_et_scenario_negawatt_28-03-2013.pdf
+      - name: Cambridge Econometrics et al. (2015), employment and social impact of energy efficiency, for DG ENER
+        url: https://circabc.europa.eu/rest/download/4ba02aea-682c-4872-ab92-2d0284786e91
+
+  - slug: figaro
+    term: FIGARO
+    group: The model
+    definition: >-
+      Eurostat's input-output tables for the EU: 50 economies (the 27 member
+      states, 22 other economies and the rest of the world) by 64 industries,
+      one table per year.
+    why: >-
+      It is the official source that links every member state's industries to
+      each other and to imports, so spending in one country can press on
+      industries in another.
+    caveat: >-
+      The 2024 table rests largely on Eurostat projections. 2023, which rests
+      on more reported data, is run as a check.
+    source:
+      name: Eurostat, FIGARO (naio_10_fcp)
+      detail: 2026 edition, reference year 2024
+      url: https://ec.europa.eu/eurostat/cache/metadata/en/naio_10_fcp_esms.htm
+    also_used_by:
+      - name: Eurostat and the European Commission's Joint Research Centre, which built it, for analysis of trade and value added
+        url: https://ec.europa.eu/eurostat/cache/metadata/en/naio_10_fcp_esms.htm
+
+  - slug: nace-a64
+    term: NACE A64
+    group: The model
+    definition: >-
+      The EU's list of industries (NACE Rev. 2) grouped into 64 industries.
+      Construction, for example, is one industry, F, which covers NACE
+      divisions 41 (buildings), 42 (civil engineering) and 43 (specialised
+      trades such as installation and finishing).
+    why: >-
+      It is the finest detail at which both the input-output tables and the
+      employment figures exist for all 27 member states, so no result can be
+      more detailed than this.
+    caveat: >-
+      Construction cannot be split into the trades renovation needs. The
+      Sweden layer shows how far an occupational register can do it.
+    source:
+      name: Concordance used by the engine (engine/concordances/a64.csv)
+      detail: FIGARO codes, NACE sections and divisions, national accounts codes
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/engine/concordances/a64.csv
+
+  - slug: line
+    term: Line
+    group: The model
+    definition: >-
+      One industry in one member state, for example construction in Germany.
+      Pressure, shortage level and estimated risk category are given per line.
+    why: >-
+      Labour is counted where the work is done, so each line is scored
+      against its own workforce.
+    source:
+      name: Concordance used by the engine (engine/concordances/a64.csv)
+      detail: 27 member states by 64 industries
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/engine/concordances/a64.csv
+
+  - slug: direct-purchases
+    term: Direct purchases
+    group: The model
+    definition: >-
+      The shock split by product, following the composition, and by where
+      each product comes from, following where the member state already buys
+      it for investment.
+    why: >-
+      Part of the money leaves the country at the first step, through
+      imported equipment.
+    source:
+      name: Eurostat, FIGARO
+      detail: Each member state's existing purchases for gross fixed capital formation (P51G)
+      url: https://ec.europa.eu/eurostat/cache/metadata/en/naio_10_fcp_esms.htm
+
+  - slug: required-output
+    term: Required output
+    group: The model
+    definition: >-
+      The output every industry must produce to meet the shock, directly and
+      through its supply chain, in million euros. It is computed with the
+      Leontief inverse of the input-output table.
+    why: >-
+      It is the demand side of the comparison: what the programme asks of
+      each industry.
+    source:
+      name: Eurostat, FIGARO
+      detail: 2026 edition, reference year 2024
+      url: https://ec.europa.eu/eurostat/cache/metadata/en/naio_10_fcp_esms.htm
+    also_used_by:
+      - name: Cambridge Econometrics et al. (2015), for DG ENER
+        url: https://circabc.europa.eu/rest/download/4ba02aea-682c-4872-ab92-2d0284786e91
+
+  - slug: origin
+    term: At home, rest of EU, outside EU
+    group: The model
+    definition: >-
+      Where the required output is produced: in the member state that spends,
+      in other member states, or outside the EU. Each is a share of the total.
+    why: >-
+      Pressure falls where the work is done, which is not always where the
+      money is spent.
+    source:
+      name: Eurostat, FIGARO
+      detail: 2026 edition, reference year 2024
+      url: https://ec.europa.eu/eurostat/cache/metadata/en/naio_10_fcp_esms.htm
+
+  - slug: application
+    term: Simultaneous or own application
+    group: The model
+    definition: >-
+      Simultaneous: all member states in the run spend at once, so the
+      pressure on an industry adds up demand from every programme. Own: each
+      member state's industries see only its own programme.
+    why: >-
+      A Europe-wide programme would draw on the same suppliers, for example
+      German machinery for French and Italian renovation.
+    source:
+      name: Method note, step 2
+      detail: Simultaneous is the default
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/docs/method-note.md
+
+  - slug: jobs-conversion
+    term: Jobs conversion
+    group: The model
+    definition: >-
+      Required output turned into persons employed, using each industry's
+      current persons employed per million euros of output in that member
+      state.
+    why: >-
+      Shortages are about people, so the demand has to be expressed in people
+      before the two can be compared.
+    caveat: >-
+      A job estimate is not a hire. Firms can move existing staff from other
+      work, and households or housing cooperatives can swap grant-funded work
+      for work they had already planned, such as postponing a roof
+      replacement to insulate. A high estimated risk category signals a risk
+      of pressure, not certain hiring.
+    source:
+      name: Eurostat, employment by 64 industries (nama_10_a64_e)
+      detail: EMP_DC, thousand persons, 2024, with FIGARO output for the same year
+      url: https://ec.europa.eu/eurostat/databrowser/view/nama_10_a64_e/default/table
+    also_used_by:
+      - name: Quirion (2013), jobs per million euros of renovation in France
+        url: https://negawatt.org/IMG/pdf/etude_p.quirion_emplois_et_scenario_negawatt_28-03-2013.pdf
+      - name: Irish Fiscal Advisory Council (2024), construction workers needed for Ireland's infrastructure plans
+        url: https://fiscalcouncil.ie/wp-content/uploads/2024/10/Irelands-Infrastructure-Demands.pdf
+
+  - slug: employment-multiplier
+    term: Employment multiplier
+    group: The model
+    definition: >-
+      Persons employed per million euros of spending, counting the whole
+      supply chain. It comes from applying each industry's persons per million
+      euros of output to the required output.
+    why: >-
+      It differs between member states because wages and productivity differ,
+      which is one reason the same financial shock occupies different numbers
+      of people.
+    source:
+      name: Eurostat, nama_10_a64_e and FIGARO
+      detail: 2024
+      url: https://ec.europa.eu/eurostat/databrowser/view/nama_10_a64_e/default/table
+
+  - slug: extra-persons
+    term: Extra persons
+    group: Measures shown
+    definition: >-
+      The number of people the shock would occupy for a year, at today's
+      output per person, in the EU or on one line.
+    why: >-
+      It is the size of the demand in the same unit as the workforce, so it
+      can be set against it.
+    caveat: >-
+      Not new hires. Firms can reprioritise existing capacity, and households
+      can swap grant-funded work for work they had already planned.
+    source:
+      name: Eurostat, nama_10_a64_e and FIGARO
+      detail: 2024
+      url: https://ec.europa.eu/eurostat/databrowser/view/nama_10_a64_e/default/table
+
+  - slug: pressure
+    term: Pressure
+    group: Measures shown
+    definition: >-
+      Extra persons on a line as a share of the persons it employs now. 6%
+      means the industry would need 6 more workers for every 100 it has.
+    why: >-
+      It shows how large the programme is for that industry, which is one of
+      the two signals behind the estimated risk category.
+    source:
+      name: Eurostat, nama_10_a64_e
+      detail: EMP_DC, thousand persons, 2024
+      url: https://ec.europa.eu/eurostat/databrowser/view/nama_10_a64_e/default/table
+
+  - slug: labour-shortage-indicator
+    term: Labour shortage indicator (slack)
+    group: Measures shown
+    definition: >-
+      The share of firms that name labour as a factor limiting their
+      activity, from the European Commission's business surveys of
+      construction, industry and services in each member state.
+    why: >-
+      It is the only shortage measure published in the same way for every
+      member state and most industries, monthly or quarterly, over many years.
+    caveat: >-
+      It counts firms, not missing workers. A firm reporting no shortage has
+      not shown that it could take on a large new workload.
+    source:
+      name: European Commission (DG ECFIN), business and consumer surveys
+      detail: Release of October 2026; construction question 2, industry question 8, services question 7
+      url: https://economy-finance.ec.europa.eu/economic-forecast-and-surveys/business-and-consumer-surveys/overarching-methodological-concepts_en
+    also_used_by:
+      - name: European Commission, business and consumer survey reports
+        url: https://economy-finance.ec.europa.eu/economic-forecast-and-surveys/business-and-consumer-surveys/download-business-and-consumer-survey-data/subsector-data_en
+      - name: Sveriges Riksbank (2023), new indicators of resource utilisation
+        url: https://www.riksbank.se/globalassets/media/rapporter/ekonomiska-kommentarer/svenska/2023/nya-indikatorer-pa-resursutnyttjandet.pdf
+
+  - slug: slack-current
+    term: Shortage share now
+    group: Measures shown
+    definition: >-
+      The share of firms naming labour as a limiting factor, averaged over the
+      latest four complete quarters.
+    why: >-
+      Averaging a full year removes most seasonal swings.
+    source:
+      name: European Commission (DG ECFIN), business and consumer surveys
+      detail: Release of October 2026, not seasonally adjusted
+      url: https://economy-finance.ec.europa.eu/economic-forecast-and-surveys/business-and-consumer-surveys/overarching-methodological-concepts_en
+
+  - slug: slack-percentile
+    term: Percentile in its own history
+    group: Measures shown
+    definition: >-
+      Where the shortage share now sits in the series' own history. 90% means
+      the share has been lower in nine of every ten periods since the series
+      began.
+    why: >-
+      Firms in different countries answer the survey differently, so each
+      series is compared with its own past, not with other countries.
+    source:
+      name: European Commission (DG ECFIN), business and consumer surveys
+      detail: Whole history of each series; at least 5 years needed
+      url: https://economy-finance.ec.europa.eu/economic-forecast-and-surveys/business-and-consumer-surveys/overarching-methodological-concepts_en
+
+  - slug: slack-class
+    term: Shortage level (low, elevated, high)
+    group: Measures shown
+    definition: >-
+      Low: at or below {slack_median} of the series' history. Elevated: above
+      it. High: in {slack_top} of its history.
+    why: >-
+      It is the second signal behind the estimated risk category: whether
+      firms already report more labour shortages than usual.
+    source:
+      name: European Commission (DG ECFIN), business and consumer surveys
+      detail: Release of October 2026
+      url: https://economy-finance.ec.europa.eu/economic-forecast-and-surveys/business-and-consumer-surveys/overarching-methodological-concepts_en
+
+  - slug: headline
+    term: Jobs on tight or binding lines
+    group: Measures shown
+    definition: >-
+      The headline for a member state: the share of the jobs its programme
+      creates anywhere in the EU that fall on lines rated tight or binding.
+    why: >-
+      It sums up, in one number, how much of the programme's work lands where
+      there are signs of labour pressure.
+    caveat: >-
+      Member states are separated only weakly by it: construction is under
+      pressure everywhere, and shortage reports are high in most industries
+      in 2025 and 2026.
+    source:
+      name: Engine output, countries table
+      detail: Computed from the two signals above
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/docs/method-note.md
+
+  - slug: unrated-share
+    term: Jobs on unrated lines
+    group: Measures shown
+    definition: >-
+      The share of the programme's jobs that fall on lines with no estimated
+      risk category, mostly because the business surveys do not cover that
+      industry.
+    why: >-
+      A low headline can come from missing evidence rather than from spare
+      capacity; this shows how much is missing.
+    source:
+      name: Concordance of survey divisions to the 64 industries
+      detail: 48 of 64 industries have a survey series
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/engine/concordances/a64.csv
+
+  - slug: data-quality
+    term: Data quality
+    group: Measures shown
+    definition: >-
+      A grade for each member state's result. Good: at most 10% of its jobs
+      on unrated lines or lines with estimated employment, and no construction
+      note. Limited: up to a third, or a construction note. Poor: more.
+    why: >-
+      It tells you how far to trust one member state's result before
+      comparing it with others.
+    source:
+      name: Method note, data quality flag
+      detail: Grades set by the team; reasons listed with each grade
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/docs/method-note.md
+
+  - slug: thresholds
+    term: Thresholds
+    group: Estimated risk categories
+    definition: >-
+      The four cut-offs that turn the two signals into categories: pressure
+      of {pressure_low} (tight from here) and {pressure_high} (binding above
+      this), and shortage reports above {slack_median} or in {slack_top} of
+      their own history.
+    why: >-
+      They are judgements made by the team. Each has a stated reason, and the
+      threshold page shows how the results change when they move.
+    reasoning: >-
+      Why 2%, the default for tight: from {ref_years}, an industry's
+      workforce in a member state grew by 2% or more in a year in about
+      {ref_all_low} of cases, weighted by employment ({ref_f_low} for
+      construction). An extra 2% is within what industries sometimes manage,
+      but large enough to notice on top of normal growth. Why 5%, the default
+      for binding: growth of 5% or more in a year happened in about
+      {ref_all_high} of cases ({ref_f_high} for construction), so it asks an
+      industry for something it rarely does. Why the median: above it, more
+      firms than usual already report labour as a limit. Why the top
+      quarter: it is the tightest quarter of periods on record for that
+      series, and binding needs it as well as high pressure.
+    source:
+      name: Eurostat, nama_10_a64_e (reference figures) and DG ECFIN surveys
+      detail: docs/results/threshold_reference.csv
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/docs/results/threshold_reference.csv
+
+  - slug: estimated-risk-category
+    term: Estimated risk category
+    group: Estimated risk categories
+    definition: >-
+      Clear, tight or binding: how strongly the two signals, pressure and
+      shortage level, point to labour pressure on a line. Lines without
+      evidence get no category.
+    why: >-
+      It flags where to look first. It is a risk indicator, not a factual
+      judgement about whether a programme can be delivered.
+    source:
+      name: Method note, step 6
+      detail: Rule proposed in the specification and tested here
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/docs/method-note.md
+
+  - slug: clear
+    term: Clear
+    group: Estimated risk categories
+    definition: >-
+      The shock adds less than {pressure_low} to the line's workforce, and
+      firms report labour shortages no more often than {slack_median} of the
+      series' history.
+    why: >-
+      Neither signal points to a problem.
+    caveat: >-
+      It does not show that the extra workers exist, or are willing and
+      qualified.
+    source:
+      name: Method note, rating glossary
+      detail: Pressure from nama_10_a64_e and FIGARO; shortage level from DG ECFIN surveys
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/docs/method-note.md
+
+  - slug: tight
+    term: Tight
+    group: Estimated risk categories
+    definition: >-
+      Either the shock adds {pressure_low} or more to the line's workforce, or
+      firms already report labour shortages more often than {slack_median} of
+      the series' history.
+    why: >-
+      At least one signal points to pressure.
+    caveat: >-
+      It cannot say whether a shortfall would be met by longer hours, hiring
+      from other industries, migration or delay, or how prices would respond.
+    source:
+      name: Method note, rating glossary
+      detail: Pressure from nama_10_a64_e and FIGARO; shortage level from DG ECFIN surveys
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/docs/method-note.md
+
+  - slug: binding
+    term: Binding
+    group: Estimated risk categories
+    definition: >-
+      The shock adds more than {pressure_high} to the line's workforce, and
+      shortage reports are in {slack_top} of their own history.
+    why: >-
+      Both signals at once: the programme as specified, in one year, is
+      likely to meet a labour constraint in that industry.
+    caveat: >-
+      It cannot show that the work could not be done over a longer period,
+      or with workers from elsewhere.
+    source:
+      name: Method note, rating glossary
+      detail: Pressure from nama_10_a64_e and FIGARO; shortage level from DG ECFIN surveys
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/docs/method-note.md
+
+  - slug: no-rating
+    term: No rating
+    group: Estimated risk categories
+    definition: >-
+      The shortage evidence is missing, too short (under five years) or not
+      comparable, or there is no employment figure. No category is forced.
+    why: >-
+      Missing evidence is shown as missing, not as clear.
+    source:
+      name: Method note, step 5
+      detail: 16 of the 64 industries have no survey question
+      url: https://github.com/ChrisB2025/capacity-check-eu/blob/main/docs/method-note.md
+
+  - slug: occupation-share
+    term: Share of the occupation's employees
+    group: Sweden
+    definition: >-
+      Extra persons in a Swedish occupation as a share of the people employed
+      in it now, splitting each industry's extra persons by its current
+      occupation mix.
+    why: >-
+      It is the occupational version of pressure, and the only place the tool
+      can show trades such as electricians or insulation workers.
+    caveat: >-
+      Counts employees only; the self-employed, common in construction, are
+      outside the mix.
+    source:
+      name: Statistics Sweden, occupational register (YREG54BAS)
+      detail: Employees by occupation (SSYK 2012) and industry group, 2024
+      url: https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0208__AM0208E/
+
+  - slug: yrkesbarometer
+    term: Recruitment situation and outlook
+    group: Sweden
+    definition: >-
+      The Swedish Public Employment Service's assessment of each occupation:
+      job prospects, whether employers find it hard to recruit, and the
+      five-year outlook.
+    why: >-
+      It is an independent, occupation-level view to set beside the model's
+      estimate.
+    source:
+      name: Arbetsförmedlingen, Yrkesbarometer
+      detail: Round 2026-1, open data
+      url: https://jobtechdev.se/en/components/yrkesprognoser?q=Dataset

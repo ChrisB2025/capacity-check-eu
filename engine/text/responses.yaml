@@ -1,0 +1,40 @@
+# "What this could mean": possible responses where a line is tight or binding.
+# Options to consider, not recommendations. The tool does not test any of them.
+
+intro: >-
+  Options to consider, not recommendations. Each would need its own
+  assessment; the tool does not test them.
+
+binding:
+  - title: Targeted training before the programme starts
+    text: >-
+      Short courses for the trades involved, timed so that people qualify
+      before the work peaks.
+  - title: Phase the programme over more years
+    text: >-
+      The same spending spread over a longer period adds less to each year's
+      workforce.
+  - title: Steer demand towards available capacity
+    text: >-
+      Adjust grants or subsidies so that more of the work goes to measures
+      and trades that are not under pressure.
+  - title: Recruit from other industries or regions
+    text: >-
+      Retraining, recognition of qualifications, or workers from regions or
+      member states with spare capacity.
+  - title: Sequence with other programmes
+    text: >-
+      Avoid peaks where other public programmes draw on the same trades at
+      the same time.
+
+tight:
+  - title: Watch the shortage reports as the programme starts
+    text: >-
+      A tight line can move to binding if shortage reports rise further.
+  - title: Plan training places in advance
+    text: >-
+      Lead times for training are long; places can be added before they are
+      needed.
+  - title: Stagger start dates
+    text: >-
+      Spreading starts across the year or between regions eases peaks.

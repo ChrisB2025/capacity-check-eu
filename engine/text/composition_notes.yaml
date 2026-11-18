@@ -1,0 +1,57 @@
+# Plain-language reasons for each composition line, shown in "How the shock is
+# allocated". Kept apart from engine/compositions/*.yaml so that the files the
+# engine runs, and their checksums in each run manifest, do not change.
+# Derivation and sources: docs/composition-table.md.
+
+compositions:
+  standard: >-
+    Design and supervision take 20%, the assumption used to monitor
+    Germany's KfW retrofit programmes. The other 80% follows Quirion's
+    allocation of deep renovation in France (450 euros per square metre:
+    insulation 315, heating equipment 53, heating installation 45,
+    distribution 37).
+  alt_contractor: >-
+    The KfW assumption as it stands: 80% construction work, with all
+    materials and equipment bought by the contractors, and 20% design and
+    supervision. The lower bound for demand on manufacturing.
+  alt_materials: >-
+    The split used by Cambridge Econometrics for DG ENER: materials bought
+    as separate products beside construction work. The upper bound for
+    demand on materials, and covers all energy efficiency projects, not
+    only housing.
+  alt_heating: >-
+    A different programme: heat pumps without envelope work, split 70%
+    equipment and 30% installation and other costs, as the Danish Energy
+    Agency reports.
+
+codes:
+  F: >-
+    Insulation work and heating installation, bought from contractors at
+    their installed price. Materials come in through construction's own
+    supply chain, so they are not listed again.
+  C28: >-
+    Heat pumps, boilers and ventilation units. Listed separately because
+    construction's average supply chain contains little machinery.
+  G46: >-
+    The wholesale margin on heating equipment, kept as its own purchase.
+  M71: >-
+    Architects, engineers and site supervision.
+  C22: >-
+    Foam insulation, mapped to rubber and plastic products.
+  C23: >-
+    Mineral wool, glass and plaster.
+  C24: >-
+    Steel and other metals.
+  C27: >-
+    Electrical goods such as cables and controls.
+
+construction_limit: >-
+  FIGARO has one construction industry, F, which covers NACE divisions 41
+  (buildings), 42 (civil engineering) and 43 (specialised trades such as
+  installation and finishing). The input-output layer therefore cannot
+  separate insulation from heating installation, or renovation trades from
+  road building: the construction line carries the average supply chain and
+  workforce of all construction. The business surveys do report divisions
+  41 to 43 separately, but the tool uses the construction total because the
+  demand side has no split to match. Where an occupational register exists,
+  as in Sweden, the construction workforce can be broken down into trades.

@@ -1,0 +1,29 @@
+# Construction trades in the Sweden layer, with English titles translated from
+# the Swedish SSYK 2012 titles. Used to show how the single construction
+# industry breaks down into the trades renovation needs.
+
+groups:
+  - name: Building envelope and finishing
+    codes:
+      "7123": Insulation workers
+      "7111": Carpenters and joiners
+      "7121": Roofers
+      "7124": Glaziers
+      "7112": Bricklayers
+      "7131": Painters
+      "7122": Floor layers
+      "7116": Scaffolders
+  - name: Heating, ventilation and electrics
+    codes:
+      "7125": Plumbers and heating and ventilation fitters
+      "7126": Refrigeration and heat pump technicians
+      "7411": Installation and service electricians
+      "7413": Distribution electricians
+  - name: Site, civil works and supervision
+    codes:
+      "3121": Construction supervisors
+      "3112": Building engineers and technicians
+      "7113": Concrete workers
+      "7114": Civil construction workers
+      "7119": Other building and civil construction workers
+      "8342": Construction machine operators
