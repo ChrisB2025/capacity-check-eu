@@ -201,3 +201,17 @@ def test_explainer_for_any_run_and_ciaran_questions(client, settings):
     for shown in expected:
         assert shown in run_page, shown
     assert client.get("/run/nope/explain/").status_code == 404
+
+
+def test_data_page_shows_ladder_and_machine_verdict(client, settings):
+    from engine import text
+
+    settings.PUBLIC_READ_ONLY = True
+    page = client.get("/data/").content.decode()
+    d = text.data_ladder()
+    from django.utils.html import escape
+
+    assert escape(d["verdict"]["label"]) in page and "machine judgement" in page
+    for step in d["ladder"]:
+        assert escape(step["step"]) in page
+    assert "Chris Bland" not in page  # the verdict is in no one's name

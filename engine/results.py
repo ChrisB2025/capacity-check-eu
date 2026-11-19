@@ -55,7 +55,8 @@ from engine.sources._common import REPO_ROOT
 
 OUT_DIR = REPO_ROOT / "docs" / "results"
 REVIEW_DIR = REPO_ROOT / "docs" / "review"
-REVIEW_DOCS = ("spec-v2.md", "method-note.md", "glossary.md",
+REVIEW_DOCS = ("spec-v2.md", "method-note.md", "glossary.md", "data-ladder.md",
+               "research-wg-briefing.md",
                "composition-table.md", "gate-3-report.md", "cdm-mapping.md",
                "data-register.md")  # fmt: skip
 

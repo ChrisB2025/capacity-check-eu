@@ -483,6 +483,11 @@ def glossary(request):
     return render(request, "results/glossary.html", {"groups": groups})
 
 
+def data(request):
+    """What the data allows: the ladder, comparability, and the tool's verdict."""
+    return render(request, "results/data.html", {"d": text.data_ladder()})
+
+
 def thresholds(request, run_id):
     """How the estimated risk categories change when the thresholds move."""
     run = _run(run_id)

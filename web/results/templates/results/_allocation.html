@@ -28,5 +28,6 @@
     <h3 class="font-semibold">Limit: construction is one industry</h3>
     <p class="mt-1 text-sm text-stone-800">{{ construction_limit }}</p>
   </div>
+  <p class="mt-3 text-sm text-stone-700">Which spending lines can be rated depends on the data: <a class="underline" href="{% url 'data' %}">what the data allows</a>.</p>
   {% if trades %}{% include "results/_trades_se.html" %}{% endif %}
 </section>

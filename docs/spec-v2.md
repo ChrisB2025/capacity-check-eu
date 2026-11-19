@@ -15,6 +15,7 @@ On 18 November 2026 Chris Bland, Stephen Hinton and Ciaran McKenna reviewed the 
 7. **Layered results**: an executive summary, a plain-language explanation, then method detail; a statement of where the tool sits in the policy process; a "what this could mean" panel listing options, not recommendations, where a line is tight or binding.
 8. **A reviewer page** with the review questions and a feedback form.
 9. **Corrections**: the standard composition has no separate building materials line, and the construction shortage survey is monthly.
+10. **What the data allows** (added 19 November 2026): a data page mapping what free EU data can support across the resource ladder (labour, energy, materials, the Doughnut's ecological ceiling and social foundation), with the tool's own verdict on where a pan-European version must hand over to national data ([data-ladder.md](data-ladder.md)).
 
 ## **Executive summary**
 

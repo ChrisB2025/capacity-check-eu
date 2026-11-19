@@ -76,3 +76,17 @@ def test_responses_and_trades():
 def test_text_files_are_valid_yaml():
     for f in text.TEXT_DIR.glob("*.yaml"):
         assert yaml.safe_load(f.read_text(encoding="utf-8"))
+
+
+def test_data_ladder_is_complete_and_in_sync():
+    d = text.data_ladder()
+    assert d["verdict"]["provenance"] and d["verdict"]["headline"]
+    for step in d["ladder"]:
+        for r in step["rows"]:
+            assert r["level"] in text.LEVELS, r["question"]
+            assert r["answer"] and r["limit"] and r["source_list"], r["question"]
+            for s in r["source_list"]:
+                assert s["url"].startswith("https://"), s["key"]
+    assert text.DATA_LADDER_MD.read_text(encoding="utf-8") == (
+        text.data_ladder_markdown()
+    ), "docs/data-ladder.md is out of date: run `python -m engine glossary`"

@@ -18,6 +18,7 @@
         <a href="{% url 'runs' %}" class="hover:underline">Runs</a>
         {% if not PUBLIC_READ_ONLY %}<a href="{% url 'new_run' %}" class="hover:underline">New run</a>{% endif %}
         <a href="{% url 'about' %}" class="hover:underline">Method</a>
+        <a href="{% url 'data' %}" class="hover:underline">Data</a>
         <a href="{% url 'glossary' %}" class="hover:underline">Glossary</a>
         <a href="{% url 'reviewers' %}" class="hover:underline">For reviewers</a>
       </nav>
