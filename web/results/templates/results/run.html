@@ -5,6 +5,7 @@
 
 <nav class="mb-6 flex flex-wrap gap-x-3 gap-y-1 text-sm" aria-label="On this page">
   <a href="#summary" class="underline">In brief</a>
+  <a href="{% url 'explain' run.run_id %}" class="underline">Step by step</a>
   <a href="#headline" class="underline">Headline</a>
   <a href="#comparability" class="underline">What you can compare</a>
   <a href="#allocation" class="underline">How the shock is allocated</a>
@@ -68,15 +69,16 @@
 
 <section id="requirement" class="mt-8">
   <h2 class="text-lg font-semibold">1. Requirement: what the shock needs</h2>
-  <p class="mt-1 text-sm text-stone-600">Required output across all economies, where it is produced, and the persons employed it needs in EU member states, in one year.</p>
+  <p class="mt-1 text-sm text-stone-600">Required output across all economies, where it is produced, and the persons employed it needs in EU member states, in one year. {{ focus_note }}</p>
   <div class="mt-3">{% include "results/_jobs_caveat.html" %}</div>
   <div class="mt-3 overflow-x-auto rounded border border-stone-200 bg-white">
   <table class="w-full text-sm">
     <thead class="bg-stone-100 text-left text-stone-600"><tr>
       <th class="px-3 py-2">Member state</th><th class="px-3 py-2 text-right">{% term "shock" "Shock (EUR m)" %}</th><th class="px-3 py-2 text-right">{% term "required-output" "Required output (EUR m)" %}</th>
       <th class="px-3 py-2 text-right">{% term "origin" "At home" %}</th><th class="px-3 py-2 text-right">Rest of EU</th><th class="px-3 py-2 text-right">Outside EU</th>
-      <th class="px-3 py-2 text-right">{% term "extra-persons" "Extra persons in the EU" %}</th>
-      {% for code, label in focus_labels %}<th class="px-3 py-2 text-right">Pressure: {{ label }}{% if forloop.first %}{% term "pressure" "" %}{% endif %}</th>{% endfor %}
+      <th class="px-3 py-2 text-right">{% term "extra-persons" "Extra persons in the EU, all" %}</th>
+      <th class="px-3 py-2 text-right">of which at home</th>
+      {% for code, label in focus_labels %}<th class="px-3 py-2 text-right">Pressure: {{ label }}{% if forloop.first %}{% term "pressure" "" %}{% endif %}<span class="block text-xs font-normal">extra persons</span></th>{% endfor %}
     </tr></thead>
     <tbody>
     {% for c in countries %}
@@ -88,30 +90,32 @@
         <td class="px-3 py-1.5 text-right tabular-nums">{{ c.required_rest_eu_share|pct }}</td>
         <td class="px-3 py-1.5 text-right tabular-nums">{{ c.required_non_eu_share|pct }}</td>
         <td class="px-3 py-1.5 text-right tabular-nums">{{ c.extra_persons_eu|hundreds }}</td>
-        {% for f in c.focus %}<td class="px-3 py-1.5 text-right tabular-nums">{{ f.pressure|pct:1 }}</td>{% endfor %}
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ c.jobs.jobs_at_home|hundreds }}</td>
+        {% for f in c.focus %}<td class="px-3 py-1.5 text-right tabular-nums">{{ f.pressure|pct:1 }}<span class="block text-xs text-stone-500">{{ f.extra_persons_all|hundreds }}</span></td>{% endfor %}
       </tr>
     {% endfor %}
     </tbody>
   </table>
   </div>
-  <p class="mt-1 text-xs text-stone-500">Pressure: extra persons on the member state's own industry, from {% if p.application == "simultaneous" %}all programmes in this run{% else %}its own programme{% endif %}, as a share of the industry's employment.</p>
+  <p class="mt-1 text-xs text-stone-500">Extra persons in the EU: everyone the member state's programme puts to work, in its own country and elsewhere in the EU; "of which at home" is the part in its own country. Pressure: extra persons on the member state's own industry, from {% if p.application == "simultaneous" %}all programmes in this run{% else %}its own programme{% endif %}, as a share of the industry's employment; the number beneath is those persons.</p>
 </section>
 
 <section id="availability" class="mt-10">
   <h2 class="text-lg font-semibold">2. Availability: what firms report</h2>
   <p class="mt-1 text-sm text-stone-600">Share of firms naming labour as a factor limiting activity, mean of the latest four complete quarters, placed in the series' own history. High: top quarter. Elevated: above median. Low: at or below median. {% term "slack-class" "" %}</p>
+  <p class="panel-note mt-2"><strong>How to read a small share that counts as high.</strong> Each country is compared with its own past, not with other countries, because firms in different countries answer the survey differently.{% if low_high %} For example, {{ low_high.slack_current|num:1 }}% of construction firms in {{ low_high.name }} now name labour as a limit, far fewer than in many countries, but that sits at the {{ low_high.slack_percentile|ordinal }} percentile of {{ low_high.name }}'s own past readings, so it counts as high: firms there rarely report labour shortages, and now more of them do.{% endif %}</p>
   <div class="mt-3 overflow-x-auto rounded border border-stone-200 bg-white">
   <table class="w-full text-sm">
     <thead class="bg-stone-100 text-left text-stone-600"><tr>
       <th class="px-3 py-2">Member state</th>
       {% for code, label in focus_labels %}<th class="px-3 py-2">{% if forloop.first %}{% term "slack-percentile" label %}{% else %}{{ label }}{% endif %}</th>{% endfor %}
-      <th class="px-3 py-2 text-right">{% term "slack-current" "Construction: share of firms now" %}</th><th class="px-3 py-2 text-right">Construction: years of history</th>
+      <th class="px-3 py-2 text-right">{% term "slack-current" "Construction: share of firms reporting labour shortages now" %}</th><th class="px-3 py-2 text-right">Construction: years of history</th>
     </tr></thead>
     <tbody>
     {% for c in countries %}
       <tr class="border-t border-stone-100">
         <td class="px-3 py-1.5">{{ c.name }}</td>
-        {% for f in c.focus %}<td class="px-3 py-1.5">{% if f.slack_class %}{{ f.slack_class }} <span class="text-stone-500">({{ f.slack_percentile|pct }})</span>{% else %}<span class="text-stone-500">no series</span>{% endif %}</td>{% endfor %}
+        {% for f in c.focus %}<td class="px-3 py-1.5">{% if f.slack_class %}{{ f.slack_class }} <span class="text-stone-500">({{ f.slack_percentile|ordinal }} percentile)</span>{% else %}<span class="text-stone-500">no series</span>{% endif %}</td>{% endfor %}
         {% with f=c.focus.0 %}
         <td class="px-3 py-1.5 text-right tabular-nums">{% if f.slack_current != None %}{{ f.slack_current|num:1 }}%{% else %}n/a{% endif %}</td>
         <td class="px-3 py-1.5 text-right tabular-nums">{{ f.slack_years|num:1 }}</td>
@@ -121,7 +125,7 @@
     </tbody>
   </table>
   </div>
-  <p class="mt-1 text-xs text-stone-500">Percentages in brackets: where the current share sits in the series' own history.</p>
+  <p class="mt-1 text-xs text-stone-500">Percentiles in brackets: where the current share sits in the series' own history. The 86th percentile means the share has been lower in 86 of every 100 past periods.</p>
 </section>
 
 <section id="rating" class="mt-10">
@@ -139,8 +143,8 @@
       <tr class="border-t border-stone-100">
         <td class="px-3 py-1.5"><a class="underline" href="{% url 'country' run.run_id c.country %}">{{ c.name }}</a></td>
         {% for f in c.focus %}<td class="px-3 py-1.5">{% rating_chip f.rating brief=True %}</td>{% endfor %}
-        <td class="px-3 py-1.5 text-right font-medium tabular-nums">{{ c.headline_tight_or_binding_share|pct }}</td>
-        <td class="px-3 py-1.5 text-right tabular-nums">{{ c.unrated_share|pct }}</td>
+        <td class="px-3 py-1.5 text-right font-medium tabular-nums">{{ c.headline_tight_or_binding_share|pct }}<span class="block text-xs font-normal text-stone-500">{{ c.jobs.jobs_tight_or_binding|hundreds }} jobs</span></td>
+        <td class="px-3 py-1.5 text-right tabular-nums">{{ c.unrated_share|pct }}<span class="block text-xs text-stone-500">{{ c.jobs.jobs_unrated|hundreds }} jobs</span></td>
         <td class="px-3 py-1.5" title="{{ c.data_quality_flags }}">{{ c.data_quality }}</td>
       </tr>
     {% endfor %}

@@ -19,6 +19,7 @@ saves each run to ``data/processed/runs/<run_id>/``, and writes to
                       web app's front page
 ``summary.csv``       the figures behind the executive summary
 ``allocation.csv``    each composition line with its NACE codes and amount
+``country_jobs.csv``  per member state, the headline and its parts as persons
 ``sensitivity.csv``   ratings under other pressure and slack thresholds
 ``threshold_reference.csv``  how often industries' employment has grown by
                       each pressure threshold in one year (written by
@@ -179,6 +180,13 @@ EXAMPLE_COUNTRY = "DE"
 EXAMPLE_INDUSTRY = "F"
 
 
+def _rated_line_share(counts) -> float:
+    """Tight or binding lines as a share of rated lines (a count, not jobs)."""
+    hit = int(counts.get(rating.TIGHT, 0)) + int(counts.get(rating.BINDING, 0))
+    rated = hit + int(counts.get(rating.CLEAR, 0))
+    return hit / rated if rated else np.nan
+
+
 def overview(res) -> pd.DataFrame:
     """One row: EU totals and a worked example, for the front page.
 
@@ -221,6 +229,7 @@ def overview(res) -> pd.DataFrame:
             f"lines_{k.replace(' ', '_')}": int(counts.get(k, 0))
             for k in (rating.BINDING, rating.TIGHT, rating.CLEAR, rating.NO_RATING)
         },
+        "lines_tight_or_binding_share_of_rated": _rated_line_share(counts),
         "example_country": ex,
         "example_shock_meur": exc["shock_meur"],
         "example_extra_persons_eu": exc["extra_persons_eu"],
@@ -270,6 +279,9 @@ def allocation(res) -> pd.DataFrame:
                 "nace_section": ind["nace_section"],
                 "section_label": ind["section_label"],
                 "nace_divisions": ", ".join(str(ind["nace_divisions"]).split()),
+                "shortage_survey": (
+                    ind["ecfin_survey"] if isinstance(ind["ecfin_survey"], str) else ""
+                ),
                 "sources": ", ".join(ln.sources),
             }
         )
@@ -318,8 +330,34 @@ def executive_summary(res) -> pd.DataFrame:
             for k in (rating.BINDING, rating.TIGHT, rating.CLEAR, rating.NO_RATING)
         },
         **{f"quality_{k}": int(quality.get(k, 0)) for k in ("good", "limited", "poor")},
+        "lines_tight_or_binding_share_of_rated": _rated_line_share(counts),
     }
     return pd.DataFrame([row])
+
+
+def country_jobs(res) -> pd.DataFrame:
+    """Per member state's programme, the headline and its parts as persons.
+
+    ``jobs_at_home`` are the extra persons on the member state's own lines
+    from its own programme; ``jobs_tight_or_binding`` and ``jobs_unrated`` are
+    the headline and unrated shares applied to the programme's EU jobs, which
+    is how those shares are defined.
+    """
+    c = res.tables["countries"]
+    lines = res.tables["lines"]
+    home = lines.groupby("economy")["extra_persons_own"].sum()
+    out = pd.DataFrame(
+        {
+            "country": c["country"],
+            "extra_persons_eu": c["extra_persons_eu"],
+            "jobs_at_home": c["country"].map(home).fillna(0.0),
+            "jobs_tight_or_binding": c["headline_tight_or_binding_share"]
+            * c["extra_persons_eu"],
+            "jobs_unrated": c["unrated_share"] * c["extra_persons_eu"],
+        }
+    )
+    out["jobs_elsewhere_in_eu"] = out["extra_persons_eu"] - out["jobs_at_home"]
+    return out
 
 
 def _summary_row(name: str, res) -> dict:
@@ -409,6 +447,7 @@ def run(allow_unconfirmed: bool = False, progress=print) -> dict:
         "overview.csv": overview(base),
         "summary.csv": executive_summary(base),
         "allocation.csv": allocation(base),
+        "country_jobs.csv": country_jobs(base),
         "sensitivity.csv": sensitivity.table(base),
     }
     for name, df in sweden.run(base).items():

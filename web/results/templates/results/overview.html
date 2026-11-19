@@ -9,10 +9,11 @@
 {% else %}
 
 {# Layer 1: the premise, in a few seconds #}
+{% if not front %}{% include "results/_run_header.html" %}<p class="mb-6 text-sm text-stone-600">The step-by-step explainer for this run. The <a class="underline" href="{% url 'overview' %}">front page</a> shows the standard run.</p>{% endif %}
 <section class="grid items-center gap-8 lg:grid-cols-2">
   <div>
     <p class="intro intro-1 text-sm font-medium text-stone-500">Capacity Check Europe <span class="ml-1 rounded bg-amber-100 px-1.5 py-0.5 text-xs text-amber-900">provisional, not yet reviewed</span></p>
-    <h1 class="intro intro-1 mt-3 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">If every EU country spent {{ ov.shock_pct|floatformat }}% of its GDP renovating homes, are there the workers to do it?</h1>
+    <h1 class="intro intro-1 mt-3 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">If {% if ov.countries == 27 %}every EU country{% else %}{{ ov.countries }} EU countr{{ ov.countries|pluralize:"y,ies" }}{% endif %} spent {{ ov.shock_pct|floatformat }}% of {% if ov.countries == 27 %}its{% else %}their{% endif %} GDP making homes more energy efficient, are there the workers to do it?</h1>
     <p class="intro intro-2 mt-6 flex items-baseline gap-3">
       <span class="text-6xl font-semibold tracking-tight text-[#104281] tabular-nums">{{ ov.headline_jobs_weighted|pct }}</span>
       <span class="text-lg leading-snug text-stone-800">of the jobs it needs would be in industries where workers are already short, or would become short.</span>
@@ -56,7 +57,7 @@
       <span class="step-num">1</span>
       <div>
         <h3 class="text-lg font-semibold">Spend the money</h3>
-        <p class="mt-1 text-stone-700"><strong class="text-stone-900">&euro;{{ ov.shock_meur|bn }}bn</strong>: {{ ov.shock_pct|floatformat }}% of {{ ov.gdp_year }} GDP in each of the {{ ov.countries }} member states, spent in one year on housing and energy renovation. Every country gets the same share of its GDP, so the same financial push, not the same physical programme.</p>
+        <p class="mt-1 text-stone-700"><strong class="text-stone-900">&euro;{{ ov.shock_meur|bn }}bn</strong>: {{ ov.shock_pct|floatformat }}% of {{ ov.gdp_year }} GDP in each of the {{ ov.countries }} member states, spent in one year on energy-efficiency renovation of existing homes (insulation and heating systems). The money is additional: it comes on top of everything these industries already do, so the results show the pressure it adds to industries already at work. Every country gets the same share of its GDP, so the same financial push, not the same physical programme.</p>
         <div class="bar mt-4 flex h-6 overflow-hidden rounded" aria-hidden="true">
           {% for ln in run.composition.lines %}<span class="seg-{{ forloop.counter }}" style="flex-grow: {{ ln.share }}"></span>{% endfor %}
         </div>
@@ -127,6 +128,7 @@
       <div>
         <h3 class="text-lg font-semibold">Rate each industry, then add up</h3>
         <p class="mt-1 text-stone-700">Each of the 64 industries in each country gets one of four estimated risk categories, combining the extra people needed (step 3) with what firms report (step 4). They are risk indicators, not factual judgements. {% term "thresholds" "Why these cut-offs" %}</p>
+        <p class="mt-2 text-sm text-stone-600">Binding is the strongest claim, so it needs both signals to agree: "and". Tight is an early warning, so either signal is enough: "or".</p>
         <dl class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
           <div><dt class="inline">{% rating_chip "binding" %}</dt> <dd class="inline text-stone-700">adds more than {{ p.thresholds.pressure_high|pct }} to the workforce, and shortages are in the top quarter of their history</dd></div>
           <div><dt class="inline">{% rating_chip "tight" %}</dt> <dd class="inline text-stone-700">adds at least {{ p.thresholds.pressure_low|pct }}, or shortages are above their usual level</dd></div>
@@ -141,8 +143,8 @@
           <span class="bg-emerald-200" style="flex-grow: {{ ov.lines_clear }}" title="clear"></span>
           <span class="bg-stone-200" style="flex-grow: {{ ov.lines_no_rating }}" title="no rating"></span>
         </div>
-        <p class="mt-1 text-sm text-stone-600 tabular-nums">{{ ov.lines_binding|num }} binding, {{ ov.lines_tight|num }} tight, {{ ov.lines_clear|num }} clear, {{ ov.lines_no_rating|num }} no rating</p>
-        <p class="mt-4 text-stone-800">Count the jobs that land on tight or binding lines and you have the headline: <strong>{{ ov.headline_jobs_weighted|pct }}</strong> across the EU, from {{ ov.headline_min|pct }} in {{ min_name }} to {{ ov.headline_max|pct }} in {{ max_name }}. A further {{ ov.unrated_jobs_weighted|pct }} of jobs are on lines with no rating.</p>
+        <p class="mt-1 text-sm text-stone-600 tabular-nums">{{ ov.lines_binding|num }} binding, {{ ov.lines_tight|num }} tight, {{ ov.lines_clear|num }} clear, {{ ov.lines_no_rating|num }} no rating{% if ov.lines_tight_or_binding_share_of_rated != None %}: {{ ov.lines_tight_or_binding_share_of_rated|pct }} of the rated lines are tight or binding{% endif %}.</p>
+        <p class="mt-4 text-stone-800">The headline counts jobs, not lines. Most of the programme's jobs are in construction, which is tight or binding everywhere, so the share of jobs is higher than the share of lines. Count the jobs that land on tight or binding lines and you have the headline: <strong>{{ ov.headline_jobs_weighted|pct }}</strong> across the EU, from {{ ov.headline_min|pct }} in {{ min_name }} to {{ ov.headline_max|pct }} in {{ max_name }}. A further {{ ov.unrated_jobs_weighted|pct }} of jobs are on lines with no rating.</p>
       </div>
     </li>
   </ol>

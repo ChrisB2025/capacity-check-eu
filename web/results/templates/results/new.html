@@ -20,11 +20,11 @@
     <div id="comp-lines" class="mt-3">
       <p class="text-xs text-stone-500">{{ composition.description }}</p>
       <table class="mt-2 w-full text-sm" hx-get="{% url 'composition_total' %}" hx-trigger="input from:find input" hx-include="#comp-lines" hx-target="#comp-total">
-        <thead class="text-left text-stone-500"><tr><th class="py-1">Code</th><th>Product</th><th class="text-right">Share</th></tr></thead>
+        <thead class="text-left text-stone-500"><tr><th class="py-1">Code</th><th>Product</th><th>Shortage data</th><th class="text-right">Share</th></tr></thead>
         <tbody>
         {% for ln in composition.lines %}
           <tr class="border-t border-stone-100">
-            <td class="py-1 font-mono">{{ ln.code }}</td><td class="pr-2">{{ ln.label }}</td>
+            <td class="py-1 font-mono">{{ ln.code }}</td><td class="pr-2">{{ ln.label }}</td><td class="pr-2 text-xs">{% with s=coverage|get:ln.code %}{% if s %}survey ({{ s }}){% else %}<span class="text-red-800">none: no rating unless the vacancy rate is chosen</span>{% endif %}{% endwith %}</td>
             <td class="text-right"><input type="number" name="share_{{ ln.code }}" value="{{ ln.share }}" step="any" min="0" max="1" class="w-28 rounded border border-stone-300 px-2 py-0.5 text-right"></td>
           </tr>
         {% endfor %}

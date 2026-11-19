@@ -26,8 +26,11 @@ MAP_FILE = Path(__file__).parent / "static" / "results" / "map.json"
 # Headline bins for the map, and the sequential blue ramp (light to dark).
 MAP_BINS = (0.0, 0.6, 0.7, 0.75, 0.8, 0.85)
 MAP_COLOURS = ("#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#104281")
+# Fallback columns when a run has no allocation table (imported before
+# 19 Nov 2026); otherwise the columns follow the run's spending mix.
 FOCUS = (("F", "Construction"), ("M71", "Architecture and engineering"),
          ("C28", "Machinery, incl. heat pumps"))  # fmt: skip
+FOCUS_MAX = 4
 
 
 def health(request):
@@ -161,9 +164,19 @@ def _base_run() -> Run | None:
 def overview(request):
     """Front page: the premise, then how it works, then the way into the runs.
     Every figure is a cell of the base run's engine ``overview`` table."""
-    run = _base_run()
+    return _explainer(request, _base_run(), front=True)
+
+
+def explain(request, run_id):
+    """The front page's step-by-step explainer for any stored run."""
+    return _explainer(request, _run(run_id), front=False)
+
+
+def _explainer(request, run, front: bool):
     ov = next(iter(_rows(run, "overview")), None) if run else None
     if ov is None:
+        if not front:
+            raise Http404
         return render(request, "results/overview.html", {"run": run, "ov": None})
     names = _names()
     countries = _rows(run, "countries")
@@ -187,6 +200,7 @@ def overview(request):
             "viewbox": m["viewBox"],
             "map_source": m["source"],
             "legend": _legend(),
+            "front": front,
             **_summary(run, names),
         },
     )
@@ -225,6 +239,7 @@ def new_run(request):
         "defaults_pressure_high": f"{RunParams().thresholds.pressure_high * 100:g}",
         "values": request.POST or {},
         "selected": set(request.POST.getlist("countries")) or set(EU27),
+        "coverage": _coverage(comps[comp_name]),
     }
     if request.method != "POST":
         return render(request, "results/new.html", ctx)
@@ -235,6 +250,17 @@ def new_run(request):
         return render(request, "results/new.html", ctx, status=400)
     run = bridge.execute(params)
     return redirect("run", run_id=run.run_id)
+
+
+def _coverage(comp) -> dict[str, str]:
+    """For each line of a composition, the business survey that covers its
+    industry, or "" when none does (those lines get no rating)."""
+    a64 = concordance.load().set_index("figaro_code")
+    out = {}
+    for ln in comp.lines:
+        v = a64.loc[ln.code, "ecfin_survey"] if ln.code in a64.index else ""
+        out[ln.code] = v if isinstance(v, str) else ""
+    return out
 
 
 def _params_from_post(post, comps) -> RunParams:
@@ -289,15 +315,21 @@ def run_detail(request, run_id):
     for c in countries:
         c["name"] = names.get(c["country"], c["country"])
     by_c = {c["country"]: c for c in countries}
+    alloc, comp_note = _allocation(run)
+    focus_labels = _focus(alloc)
     lines = ResultRow.objects.filter(
-        run=run, table="lines", industry__in=[f for f, _ in FOCUS],
+        run=run, table="lines", industry__in=[f for f, _ in focus_labels],
         country__in=list(by_c),
     )  # fmt: skip
     focus = {}
     for r in lines:
         focus.setdefault(r.country, {})[r.industry] = r.data
+    jobs = {r["country"]: r for r in _rows(run, "country_jobs")}
     for c in countries:
-        c["focus"] = [focus.get(c["country"], {}).get(code, {}) for code, _ in FOCUS]
+        c["focus"] = [
+            focus.get(c["country"], {}).get(code, {}) for code, _ in focus_labels
+        ]
+        c["jobs"] = jobs.get(c["country"], {})
 
     m = _map()
     shapes = _shapes(run, by_c)
@@ -305,7 +337,7 @@ def run_detail(request, run_id):
     tables = sorted(
         set(ResultRow.objects.filter(run=run).values_list("table", flat=True))
     )
-    alloc, comp_note = _allocation(run)
+    notes = text.composition_notes()
     return render(
         request,
         "results/run.html",
@@ -313,7 +345,10 @@ def run_detail(request, run_id):
             "run": run,
             "p": run.params,
             "countries": countries,
-            "focus_labels": FOCUS,
+            "focus_labels": focus_labels,
+            "focus_note": notes["focus_note"] if alloc else "",
+            "no_survey": notes["no_survey"],
+            "low_high": _low_high(countries),
             "shapes": shapes,
             "viewbox": m["viewBox"],
             "map_source": m["source"],
@@ -324,12 +359,33 @@ def run_detail(request, run_id):
             "has_sensitivity": "sensitivity" in tables,
             "alloc": alloc,
             "comp_note": comp_note,
-            "construction_limit": text.composition_notes()["construction_limit"],
+            "construction_limit": notes["construction_limit"],
             "trades": _trades(run),
             "responses": text.responses(),
             **_summary(run, names),
         },
     )
+
+
+def _focus(alloc: list[dict]) -> list[tuple[str, str]]:
+    """The industries the money is spent with directly, largest share first."""
+    if not alloc:
+        return list(FOCUS)
+    short = text.composition_notes().get("short_labels", {})
+    ranked = sorted(alloc, key=lambda a: -(a.get("share") or 0))[:FOCUS_MAX]
+    return [(a["code"], short.get(a["code"], a["industry_label"])) for a in ranked]
+
+
+def _low_high(countries: list[dict]) -> dict | None:
+    """The member state whose construction shortage share is lowest among
+    those rated high: the clearest example that each series is read against
+    its own history."""
+    rows = []
+    for c in countries:
+        f = next((x for x in c["focus"] if x.get("industry") == "F"), None)
+        if f and f.get("slack_class") == "high" and f.get("slack_current") is not None:
+            rows.append({**f, "name": c["name"]})
+    return min(rows, key=lambda r: r["slack_current"]) if rows else None
 
 
 def country(request, run_id, country):
