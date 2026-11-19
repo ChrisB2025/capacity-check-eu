@@ -39,6 +39,14 @@ CSRF_TRUSTED_ORIGINS = [
 # visible without logging in and no new run can be started by anyone.
 PUBLIC_READ_ONLY = os.environ.get("PUBLIC_READ_ONLY", "").lower() in ("1", "true")
 
+# Sign-in handed over from the MML EU Workspace (web/results/sso.py). Empty
+# secret: /sso/ is closed. The secret matches LABS_SHARED_SECRET on mml-eu.
+SSO_SHARED_SECRET = os.environ.get("SSO_SHARED_SECRET", "")
+SSO_MAX_AGE = 60  # seconds a hand-off token stays valid
+MML_EU_LABS_URL = os.environ.get(
+    "MML_EU_LABS_URL", "https://modernmoneylab.eu/account/labs/capacity-check/"
+)
+
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",

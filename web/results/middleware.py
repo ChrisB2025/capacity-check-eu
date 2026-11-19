@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 
-OPEN_PATHS = ("/health/", "/login/", "/static/")
+OPEN_PATHS = ("/health/", "/login/", "/sso/", "/static/")
 
 
 class LoginRequiredMiddleware:
