@@ -6,7 +6,7 @@
 ``gate1``          write the gate 1 coverage tables to docs/gate-1/
 ``sweden``         write the Sweden occupation tables for a saved run
 ``results``        run the full matrix and write docs/results/
-``glossary``       write the threshold reference table and docs/glossary.md
+``glossary``       write the threshold reference, docs/glossary.md, docs/data-ladder.md
 ``run``            run the model; refuses compositions not yet confirmed
 """
 
@@ -80,7 +80,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("gate1", help="Write the gate 1 coverage tables.")
     sub.add_parser(
         "glossary",
-        help="Write docs/results/threshold_reference.csv and docs/glossary.md.",
+        help="Write the threshold reference, docs/glossary.md and docs/data-ladder.md.",
     )
     ts = sub.add_parser("testset", help="Regenerate the fixed test set fixtures.")
     ts.add_argument(
@@ -262,6 +262,7 @@ def main(argv: list[str] | None = None) -> int:
         text._load.cache_clear()
         text._reference_values.cache_clear()
         print(text.write_glossary())
+        print(text.write_data_ladder())
         return 0
     if args.command == "gate1":
         from engine import gate1

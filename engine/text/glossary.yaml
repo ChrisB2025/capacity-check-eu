@@ -22,7 +22,10 @@ terms:
     group: The question
     definition: >-
       The extra public spending tested: {shock_pct} of each member state's
-      2024 GDP, spent in one year on housing and energy renovation.
+      2024 GDP, spent in one year on energy-efficiency renovation of existing
+      homes (insulation and heating systems). It is additional: it comes on
+      top of everything the industries already do, so the results show the
+      pressure it adds to industries already working.
     why: >-
       A shock of the same size relative to each economy puts every member
       state on the same footing. It is an identical financial shock, not an
@@ -323,9 +326,11 @@ terms:
     term: Percentile in its own history
     group: Measures shown
     definition: >-
-      Where the shortage share now sits in the series' own history. 90% means
-      the share has been lower in nine of every ten periods since the series
-      began.
+      Where the shortage share now sits in the series' own history. The 90th
+      percentile means the share has been lower in nine of every ten periods
+      since the series began. A small share can still be high for that
+      country: if few firms in a country ever name labour as a limit, 5% of
+      firms can be above most of its past readings.
     why: >-
       Firms in different countries answer the survey differently, so each
       series is compared with its own past, not with other countries.
@@ -354,6 +359,8 @@ terms:
     definition: >-
       The headline for a member state: the share of the jobs its programme
       creates anywhere in the EU that fall on lines rated tight or binding.
+      It counts jobs, not lines: a line with many of the programme's jobs,
+      such as construction, weighs more than one with few.
     why: >-
       It sums up, in one number, how much of the programme's work lands where
       there are signs of labour pressure.
@@ -418,7 +425,9 @@ terms:
       industry for something it rarely does. Why the median: above it, more
       firms than usual already report labour as a limit. Why the top
       quarter: it is the tightest quarter of periods on record for that
-      series, and binding needs it as well as high pressure.
+      series. Why "and" for binding but "or" for tight: binding is the
+      strongest claim, so both signals must agree; tight is an early
+      warning, so either signal is enough to flag a line for a closer look.
     source:
       name: Eurostat, nama_10_a64_e (reference figures) and DG ECFIN surveys
       detail: docs/results/threshold_reference.csv

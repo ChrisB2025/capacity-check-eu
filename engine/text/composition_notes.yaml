@@ -45,6 +45,25 @@ codes:
   C27: >-
     Electrical goods such as cables and controls.
 
+short_labels:
+  F: Construction
+  C28: Machinery, incl. heat pumps
+  G46: Wholesale trade
+  M71: Architecture and engineering
+  C22: Rubber and plastics
+  C23: Mineral products
+  C24: Basic metals
+  C27: Electrical equipment
+
+focus_note: >-
+  These columns are the industries the money is spent with directly, the
+  first round of the spending mix, largest first. Every one of the 64
+  industries is on each country's page.
+
+no_survey: >-
+  None: the business surveys do not cover this industry, so its lines get no
+  rating unless the job vacancy rate is chosen as the shortage measure.
+
 construction_limit: >-
   FIGARO has one construction industry, F, which covers NACE divisions 41
   (buildings), 42 (civil engineering) and 43 (specialised trades such as

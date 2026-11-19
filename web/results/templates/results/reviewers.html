@@ -16,6 +16,7 @@
     <li><a class="underline" href="{% url 'thresholds' base.run_id %}">The thresholds page</a>: why the cut-offs are where they are, and how the results change when they move.</li>
     {% if "SE" in base.params.countries %}<li><a class="underline" href="{% url 'sweden' base.run_id %}">Sweden by occupation</a>: how far an occupational register can split construction into trades.</li>{% endif %}
     {% endif %}
+    <li><a class="underline" href="{% url 'data' %}">What the data allows</a>: what free EU data can and cannot support, from labour to energy, materials and the Doughnut's ecological ceiling and social foundation, with the tool's own verdict on how far a pan-European version can go. Tell us where it is wrong.</li>
     <li><a class="underline" href="{% url 'glossary' %}">The glossary</a>: every term, why it matters and where the data come from. The "?" buttons across the site show the same text.</li>
   </ol>
   <p class="mt-3 text-stone-800">The method in full: the <a class="underline" href="{{ REPO_URL }}/blob/main/docs/spec-v2.md">specification (version 2)</a>, the <a class="underline" href="{{ REPO_URL }}/blob/main/docs/method-note.md">method note</a> and the <a class="underline" href="{{ REPO_URL }}/blob/main/docs/composition-table.md">composition table</a>.</p>

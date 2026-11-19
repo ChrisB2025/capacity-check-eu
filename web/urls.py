@@ -15,9 +15,11 @@ urlpatterns = [
     path("run/<str:run_id>/country/<str:country>/", views.country, name="country"),
     path("run/<str:run_id>/sweden/", views.sweden, name="sweden"),
     path("run/<str:run_id>/thresholds/", views.thresholds, name="thresholds"),
+    path("run/<str:run_id>/explain/", views.explain, name="explain"),
     path("run/<str:run_id>/csv/<str:table>.csv", views.csv, name="csv"),
     path("about/", views.about, name="about"),
     path("glossary/", views.glossary, name="glossary"),
+    path("data/", views.data, name="data"),
     path("reviewers/", views.reviewers, name="reviewers"),
     path("reviewers/feedback/", views.feedback_list, name="feedback_list"),
 ]

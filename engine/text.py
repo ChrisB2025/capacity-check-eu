@@ -180,3 +180,86 @@ def glossary_markdown() -> str:
 def write_glossary() -> str:
     GLOSSARY_MD.write_text(glossary_markdown(), encoding="utf-8", newline="\n")
     return str(GLOSSARY_MD)
+
+
+DATA_LADDER_MD = REPO_ROOT / "docs" / "data-ladder.md"
+LEVELS = ("eu", "some", "national", "local", "none")
+
+
+def data_ladder() -> dict:
+    """The data page: ladder rows with their sources resolved."""
+    d = dict(_load("data_ladder"))
+    src = d["sources"]
+    steps = []
+    for step in d["ladder"]:
+        rows = [
+            {**r, "source_list": [{"key": k, **src[k]} for k in r.get("sources", [])]}
+            for r in step["rows"]
+        ]
+        steps.append({**step, "rows": rows})
+    d["ladder"] = steps
+    return d
+
+
+def data_ladder_markdown() -> str:
+    d = data_ladder()
+    v = d["verdict"]
+    out = [
+        "# What the data allows",
+        "",
+        "Generated from `engine/text/data_ladder.yaml` by `python -m engine "
+        "glossary`; edit that file, not this one. The same text drives the "
+        "data page in the web app.",
+        "",
+        f"Audit of free, publicly accessible data, {d['audited']}.",
+        "",
+        d["intro"],
+        "",
+        f"## {v['label']}",
+        "",
+        f"*{v['provenance']}*",
+        "",
+        f"**{v['headline']}**",
+        "",
+    ]
+    out += [f"- **{p['title']}.** {p['text']}" for p in v["points"]]
+    out += ["", f"**The threshold.** {v['threshold']}", "", "## The ladder", ""]
+    for step in d["ladder"]:
+        out += [f"### {step['step']} ({step['status_note'].lower()})", ""]
+        out += ["| Question | Level | In the tool | What exists | Limit |"]
+        out += ["| :--- | :--- | :--- | :--- | :--- |"]
+        for r in step["rows"]:
+            out.append(
+                f"| {r['question']} | {d['levels'][r['level']]} | {r['in_tool']} "
+                f"| {r['answer']} | {r['limit']} |"
+            )
+        out.append("")
+    out += ["## Comparability problems and what is done about them", ""]
+    out += ["| Problem | Effect | Mitigation |", "| :--- | :--- | :--- |"]
+    out += [
+        f"| {c['problem']} | {c['effect']} | {c['mitigation']} |"
+        for c in d["comparability"]
+    ]
+    out += [
+        "",
+        "## Other programmes",
+        "",
+        d["programmes"],
+        "",
+        "## Possible next steps",
+        "",
+    ]
+    out += [
+        f"- **{n['title']}** ({n['cost'].lower()}). {n['text']}"
+        for n in d["next_steps"]
+    ]
+    out += ["", "## Sources", ""]
+    out += [
+        f"- [{s['name']}]({s['url']}): {s['detail']}." for s in d["sources"].values()
+    ]
+    return "\n".join(out).rstrip() + "\n"
+
+
+def write_data_ladder() -> str:
+    DATA_LADDER_MD.write_text(data_ladder_markdown(), encoding="utf-8", newline="\n")
+    return str(DATA_LADDER_MD)

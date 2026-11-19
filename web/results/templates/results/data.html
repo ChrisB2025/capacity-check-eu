@@ -1,0 +1,97 @@
+{% extends "results/base.html" %}{% load fmt %}
+{% block title %}What the data allows | Capacity Check Europe{% endblock %}
+{% block content %}
+<div class="max-w-4xl">
+  <h1 class="text-2xl font-semibold tracking-tight">What the data allows</h1>
+  <p class="mt-2 text-stone-700">{{ d.intro }}</p>
+  <p class="mt-1 text-sm text-stone-500">Audit of free, publicly accessible data, {{ d.audited }}.</p>
+</div>
+
+{# Layer 1: the verdict #}
+<section id="verdict" class="mt-6 max-w-4xl rounded-lg border-2 border-stone-800 bg-white p-5">
+  <p class="text-xs font-semibold uppercase tracking-wide text-stone-500">{{ d.verdict.label }}</p>
+  <p class="mt-2 text-lg font-medium leading-snug text-stone-900">{{ d.verdict.headline }}</p>
+  <ul class="mt-4 space-y-2 text-sm text-stone-800">
+    {% for pt in d.verdict.points %}<li><strong>{{ pt.title }}.</strong> {{ pt.text }}</li>{% endfor %}
+  </ul>
+  <p class="mt-4 text-sm text-stone-800"><strong>The threshold.</strong> {{ d.verdict.threshold }}</p>
+  <p class="mt-4 border-t border-stone-200 pt-3 text-xs text-stone-500">{{ d.verdict.provenance }}</p>
+</section>
+
+{# Layer 2: the ladder at a glance #}
+<section id="ladder" class="mt-10">
+  <h2 class="text-xl font-semibold tracking-tight">The ladder at a glance</h2>
+  <p class="mt-1 max-w-3xl text-sm text-stone-600">Each step of the resource ladder, and each question the method needs answered, coloured by the level at which free data answers it. The green runs out as the questions get more detailed: that is the threshold.</p>
+  <div class="mt-3 flex flex-wrap gap-2 text-xs">
+    {% for key, label in d.levels.items %}<span class="lvl lvl-{{ key }}">{{ label }}</span>{% endfor %}
+  </div>
+  <div class="mt-4 overflow-x-auto rounded border border-stone-200 bg-white">
+    <table class="w-full text-sm">
+      <tbody>
+      {% for step in d.ladder %}
+        <tr class="border-t border-stone-100 align-top first:border-t-0">
+          <th class="w-44 px-3 py-2 text-left font-semibold">{{ step.step }}<span class="block text-xs font-normal text-stone-500">{{ step.status_note }}</span></th>
+          <td class="px-3 py-2">
+            <ul class="space-y-1">
+              {% for r in step.rows %}<li class="flex flex-wrap items-baseline gap-2"><span class="lvl lvl-{{ r.level }}">{{ d.levels|get:r.level }}</span><a class="hover:underline" href="#q-{{ forloop.parentloop.counter }}-{{ forloop.counter }}">{{ r.question }}</a></li>{% endfor %}
+            </ul>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{# Layer 3: each question in detail #}
+<section id="detail" class="mt-10 max-w-4xl">
+  <h2 class="text-xl font-semibold tracking-tight">Each question in detail</h2>
+  {% for step in d.ladder %}
+  <h3 class="mt-8 text-lg font-semibold">{{ step.step }} <span class="text-sm font-normal text-stone-500">{{ step.status_note }}</span></h3>
+  {% for r in step.rows %}
+  <article id="q-{{ forloop.parentloop.counter }}-{{ forloop.counter }}" class="mt-3 scroll-mt-6 rounded-lg border border-stone-200 bg-white p-4">
+    <div class="flex flex-wrap items-baseline justify-between gap-2">
+      <h4 class="font-semibold">{{ r.question }}</h4>
+      <span class="flex gap-2"><span class="lvl lvl-{{ r.level }}">{{ d.levels|get:r.level }}</span><span class="lvl bg-white text-stone-600 ring-1 ring-stone-300">In the tool: {{ r.in_tool }}</span></span>
+    </div>
+    <p class="mt-2 text-sm text-stone-800"><strong>What exists.</strong> {{ r.answer }}</p>
+    <p class="mt-1 text-sm text-stone-800"><strong>Limit.</strong> {{ r.limit }}</p>
+    <ul class="mt-2 space-y-0.5 text-xs text-stone-600">
+      {% for s in r.source_list %}<li><a class="underline" href="{{ s.url }}">{{ s.name }}</a>: {{ s.detail }}</li>{% endfor %}
+    </ul>
+  </article>
+  {% endfor %}
+  {% endfor %}
+</section>
+
+<section id="comparability" class="mt-10">
+  <h2 class="text-xl font-semibold tracking-tight">Comparability problems, and what is done about them</h2>
+  <div class="mt-3 overflow-x-auto rounded border border-stone-200 bg-white">
+    <table class="w-full text-sm">
+      <thead class="bg-stone-100 text-left text-stone-600"><tr><th class="px-3 py-2">Problem</th><th class="px-3 py-2">Effect</th><th class="px-3 py-2">Mitigation</th></tr></thead>
+      <tbody>
+      {% for c in d.comparability %}
+        <tr class="border-t border-stone-100 align-top"><td class="px-3 py-2 font-medium">{{ c.problem }}</td><td class="px-3 py-2 text-stone-700">{{ c.effect }}</td><td class="px-3 py-2 text-stone-700">{{ c.mitigation }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="programmes" class="mt-10 max-w-4xl">
+  <h2 class="text-xl font-semibold tracking-tight">What this means for other programmes</h2>
+  <p class="mt-2 text-stone-800">{{ d.programmes }}</p>
+</section>
+
+<section id="next" class="mt-10 max-w-4xl">
+  <h2 class="text-xl font-semibold tracking-tight">Possible next steps</h2>
+  <p class="mt-1 text-sm text-stone-600">Options for discussion, ordered from least to most new data. None is built.</p>
+  <div class="mt-3 grid gap-3 sm:grid-cols-2">
+    {% for n in d.next_steps %}
+    <div class="panel"><p class="font-semibold">{{ n.title }}</p><p class="text-xs text-stone-500">{{ n.cost }}</p><p class="mt-1 text-sm text-stone-700">{{ n.text }}</p></div>
+    {% endfor %}
+  </div>
+</section>
+
+<p class="mt-10 text-xs text-stone-500">Source file: <a class="underline" href="{{ REPO_URL }}/blob/main/engine/text/data_ladder.yaml">engine/text/data_ladder.yaml</a>; also published as <a class="underline" href="{{ REPO_URL }}/blob/main/docs/data-ladder.md">docs/data-ladder.md</a>.</p>
+{% endblock %}

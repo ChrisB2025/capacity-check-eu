@@ -63,3 +63,16 @@ def rating_class(r):
 @register.filter
 def attr_of(obj, name):
     return getattr(obj, name, None)
+
+
+@register.filter
+def ordinal(v):
+    """A share as an ordinal percentile: 0.863 becomes "86th"."""
+    f = _num(v)
+    if f is None:
+        return "n/a"
+    n = int(round(f * 100))
+    suffix = (
+        "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    )
+    return f"{n}{suffix}"

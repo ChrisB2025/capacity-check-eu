@@ -209,6 +209,7 @@ def engine_tables(res) -> dict:
     tables["overview"] = results.overview(res)
     tables["summary"] = results.executive_summary(res)
     tables["allocation"] = results.allocation(res)
+    tables["country_jobs"] = results.country_jobs(res)
     tables["sensitivity"] = sensitivity.table(res)
     if SWEDEN in res.params.countries:
         tables.update(sweden.run(res))

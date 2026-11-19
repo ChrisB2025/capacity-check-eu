@@ -97,3 +97,20 @@ def test_allocation_maps_every_line_to_nace():
     assert f["nace_divisions"] == "41, 42, 43"
     for k in ("home_share", "rest_eu_share", "non_eu_share"):
         assert a[k].between(0, 1).all()
+
+
+@pytest.mark.skipif(not HAVE_DATA, reason="processed data not present")
+def test_country_jobs_add_up():
+    base = testset.run_case("base", allow_unconfirmed=True)
+    cj = results.country_jobs(base)
+    c = base.tables["countries"]
+    assert (cj["jobs_at_home"] <= cj["extra_persons_eu"] + 1e-6).all()
+    total = (c["headline_tight_or_binding_share"] * c["extra_persons_eu"]).sum()
+    assert cj["jobs_tight_or_binding"].sum() == pytest.approx(total)
+    ov = results.overview(base).iloc[0]
+    rated = ov["lines_binding"] + ov["lines_tight"] + ov["lines_clear"]
+    want = (ov["lines_binding"] + ov["lines_tight"]) / rated
+    assert ov["lines_tight_or_binding_share_of_rated"] == pytest.approx(want)
+    a = results.allocation(base).set_index("code")
+    assert a.loc["F", "shortage_survey"] == "building"
+    assert a.loc["G46", "shortage_survey"] == ""

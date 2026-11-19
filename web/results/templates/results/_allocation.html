@@ -5,7 +5,7 @@
   <table class="w-full text-sm">
     <thead class="bg-stone-100 text-left text-stone-600"><tr>
       <th class="px-3 py-2">Spending line</th><th class="px-3 py-2 text-right">Share</th><th class="px-3 py-2 text-right">EUR m, all member states</th>
-      <th class="px-3 py-2">Industry it maps to</th><th class="px-3 py-2">NACE divisions</th><th class="px-3 py-2 text-right">{% term "origin" "Made at home" %}</th><th class="px-3 py-2">Why</th>
+      <th class="px-3 py-2">Industry it maps to</th><th class="px-3 py-2">NACE divisions</th><th class="px-3 py-2 text-right">{% term "origin" "Made at home" %}</th><th class="px-3 py-2">{% term "labour-shortage-indicator" "Shortage data" %}</th><th class="px-3 py-2">Why</th>
     </tr></thead>
     <tbody>
     {% for a in alloc %}
@@ -16,6 +16,7 @@
         <td class="px-3 py-1.5"><span class="font-mono">{{ a.code }}</span> {{ a.industry_label }}</td>
         <td class="px-3 py-1.5 tabular-nums">{{ a.nace_divisions }}</td>
         <td class="px-3 py-1.5 text-right tabular-nums">{{ a.home_share|pct }}</td>
+        <td class="px-3 py-1.5 text-stone-700">{% if a.shortage_survey %}Business survey ({{ a.shortage_survey }}){% else %}{{ no_survey }}{% endif %}</td>
         <td class="min-w-[16rem] px-3 py-1.5 text-stone-700">{{ a.note }}{% if a.sources %} <span class="text-xs text-stone-500">Sources: {{ a.sources }}.</span>{% endif %}</td>
       </tr>
     {% endfor %}
@@ -27,5 +28,6 @@
     <h3 class="font-semibold">Limit: construction is one industry</h3>
     <p class="mt-1 text-sm text-stone-800">{{ construction_limit }}</p>
   </div>
+  <p class="mt-3 text-sm text-stone-700">Which spending lines can be rated depends on the data: <a class="underline" href="{% url 'data' %}">what the data allows</a>.</p>
   {% if trades %}{% include "results/_trades_se.html" %}{% endif %}
 </section>

@@ -177,3 +177,41 @@ def bridge_execute(res):
     from web.results import bridge
 
     return bridge.execute(res.params)
+
+
+def test_ordinal_filter():
+    from web.results.templatetags.fmt import ordinal
+
+    assert ordinal(0.863) == "86th"
+    assert ordinal(0.21) == "21st"
+    assert ordinal(0.12) == "12th"
+    assert ordinal(None) == "n/a"
+
+
+@pytest.mark.skipif(not HAVE_DATA, reason="processed data not present")
+def test_explainer_for_any_run_and_ciaran_questions(client, settings):
+    settings.PUBLIC_READ_ONLY = True
+    res = testset.run_case("shock_0_5", allow_unconfirmed=True)
+    run = bridge_execute(res)
+    page = client.get(f"/run/{run.run_id}/explain/").content.decode()
+    assert "0.5% of" in page and "The step-by-step explainer for this run" in page
+    run_page = client.get(f"/run/{run.run_id}/").content.decode()
+    expected = ("of which at home", "percentile)", "jobs</span>",
+                "Pressure: Wholesale trade", "How to read a small share")  # fmt: skip
+    for shown in expected:
+        assert shown in run_page, shown
+    assert client.get("/run/nope/explain/").status_code == 404
+
+
+def test_data_page_shows_ladder_and_machine_verdict(client, settings):
+    from engine import text
+
+    settings.PUBLIC_READ_ONLY = True
+    page = client.get("/data/").content.decode()
+    d = text.data_ladder()
+    from django.utils.html import escape
+
+    assert escape(d["verdict"]["label"]) in page and "machine judgement" in page
+    for step in d["ladder"]:
+        assert escape(step["step"]) in page
+    assert "Chris Bland" not in page  # the verdict is in no one's name

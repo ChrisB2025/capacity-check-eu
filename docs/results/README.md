@@ -4,7 +4,7 @@
 
 These tables are written by `python -m engine results` for the base run (1% of 2024 GDP, standard composition, FIGARO 2026 edition, reference year 2024), except `matrix.csv` and `robustness.csv`, which cover every run in the matrix. All results are **provisional** while the composition is unconfirmed; `summary.json` says which.
 
-Before comparing member states, read the named limits in `docs/method-note.md`: the same financial shock is applied to 27 countries with different climates, building stock, tenure, incomes and habits, so the tables compare relative pressure under an identical shock, not what each country would need to spend or do. Extra persons are not new hires. Every term is defined in `docs/glossary.md`.
+Before comparing member states, read the named limits in `docs/method-note.md`: the same financial shock is applied to 27 countries with different climates, building stock, tenure, incomes and habits, so the tables compare relative pressure under an identical shock, not what each country would need to spend or do. Extra persons are not new hires. Every term is defined in `docs/glossary.md`; what the data can and cannot support is in `docs/data-ladder.md`.
 
 | File | Contents |
 | :--- | :--- |
@@ -12,6 +12,7 @@ Before comparing member states, read the named limits in `docs/method-note.md`: 
 | `overview.csv` | EU totals and the worked example on the web app's front page |
 | `allocation.csv` | Each composition line, its amount, origin split and the NACE divisions it maps to |
 | `countries.csv` | Per member state: headline, requirement total, data quality |
+| `country_jobs.csv` | Per member state: extra persons in the EU and at home, and jobs on tight or binding and on unrated lines |
 | `lines.csv` | Per member state and industry: requirement, pressure, shortage level, estimated risk category |
 | `dependencies.csv` | Required output in the manufacturing industries the programme leans on, with no rating |
 | `sensitivity.csv` | Estimated risk categories under other pressure thresholds and shortage cut-offs |

@@ -8,7 +8,7 @@ Generated from `engine/text/glossary.yaml` by `python -m engine glossary`; edit 
 
 ### Shock
 
-The extra public spending tested: 1% of each member state's 2024 GDP, spent in one year on housing and energy renovation.
+The extra public spending tested: 1% of each member state's 2024 GDP, spent in one year on energy-efficiency renovation of existing homes (insulation and heating systems). It is additional: it comes on top of everything the industries already do, so the results show the pressure it adds to industries already working.
 
 *Why it matters.* A shock of the same size relative to each economy puts every member state on the same footing. It is an identical financial shock, not an identical physical programme.
 
@@ -172,7 +172,7 @@ The share of firms naming labour as a limiting factor, averaged over the latest 
 
 ### Percentile in its own history
 
-Where the shortage share now sits in the series' own history. 90% means the share has been lower in nine of every ten periods since the series began.
+Where the shortage share now sits in the series' own history. The 90th percentile means the share has been lower in nine of every ten periods since the series began. A small share can still be high for that country: if few firms in a country ever name labour as a limit, 5% of firms can be above most of its past readings.
 
 *Why it matters.* Firms in different countries answer the survey differently, so each series is compared with its own past, not with other countries.
 
@@ -188,7 +188,7 @@ Low: at or below the median of the series' history. Elevated: above it. High: in
 
 ### Jobs on tight or binding lines
 
-The headline for a member state: the share of the jobs its programme creates anywhere in the EU that fall on lines rated tight or binding.
+The headline for a member state: the share of the jobs its programme creates anywhere in the EU that fall on lines rated tight or binding. It counts jobs, not lines: a line with many of the programme's jobs, such as construction, weighs more than one with few.
 
 *Why it matters.* It sums up, in one number, how much of the programme's work lands where there are signs of labour pressure.
 
@@ -220,7 +220,7 @@ The four cut-offs that turn the two signals into categories: pressure of 2% (tig
 
 *Why it matters.* They are judgements made by the team. Each has a stated reason, and the threshold page shows how the results change when they move.
 
-*Reasoning.* Why 2%, the default for tight: from 2011 to 2024, an industry's workforce in a member state grew by 2% or more in a year in about 31% of cases, weighted by employment (29% for construction). An extra 2% is within what industries sometimes manage, but large enough to notice on top of normal growth. Why 5%, the default for binding: growth of 5% or more in a year happened in about 9% of cases (9% for construction), so it asks an industry for something it rarely does. Why the median: above it, more firms than usual already report labour as a limit. Why the top quarter: it is the tightest quarter of periods on record for that series, and binding needs it as well as high pressure.
+*Reasoning.* Why 2%, the default for tight: from 2011 to 2024, an industry's workforce in a member state grew by 2% or more in a year in about 31% of cases, weighted by employment (29% for construction). An extra 2% is within what industries sometimes manage, but large enough to notice on top of normal growth. Why 5%, the default for binding: growth of 5% or more in a year happened in about 9% of cases (9% for construction), so it asks an industry for something it rarely does. Why the median: above it, more firms than usual already report labour as a limit. Why the top quarter: it is the tightest quarter of periods on record for that series. Why "and" for binding but "or" for tight: binding is the strongest claim, so both signals must agree; tight is an early warning, so either signal is enough to flag a line for a closer look.
 
 *Source.* [Eurostat, nama_10_a64_e (reference figures) and DG ECFIN surveys](https://github.com/ChrisB2025/capacity-check-eu/blob/main/docs/results/threshold_reference.csv): docs/results/threshold_reference.csv.
 
