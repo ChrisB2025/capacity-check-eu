@@ -29,5 +29,6 @@ def site(request):
         "PUBLIC_READ_ONLY": settings.PUBLIC_READ_ONLY,
         "NOT_CLAIMED": NOT_CLAIMED,
         "RISK_LABEL": RISK_LABEL,
+        "MML_EU_LABS_URL": settings.MML_EU_LABS_URL,
         "REPO_URL": "https://github.com/ChrisB2025/capacity-check-eu",
     }

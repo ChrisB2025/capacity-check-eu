@@ -7,6 +7,7 @@ urlpatterns = [
     path("health/", views.health, name="health"),
     path("login/", auth_views.LoginView.as_view(), name="login"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("sso/", views.sso_handoff, name="sso"),
     path("", views.overview, name="overview"),
     path("runs/", views.runs, name="runs"),
     path("new/", views.new_run, name="new_run"),

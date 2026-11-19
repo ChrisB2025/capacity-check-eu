@@ -75,7 +75,7 @@ DJANGO_DEBUG=1 python manage.py runserver
 
 ## Hosting
 
-Railway project `capacity-check-eu`, separate from every other MML EU or US service. Public URL: https://web-production-d723d.up.railway.app (shared login until reviewer sign-off).
+Railway project `capacity-check-eu`, separate from every other MML EU or US service. Public URL: https://labs.modernmoneylab.eu (custom domain), also https://web-production-d723d.up.railway.app. Shared login for reviewers; Active MML EU members come in from Labs in the MML EU Workspace.
 
 | Service | Role |
 | :--- | :--- |
@@ -92,6 +92,8 @@ Variables on `web` (values live only in Railway, never in the repository):
 | `PUBLIC_READ_ONLY` | `false` until reviewer sign-off; `true` opens read-only public access |
 | `ALLOWED_HOSTS` | The Railway domain |
 | `APP_USERNAME`, `APP_PASSWORD` | The single shared login, created at each start |
+| `SSO_SHARED_SECRET` | Lets Active MML EU members in from Labs in the MML EU Workspace without a password (`/sso/`, `web/results/sso.py`); the same value as `LABS_SHARED_SECRET` on the mml-eu service. Empty: closed |
+| `MML_EU_LABS_URL` | Where the login page sends members (default `https://modernmoneylab.eu/account/labs/capacity-check/`) |
 | `STAFF_USERNAME`, `STAFF_PASSWORD` | A staff login, created at each start, that can read reviewer feedback at `/reviewers/feedback/` |
 | `ANTHROPIC_API_KEY` | Used from Phase 6 only. Set a monthly spend cap in the Anthropic console; the code will also enforce a cap. |
 

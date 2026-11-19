@@ -10,6 +10,7 @@ from pathlib import Path
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import login
 from django.http import Http404, HttpResponse, HttpResponseForbidden, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -18,7 +19,7 @@ from django.views.decorators.http import require_GET
 from engine import concordance, sensitivity, shock, text
 from engine.params import RunParams, Thresholds
 from engine.sources._common import EU27
-from web.results import bridge
+from web.results import bridge, sso
 from web.results.forms import QUESTIONS, FeedbackForm
 from web.results.models import Feedback, ResultRow, Run
 
@@ -31,6 +32,24 @@ MAP_COLOURS = ("#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#104281")
 FOCUS = (("F", "Construction"), ("M71", "Architecture and engineering"),
          ("C28", "Machinery, incl. heat pumps"))  # fmt: skip
 FOCUS_MAX = 4
+
+
+@require_GET
+def sso_handoff(request):
+    """Sign in an Active MML EU member handed over from the Workspace."""
+    if not sso.enabled():
+        raise Http404
+    try:
+        user = sso.member_user(sso.verify(request.GET.get("t", "")))
+    except sso.HandoffError:
+        return render(
+            request,
+            "registration/sso_failed.html",
+            {"labs_url": settings.MML_EU_LABS_URL},
+            status=403,
+        )
+    login(request, user, backend="django.contrib.auth.backends.ModelBackend")
+    return redirect("overview")
 
 
 def health(request):

@@ -3,7 +3,8 @@
 {% block content %}
 <div class="mx-auto max-w-sm rounded border border-stone-200 bg-white p-6">
   <h1 class="text-lg font-semibold">Log in</h1>
-  <p class="mt-1 text-sm text-stone-600">Shared access until the reviewer signs off.</p>
+  <p class="mt-1 text-sm text-stone-600">Shared access for reviewers until the reviewer signs off.</p>
+  <p class="mt-2 rounded border border-stone-200 bg-stone-50 px-3 py-2 text-sm text-stone-700"><strong>MML Europe members:</strong> no password needed. Open Capacity Check Europe from <a class="underline" href="{{ MML_EU_LABS_URL }}">Labs in the MML EU Workspace</a>.</p>
   <form method="post" class="mt-4 space-y-3">{% csrf_token %}
     {% if form.errors %}<p class="text-sm text-red-700">Name and password did not match.</p>{% endif %}
     <label class="block text-sm">Name<input name="username" autocomplete="username" class="mt-1 block w-full rounded border border-stone-300 px-2 py-1" required></label>
