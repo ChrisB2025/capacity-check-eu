@@ -1,0 +1,42 @@
+# Deploy to the OVH server on every push to main.
+#
+# Sends this commit's files (git archive) over SSH to the deploy user. The key in
+# VPS_DEPLOY_KEY can only run "deploy <sha>" for this one project: the server builds
+# the image tagged with the commit, restarts it, and reverts to the previous version
+# if the new one does not come up healthy. See infra-migration/vps on Chris's machine.
+#
+# Secrets: VPS_DEPLOY_KEY (private key), VPS_KNOWN_HOSTS (the server's host key line),
+# VPS_HOST (address).
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-vps
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy
+        env:
+          DEPLOY_KEY: ${{ secrets.VPS_DEPLOY_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/deploy && chmod 600 ~/.ssh/deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          git archive --format=tar HEAD \
+            | ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+                  -o ServerAliveInterval=15 "deploy@$VPS_HOST" "deploy $GITHUB_SHA"
